@@ -187,15 +187,16 @@ dispatch_semaphore_t sem;
             newShuttle.name = [obj objectForKey:@"Name"];
             newShuttle.isOnline = true;
 
-
+            NSLog(@"Heading is: %@", newShuttle.heading);
             switch ([[obj objectForKey:@"RouteID"] integerValue]) {
                 case NORTH:
+                    newShuttle.imageName = @"shuttle_green";
                     [mapState setShuttle:0 withNewShuttle:newShuttle];
                     //newShuttle.name = @"North";
                     onlineStates[0] = true;
                     break;
                 case WEST:
-
+                    newShuttle.imageName = @"shuttle_purple";
                     if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == newShuttle.vehicleID){
                         [mapState setShuttle:1 withNewShuttle:newShuttle];
                         onlineStates[1] = true;
@@ -217,6 +218,7 @@ dispatch_semaphore_t sem;
                     else newShuttle.name = @"West 2";*/
                     break;
                 case EAST:
+                    newShuttle.imageName = @"shuttle_orange";
                     [mapState setShuttle:3 withNewShuttle:newShuttle];
                     //newShuttle.name = @"East";
                     onlineStates[3] = true;
@@ -224,7 +226,7 @@ dispatch_semaphore_t sem;
                 default:
                     break;
             }
-
+            NSLog(@"Shuttlename as set: %@", newShuttle.imageName);
         }
 
         for (int i = 0; i < 4; i++) {

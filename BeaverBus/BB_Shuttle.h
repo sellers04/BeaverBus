@@ -18,6 +18,7 @@
 @property(strong, nonatomic) NSNumber *routeID;
 @property(nonatomic) BOOL isOnline;
 @property(strong, nonatomic) GMSMarker *marker;
+@property(strong, nonatomic) NSString *imageName;
 
 - (void)updateAll:(BB_Shuttle *)newShuttle;
 

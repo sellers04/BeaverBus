@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4550460219CB3F34004EC589 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4550460119CB3F34004EC589 /* GoogleMaps.framework */; };
+		4550460419CB3F3C004EC589 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4550460319CB3F3C004EC589 /* GoogleMaps.bundle */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
 		7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
@@ -59,6 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4550460119CB3F34004EC589 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../Downloads/GoogleMaps-iOS-1.8.1 2/GoogleMaps.framework"; sourceTree = "<group>"; };
+		4550460319CB3F3C004EC589 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../../Downloads/GoogleMaps-iOS-1.8.1 2/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AAB19C8D85E00B7623D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -286,6 +290,7 @@
 				7CDD0B9719C8DA0000B7623D /* AVFoundation.framework in Frameworks */,
 				7CDD0B9319C8D8F200B7623D /* GoogleMaps.framework in Frameworks */,
 				7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */,
+				4550460219CB3F34004EC589 /* GoogleMaps.framework in Frameworks */,
 				7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */,
 				7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */,
 			);
@@ -326,6 +331,8 @@
 		7CDD0AAA19C8D85E00B7623D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4550460319CB3F3C004EC589 /* GoogleMaps.bundle */,
+				4550460119CB3F34004EC589 /* GoogleMaps.framework */,
 				7CDD0BAC19C8DA3F00B7623D /* SystemConfiguration.framework */,
 				7CDD0BAA19C8DA3A00B7623D /* QuartzCore.framework */,
 				7CDD0BA819C8DA3600B7623D /* OpenGLES.framework */,
@@ -742,6 +749,7 @@
 				7CDD0AB619C8D85E00B7623D /* InfoPlist.strings in Resources */,
 				7CDD0ABF19C8D85E00B7623D /* Main.storyboard in Resources */,
 				7CDD0B9519C8D98900B7623D /* GoogleMaps.bundle in Resources */,
+				4550460419CB3F3C004EC589 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -937,6 +945,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/nickdev/Downloads/GoogleMaps-iOS-1.8.1",
+					"/Users/norredm/Downloads/GoogleMaps-iOS-1.8.1",
+					2,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BeaverBus/BeaverBus-Prefix.pch";
@@ -954,6 +964,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/nickdev/Downloads/GoogleMaps-iOS-1.8.1",
+					"/Users/norredm/Downloads/GoogleMaps-iOS-1.8.1",
+					2,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BeaverBus/BeaverBus-Prefix.pch";
@@ -1022,6 +1034,7 @@
 				7CDD0ADC19C8D85F00B7623D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7CDD0ADD19C8D85F00B7623D /* Build configuration list for PBXNativeTarget "BeaverBusTests" */ = {
 			isa = XCConfigurationList;
@@ -1030,6 +1043,7 @@
 				7CDD0ADF19C8D85F00B7623D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

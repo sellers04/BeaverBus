@@ -73,11 +73,13 @@ static BB_MapState *mapState = NULL;
 
     for(int i = 0; i < shuttlesLength; i++){
         BB_Shuttle *shuttle = [_shuttles objectAtIndex:i];
+        CLLocationDegrees heading = [shuttle.heading doubleValue];
         GMSMarker *newMarker;
         if (shuttle.isOnline){
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
             //NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
             newMarker = [GMSMarker markerWithPosition:loc];
+            
         }
         else{
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(0,0);
@@ -86,8 +88,11 @@ static BB_MapState *mapState = NULL;
             [newMarker setOpacity:0];
 
         }
-        [newMarker setIcon:[UIImage imageNamed:@"shuttle_green"]];
+        NSLog(@"Image name: %@", shuttle.imageName);
+        [newMarker setIcon:[UIImage imageNamed:shuttle.imageName]];
         [newMarker setTitle:shuttle.name];
+        newMarker.rotation = heading;
+        
         newMarker.map = _mapView;
 
         shuttle.marker = newMarker;

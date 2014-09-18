@@ -18,6 +18,7 @@
     _vehicleID = newShuttle.vehicleID;
     _routeID = newShuttle.routeID;
     _isOnline = newShuttle.isOnline;
+    _imageName = newShuttle.imageName;
 }
 
 @end
