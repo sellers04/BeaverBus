@@ -22,6 +22,8 @@ static BB_MapState *mapState;
 
 dispatch_semaphore_t sem;
 
+NSTimer *timer;
+
 
 @implementation BB_ShuttleUpdater
 
@@ -82,18 +84,104 @@ dispatch_semaphore_t sem;
 
     NSLog(@"Done with all!");
 
+    [self startShuttleUpdaterHandler];
+
     return true;
 }
 
 - (void)startShuttleUpdaterHandler{
+    NSLog(@"startingShuttleUpdater...");
+    [timer invalidate];
 
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(updateEvent:) userInfo:nil repeats:TRUE];
-
+    timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(updateEvent) userInfo:nil repeats:TRUE];
 }
 
 - (void)updateEvent{
+    NSLog(@"UpdateEvent");
+    sem = dispatch_semaphore_create(0);
     [self getShuttles];
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    NSLog(@"Done waiting");
+    [self animateHandler];
+
+}
+
+
+
+-(void)animateHandler
+{
+    NSLog(@"Animate handler");
+    dispatch_source_t dispatchSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+
+    dispatch_time_t startTime =  dispatch_time(DISPATCH_TIME_NOW, 0);
+
+    uint64_t intervalTime = (int64_t)10;
+
+    dispatch_source_set_timer(dispatchSource, startTime, intervalTime, 0);
+
+    BB_Shuttle *shuttle1 =[[BB_MapState get].shuttles objectAtIndex:0];
+    //NSArray *firstShuttleArr = [self getDistance:shuttle1 andIncrementVarible:10];
+
+    //double precisionCheck = .0001;
+
+    NSMutableArray *shuttles = [BB_MapState get].shuttles;
+
+    dispatch_source_set_event_handler(dispatchSource, ^{
+        NSLog(@"DISPAT+CH");
+        /*NSLog(@"dispatch iteration");
+        if(!((shuttle1.latitude - shuttle1.marker.position.latitude) < precisionCheck) && !((shuttle1.longitude - shuttle1.marker.position.longitude) < precisionCheck)){
+            double newLat = shuttle1.marker.position.latitude + [[firstShuttleArr objectAtIndex:0] doubleValue];
+            double newLon = shuttle1.marker.position.longitude + [[firstShuttleArr objectAtIndex:1] doubleValue];
+            NSLog(@"New iteration lat: %f , lon: %f", newLat, newLon);
+            [shuttle1.marker setPosition:CLLocationCoordinate2DMake(newLat, newLon)];
+        }else{
+            NSLog(@"Dispatch suspended!");
+            dispatch_suspend(dispatchSource);
+        }*/
+
+
+
+
+    });
+    for (BB_Shuttle *shuttle in shuttles) {
+        [shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];
+        [shuttle.marker setRotation:([shuttle.heading doubleValue])];
+    }
+    double incAmount = .00005;
+    NSLog(@"MAPSTATE shuttle: lat: %f, lon: %f",((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:0]).marker.position.latitude, ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:0]).marker.position.longitude);
+
+    NSLog(@"shuttle1MarkerPos: %f , %f", shuttle1.marker.position.latitude, shuttle1.marker.position.longitude);
+
+    NSLog(@"POST shuttle1MarkerPos: %f , %f", shuttle1.marker.position.latitude, shuttle1.marker.position.longitude);
+    NSLog(@"POST MAPSTATE shuttle: lat: %f, lon: %f",((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:0]).marker.position.latitude, ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:0]).marker.position.longitude);
+    NSLog(@"Dispatch resume");
+    dispatch_resume(dispatchSource);
+    //shuttle1.marker.po
     
+}
+
+-(NSArray*)getDistance:(BB_Shuttle *)shuttle andIncrementVarible:(int)inc
+{
+    NSLog(@"Lat: %f Lon: %f", shuttle.latitude, shuttle.longitude);
+    double latDiff = abs(shuttle.marker.position.latitude - shuttle.latitude);
+    double lonDiff = abs(shuttle.marker.position.longitude - shuttle.longitude);
+
+    double hypDist = sqrt((latDiff*latDiff)+(lonDiff*lonDiff));
+
+    double numIterations = hypDist/inc;
+
+    NSLog(@"NumIterations: %f",numIterations);
+    double latInc = latDiff/numIterations;
+    double lonInc = lonDiff/numIterations;
+
+
+
+    NSLog(@"For shuttleIndex: %d , latInc = %f, lonInc = %f", [[BB_MapState get].shuttles indexOfObject:shuttle], latInc, lonInc);
+
+    NSArray *arr = [NSArray arrayWithObjects:[NSNumber numberWithDouble:latInc], [NSNumber numberWithDouble:lonInc],nil];
+    //NSNumber *arr[2] = {[NSNumber numberWithDouble:latInc], [NSNumber numberWithDouble:lonInc]};
+
+    return arr;
 }
 
 
@@ -177,7 +265,9 @@ dispatch_semaphore_t sem;
 
         for(int i = 0; i < count; i++){
             id obj = [jsonArray objectAtIndex:i];
-            
+
+
+
             BB_Shuttle *newShuttle = [[BB_Shuttle alloc] init];
             newShuttle.latitude = [[obj objectForKey:@"Latitude"] doubleValue];
             newShuttle.longitude = [[obj objectForKey:@"Longitude"] doubleValue];
@@ -186,6 +276,8 @@ dispatch_semaphore_t sem;
             newShuttle.heading = [obj objectForKey:@"Heading"];
             newShuttle.name = [obj objectForKey:@"Name"];
             newShuttle.isOnline = true;
+
+            //NSLog(@"\nOLD LAT: %f \n NEW LAT: %f \n", ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:i]).latitude, newShuttle.latitude);
 
             NSLog(@"Heading is: %@", newShuttle.heading);
             switch ([[obj objectForKey:@"RouteID"] integerValue]) {

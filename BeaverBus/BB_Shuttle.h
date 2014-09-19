@@ -21,5 +21,6 @@
 @property(strong, nonatomic) NSString *imageName;
 
 - (void)updateAll:(BB_Shuttle *)newShuttle;
+- (void)updateMarker;
 
 @end

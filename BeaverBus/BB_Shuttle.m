@@ -10,7 +10,8 @@
 
 @implementation BB_Shuttle
 
--(void)updateAll:(BB_Shuttle *)newShuttle{
+-(void)updateAll:(BB_Shuttle *)newShuttle
+{
     _latitude = newShuttle.latitude;
     _longitude = newShuttle.longitude;
     _heading = newShuttle.heading;
@@ -19,6 +20,23 @@
     _routeID = newShuttle.routeID;
     _isOnline = newShuttle.isOnline;
     _imageName = newShuttle.imageName;
+}
+
+
+
+-(void)updateMarker
+{
+    double startLat = _marker.position.latitude;
+    double startLon = _marker.position.longitude;
+
+    double endLat = _latitude;
+    double endLon = _longitude;
+
+
+
+    //  [_marker setPosition:<#(CLLocationCoordinate2D)#>];
+    
+    
 }
 
 @end

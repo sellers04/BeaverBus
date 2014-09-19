@@ -75,6 +75,7 @@ static BB_MapState *mapState = NULL;
         BB_Shuttle *shuttle = [_shuttles objectAtIndex:i];
         CLLocationDegrees heading = [shuttle.heading doubleValue];
         GMSMarker *newMarker;
+        newMarker.groundAnchor = CGPointMake(0.5, 0.5);
         if (shuttle.isOnline){
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
             //NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
