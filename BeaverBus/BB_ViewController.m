@@ -9,12 +9,10 @@
 #import "BB_ViewController.h"
 #include "BB_MapState.h"
 #import <GoogleMaps/GoogleMaps.h>
-#import "BottomSubView.xib"
 
 @interface BB_ViewController ()
 
 @property (strong, nonatomic) IBOutlet UIView *mainView;
-
 
 @end
 

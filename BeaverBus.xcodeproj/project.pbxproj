@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7CC0C5F219CB977800E39DF4 /* BottomSubView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CC0C5F119CB977800E39DF4 /* BottomSubView.xib */; };
 		7CC0C5F519CB9A1000E39DF4 /* BB_CustomSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0C5F419CB9A1000E39DF4 /* BB_CustomSubview.m */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
@@ -54,7 +53,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7CC0C5F119CB977800E39DF4 /* BottomSubView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BottomSubView.xib; sourceTree = "<group>"; };
 		7CC0C5F319CB9A1000E39DF4 /* BB_CustomSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_CustomSubview.h; sourceTree = "<group>"; };
 		7CC0C5F419CB9A1000E39DF4 /* BB_CustomSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_CustomSubview.m; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +189,6 @@
 				7CDD0ABB19C8D85E00B7623D /* BB_AppDelegate.m */,
 				7CDD0AC319C8D85E00B7623D /* Images.xcassets */,
 				7CDD0AB219C8D85E00B7623D /* Supporting Files */,
-				7CC0C5F119CB977800E39DF4 /* BottomSubView.xib */,
 				7CC0C5F319CB9A1000E39DF4 /* BB_CustomSubview.h */,
 				7CC0C5F419CB9A1000E39DF4 /* BB_CustomSubview.m */,
 			);
@@ -363,7 +360,6 @@
 			files = (
 				7CDD0AC419C8D85E00B7623D /* Images.xcassets in Resources */,
 				7CDD0AB619C8D85E00B7623D /* InfoPlist.strings in Resources */,
-				7CC0C5F219CB977800E39DF4 /* BottomSubView.xib in Resources */,
 				7CDD0ABF19C8D85E00B7623D /* Main.storyboard in Resources */,
 				7CF5E37619CB46190042950F /* GoogleMaps.bundle in Resources */,
 			);
