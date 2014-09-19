@@ -31,5 +31,6 @@
 //- (void)initMapMarkers;
 - (void)addRoutePolylines;
 - (void)setShuttle:(int)index withNewShuttle:(BB_Shuttle *)newShuttle;
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end

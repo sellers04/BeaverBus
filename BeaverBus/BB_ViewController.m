@@ -38,10 +38,10 @@
 
     //[[[NSBundle mainBundle] loadNibNamed:@"MyCustomView" owner:self options:nil] objectAtIndex:0];
 
-    NSArray *bottomSegment = [[NSBundle mainBundle] loadNibNamed:@"BottomSubView" owner:self options:nil];
-    UIView *bottomSegView = [bottomSegment objectAtIndex:0];
-    bottomSegView.backgroundColor = [UIColor colorWithRed:0 green:80 blue:80 alpha:.7];
-    [bottomView addSubview:bottomSegView];
+    //NSArray *bottomSegment = [[NSBundle mainBundle] loadNibNamed:@"BottomSubView" owner:self options:nil];
+    //UIView *bottomSegView = [bottomSegment objectAtIndex:0];
+    //bottomSegView.backgroundColor = [UIColor colorWithRed:0 green:80 blue:80 alpha:.7];
+    //[bottomView addSubview:bottomSegView];
 
 
 
