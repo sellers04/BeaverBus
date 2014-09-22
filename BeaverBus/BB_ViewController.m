@@ -20,6 +20,8 @@
 
 @implementation BB_ViewController
 
+
+
 @synthesize bottomView = _bottomView;
 
 
@@ -27,33 +29,56 @@
 {
     [super viewDidLoad];
 
+    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Why" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Try again", nil];
+
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
 
     self.view = [BB_MapState get].mapView;
 
-    UIView * MApBaseView=[[UIView alloc]initWithFrame:CGRectZero];// add your frame size here
-    //[self.view addSubview:MApBaseView];
-    //[MApBaseView addSubview: [BB_MapState get].mapView];
-    //self.view =
+    if ([BB_MapState get].didInitialRequest){
+
+        UIView * MApBaseView=[[UIView alloc]initWithFrame:CGRectZero];// add your frame size here
+        //[self.view addSubview:MApBaseView];
+        //[MApBaseView addSubview: [BB_MapState get].mapView];
+        //self.view =
+        
+        EasyTableView *view = [[EasyTableView alloc] initWithFrame:CGRectMake(10, screenHeight-100, screenWidth-20, 90) numberOfColumns:8 ofWidth:60];
+        
+        self.bottomView = view;
+        
+        self.bottomView.delegate = self;
+        
+        [self.view addSubview:self.bottomView];
+        
+        /*
+        UITableView *bottomView = [[UITableView alloc] initWithFrame:CGRectMake(10, screenHeight-100, screenWidth-20, 90)];
+        bottomView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.7];
+        [self.view addSubview:bottomView];
+         */
     
-    EasyTableView *view = [[EasyTableView alloc] initWithFrame:CGRectMake(10, screenHeight-100, screenWidth-20, 90) numberOfColumns:8 ofWidth:60];
-    
-    self.bottomView = view;
-    
-    self.bottomView.delegate = self;
-    
-    [self.view addSubview:self.bottomView];
-    
-    /*
-    UITableView *bottomView = [[UITableView alloc] initWithFrame:CGRectMake(10, screenHeight-100, screenWidth-20, 90)];
-    bottomView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.7];
-    [self.view addSubview:bottomView];
-     */
-    
-    
+    }
+    else{
+        //Initial request failed, show try again dialog
+        [networkFailAlert show];
+
+    }
 
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        //exit the app
+    }
+    else if (buttonIndex == 1){
+        //repeat the initial network request
+        if (![[BB_ShuttleUpdater get] initialNetworkRequest]) {
+            UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Why" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Try again", nil];
+            [networkFailAlert show];
+        }
+    }
+
 }
 
 

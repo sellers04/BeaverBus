@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #include "EasyTableView.h"
 #include "BB_StopCell.h"
+#include "BB_ShuttleUpdater.h"
 
-@interface BB_ViewController : UIViewController <EasyTableViewDelegate>
+
+@interface BB_ViewController : UIViewController <EasyTableViewDelegate, UIAlertViewDelegate>
 
 @property(nonatomic) EasyTableView *bottomView;
 
