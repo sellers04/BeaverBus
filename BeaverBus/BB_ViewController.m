@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
 
-    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Why" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Try again", nil];
+    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
 
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
@@ -68,16 +68,12 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0){
-        //exit the app
-    }
-    else if (buttonIndex == 1){
+
         //repeat the initial network request
         if (![[BB_ShuttleUpdater get] initialNetworkRequest]) {
-            UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Why" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Try again", nil];
+            UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
             [networkFailAlert show];
         }
-    }
 
 }
 
