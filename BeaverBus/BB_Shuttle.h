@@ -19,6 +19,7 @@
 @property(nonatomic) BOOL isOnline;
 @property(strong, nonatomic) GMSMarker *marker;
 @property(strong, nonatomic) NSString *imageName;
+@property(strong, nonatomic) NSMutableArray *stopsEtaList;
 
 - (void)updateAll:(BB_Shuttle *)newShuttle;
 - (void)updateMarker;

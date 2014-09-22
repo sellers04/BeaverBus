@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "EasyTableView.h"
+#include "BB_StopCell.h"
 
-@interface BB_ViewController : UIViewController
+@interface BB_ViewController : UIViewController <EasyTableViewDelegate>
+
+@property(nonatomic) EasyTableView *bottomView;
 
 @end

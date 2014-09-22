@@ -68,6 +68,7 @@ NSTimer *timer;
     NSLog(@"Starting requests...");
     [self getStops];
     //NSLog(@"Done stops");
+    
     [self getShuttles];
     //[BB_MapState get].shuttles =
     //NSLog(@"Done shuttles");
@@ -103,7 +104,6 @@ NSTimer *timer;
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     NSLog(@"Done waiting");
     [self animateHandler];
-
 }
 
 
@@ -160,6 +160,8 @@ NSTimer *timer;
     
 }
 
+
+
 -(NSArray*)getDistance:(BB_Shuttle *)shuttle andIncrementVarible:(int)inc
 {
     NSLog(@"Lat: %f Lon: %f", shuttle.latitude, shuttle.longitude);
@@ -184,6 +186,78 @@ NSTimer *timer;
     return arr;
 }
 
+- (void) distributeStops:(NSNumber *)d{
+    int count = [mapState.stops count];
+    for (int i = 0; i < count; i++){
+        BB_Stop *stop = [mapState.stops objectAtIndex:i];
+        
+        
+        if([[stop.etaArray objectAtIndex:0] intValue] != -1){
+            
+        }
+        
+        
+        
+        
+        
+        switch ([stop.name characterAtIndex:0]) {
+            case 'N':
+                [stop.etaArray setObject:@5 atIndexedSubscript:0];
+                break;
+            case 'W':
+                [stop.etaArray setObject:@5 atIndexedSubscript:1];
+                [stop.etaArray setObject:@6 atIndexedSubscript:2]; //???
+                break;
+            case 'E':
+                [stop.etaArray setObject:@5 atIndexedSubscript:3];
+                break;
+            default:
+                break;
+        }
+        
+        
+      
+    }
+}
+
+- (void) getETAs{
+    //http stuff
+    /*
+     for every stopID in RouteStopArrivalTimes{
+        find stop in myStops that contains stopID
+     
+         switch (routeID){
+            case NorthRoute:
+                stop.etaArray[0] = vehicleestimates[0].secondstoStop
+     
+     
+            case EastRoute:
+                stop.etaArray[3] = vehicleestimates[0].secondstoStop
+     
+     
+            case WestRoute: //double route
+                vehicleID = vehicleestimates[0].vehicleid
+                 if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleID){
+                        stop.etaArray[1] = vehicleestimates[0].secondstostop
+                 }
+                 else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleID){
+                        stop.etaArray[2] = vehicleestimates[0].secondstostop
+                 }
+                 vehicleID = vehicleestimates[1].vehicleid
+                 if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleID){
+                        stop.etaArray[1] = vehicleestimates[1].secondstostop
+                 }
+                 else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleID){
+                        stop.etaArray[2] = vehicleestimates[1].secondstostop
+                 }
+         
+         }
+     
+     }
+     
+     */
+    
+}
 
 - (BOOL) getStops{
     NSURL *url = [NSURL URLWithString:@"http://osushuttles.com/Services/JSONPRelay.svc/GetStops"];
@@ -206,7 +280,7 @@ NSTimer *timer;
             BB_Stop *newStop = [[BB_Stop alloc] init];
             newStop.latitude = [[obj objectForKey:@"Latitude"] doubleValue];
             newStop.longitude = [[obj objectForKey:@"Longitude"] doubleValue];
-
+/*
             id mapPoints = [obj objectForKey:@"MapPoints"];
             int mapPointsCount = [mapPoints count];
             //NSLog(@"mappointsCount: %d", mapPointsCount);
@@ -222,11 +296,12 @@ NSTimer *timer;
                 mapState.mapPoints = routePoints;
                 //GMSMarker *newMarker = [GMSMarker markerWithPosition:loc]
             }
-
+*/
 
 
 
             newStop.name = [obj objectForKey:@"Description"];
+            newStop.etaArray = [NSArray arrayWithObjects:@-1, @-1, @-1, @-1, nil];
             //NSLog(@"newStop name: %@", newStop.name);
             [stopsArray addObject:newStop];
             //NSLog(@"stopsArray : %@", stopsArray);

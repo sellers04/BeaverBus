@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7CC0C5F519CB9A1000E39DF4 /* BB_CustomSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0C5F419CB9A1000E39DF4 /* BB_CustomSubview.m */; };
+		4550460D19CC921B004EC589 /* EasyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4550460C19CC921B004EC589 /* EasyTableView.m */; };
+		4550460F19CC985F004EC589 /* StopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4550460E19CC985F004EC589 /* StopCell.xib */; };
+		455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 455E5F8A19CC9FAD007620AD /* BB_StopCell.m */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
 		7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
@@ -53,8 +55,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7CC0C5F319CB9A1000E39DF4 /* BB_CustomSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_CustomSubview.h; sourceTree = "<group>"; };
-		7CC0C5F419CB9A1000E39DF4 /* BB_CustomSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_CustomSubview.m; sourceTree = "<group>"; };
+		4550460B19CC921B004EC589 /* EasyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTableView.h; sourceTree = "<group>"; };
+		4550460C19CC921B004EC589 /* EasyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTableView.m; sourceTree = "<group>"; };
+		4550460E19CC985F004EC589 /* StopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StopCell.xib; path = ../StopCell.xib; sourceTree = "<group>"; };
+		455E5F8919CC9FAD007620AD /* BB_StopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopCell.h; sourceTree = "<group>"; };
+		455E5F8A19CC9FAD007620AD /* BB_StopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopCell.m; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AAB19C8D85E00B7623D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -135,6 +140,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4550460A19CC921B004EC589 /* EasyTableView */ = {
+			isa = PBXGroup;
+			children = (
+				4550460B19CC921B004EC589 /* EasyTableView.h */,
+				4550460C19CC921B004EC589 /* EasyTableView.m */,
+			);
+			path = EasyTableView;
+			sourceTree = "<group>";
+		};
 		7CDD0A9F19C8D85E00B7623D = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +196,9 @@
 		7CDD0AB119C8D85E00B7623D /* BeaverBus */ = {
 			isa = PBXGroup;
 			children = (
+				4550460E19CC985F004EC589 /* StopCell.xib */,
+				455E5F8919CC9FAD007620AD /* BB_StopCell.h */,
+				455E5F8A19CC9FAD007620AD /* BB_StopCell.m */,
 				7CDD0ABD19C8D85E00B7623D /* Main.storyboard */,
 				7CDD0BAF19C8DE6D00B7623D /* Model */,
 				7CDD0BAE19C8DE6300B7623D /* View Controller */,
@@ -189,8 +206,6 @@
 				7CDD0ABB19C8D85E00B7623D /* BB_AppDelegate.m */,
 				7CDD0AC319C8D85E00B7623D /* Images.xcassets */,
 				7CDD0AB219C8D85E00B7623D /* Supporting Files */,
-				7CC0C5F319CB9A1000E39DF4 /* BB_CustomSubview.h */,
-				7CC0C5F419CB9A1000E39DF4 /* BB_CustomSubview.m */,
 			);
 			path = BeaverBus;
 			sourceTree = "<group>";
@@ -236,6 +251,7 @@
 		7CDD0BAF19C8DE6D00B7623D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4550460A19CC921B004EC589 /* EasyTableView */,
 				7CDD0BB019C8DEE600B7623D /* BB_MapState.h */,
 				7CDD0BB119C8DEE600B7623D /* BB_MapState.m */,
 				7CDD0BB319C8EB3A00B7623D /* BB_Shuttle.h */,
@@ -362,6 +378,7 @@
 				7CDD0AB619C8D85E00B7623D /* InfoPlist.strings in Resources */,
 				7CDD0ABF19C8D85E00B7623D /* Main.storyboard in Resources */,
 				7CF5E37619CB46190042950F /* GoogleMaps.bundle in Resources */,
+				4550460F19CC985F004EC589 /* StopCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,14 +397,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CC0C5F519CB9A1000E39DF4 /* BB_CustomSubview.m in Sources */,
 				7CDD0ABC19C8D85E00B7623D /* BB_AppDelegate.m in Sources */,
 				7CDD0BB519C8EB3A00B7623D /* BB_Shuttle.m in Sources */,
 				7CDD0AB819C8D85E00B7623D /* main.m in Sources */,
 				7CDD0BB219C8DEE600B7623D /* BB_MapState.m in Sources */,
 				7CDD0BBB19C8F35A00B7623D /* BB_ShuttleUpdater.m in Sources */,
 				7CDD0AC219C8D85E00B7623D /* BB_ViewController.m in Sources */,
+				455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */,
 				7CDD0BB819C8EB4F00B7623D /* BB_Stop.m in Sources */,
+				4550460D19CC921B004EC589 /* EasyTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,6 +42,7 @@ static BB_MapState *mapState = NULL;
     
     _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     _mapView.myLocationEnabled = YES;
+    
  
     [self addRoutePolylines];
 
@@ -57,6 +58,7 @@ static BB_MapState *mapState = NULL;
         CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(stop.latitude, stop.longitude);
 
         GMSMarker *newMarker = [GMSMarker markerWithPosition:loc];
+       // newMarker.title = [NSString stringWithFormat:@"Lat: %f, Long: %f",stop.latitude,stop.longitude];
 
         newMarker.map = _mapView;
 
