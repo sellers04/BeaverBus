@@ -20,7 +20,8 @@
 
 @implementation BB_ViewController
 
-
+UIView *updateErrorView;
+UIAlertView *networkFailAlert;
 
 @synthesize bottomView = _bottomView;
 
@@ -29,12 +30,21 @@
 {
     [super viewDidLoad];
 
-    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
 
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
 
+
+    UIButton *myLocationButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+    [myLocationButton addTarget:self action:@selector(moveToMyLocation:) forControlEvents:UIControlEventTouchUpInside];
+    [myLocationButton setTitle:@"My LOC" forState:UIControlStateNormal];
+    myLocationButton.frame = CGRectMake(10, 10, 90, 50);
+
+    networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+
     self.view = [BB_MapState get].mapView;
+
+[self.view addSubview:myLocationButton];
 
     if ([BB_MapState get].didInitialRequest){
 
@@ -50,6 +60,8 @@
         self.bottomView.delegate = self;
         
         [self.view addSubview:self.bottomView];
+
+
         
         /*
         UITableView *bottomView = [[UITableView alloc] initWithFrame:CGRectMake(10, screenHeight-100, screenWidth-20, 90)];
@@ -71,9 +83,24 @@
 
         //repeat the initial network request
         if (![[BB_ShuttleUpdater get] initialNetworkRequest]) {
-            UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+            /*UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];*/
             [networkFailAlert show];
         }
+
+}
+
+- (void)moveToMyLocation{
+    CLLocation *location = [BB_MapState get].mapView.myLocation;
+    if (location){
+        [[BB_MapState get].mapView animateToLocation:location.coordinate];
+    }
+
+}
+
+- (void)showUpdateErrorView{
+
+
+
 
 }
 

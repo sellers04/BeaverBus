@@ -10,6 +10,7 @@
 #import "BB_Stop.h"
 #import "BB_Shuttle.h"
 #import "BB_MapState.h"
+#import "BB_ViewController.h"
 
 
 int const NORTH = 1;
@@ -107,11 +108,20 @@ NSTimer *timer;
 
 - (void)updateEvent{
     NSLog(@"UpdateEvent");
+    mapState.shuttleRequestComplete = false;
     sem = dispatch_semaphore_create(0);
     [self getShuttles];
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    NSLog(@"Done waiting");
-    [self animateHandler];
+
+    if (mapState.shuttleRequestComplete){
+        //Successful update
+        NSLog(@"Done waiting");
+        [self animateHandler];
+    } else {
+
+        //Failed to update!
+
+    }
 }
 
 
@@ -151,9 +161,20 @@ NSTimer *timer;
 
 
     });
+
+    //Rotate >> Wait 0.5 seconds >> Move position
+    int64_t delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+
     for (BB_Shuttle *shuttle in shuttles) {
-        [shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];
         [shuttle.marker setRotation:([shuttle.heading doubleValue])];
+        //[shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];
+
+
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];
+        });
+
     }
     double incAmount = .00005;
     NSLog(@"MAPSTATE shuttle: lat: %f, lon: %f",((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:0]).marker.position.latitude, ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:0]).marker.position.longitude);
@@ -308,7 +329,7 @@ NSTimer *timer;
                     //GMSMarker *newMarker = [GMSMarker markerWithPosition:loc]
                 }
     */
-
+ 
 
 
                 newStop.name = [obj objectForKey:@"Description"];

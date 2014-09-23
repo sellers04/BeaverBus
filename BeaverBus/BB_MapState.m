@@ -44,7 +44,7 @@ static BB_MapState *mapState = NULL;
     
     _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     _mapView.myLocationEnabled = YES;
-    
+    _mapView.settings.compassButton = YES;
  
     [self addRoutePolylines];
 
