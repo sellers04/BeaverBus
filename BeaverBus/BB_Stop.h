@@ -15,5 +15,6 @@
 @property(strong, nonatomic) NSString *name;
 @property(strong, nonatomic) GMSMarker *marker;
 @property(strong, nonatomic) NSMutableArray *etaArray;
+@property(strong, nonatomic) NSMutableArray *servicedRoutes;
 
 @end

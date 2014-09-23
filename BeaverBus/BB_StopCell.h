@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *StopNumber;
 @property (weak, nonatomic) IBOutlet UILabel *ETAToStop;
+@property (weak, nonatomic) IBOutlet UILabel *indexNumber;
 
 @end

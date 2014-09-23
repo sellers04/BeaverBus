@@ -10,6 +10,7 @@
 		4550460D19CC921B004EC589 /* EasyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4550460C19CC921B004EC589 /* EasyTableView.m */; };
 		4550460F19CC985F004EC589 /* StopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4550460E19CC985F004EC589 /* StopCell.xib */; };
 		455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 455E5F8A19CC9FAD007620AD /* BB_StopCell.m */; };
+		4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
 		7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
@@ -60,6 +61,8 @@
 		4550460E19CC985F004EC589 /* StopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StopCell.xib; path = ../StopCell.xib; sourceTree = "<group>"; };
 		455E5F8919CC9FAD007620AD /* BB_StopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopCell.h; sourceTree = "<group>"; };
 		455E5F8A19CC9FAD007620AD /* BB_StopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopCell.m; sourceTree = "<group>"; };
+		4598D29A19D0D5FF00BF6339 /* BB_StopEstimatePair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopEstimatePair.h; sourceTree = "<group>"; };
+		4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopEstimatePair.m; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AAB19C8D85E00B7623D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -258,8 +261,10 @@
 				7CDD0BB419C8EB3A00B7623D /* BB_Shuttle.m */,
 				7CDD0BB619C8EB4F00B7623D /* BB_Stop.h */,
 				7CDD0BB719C8EB4F00B7623D /* BB_Stop.m */,
-				7CDD0BBA19C8F35A00B7623D /* BB_ShuttleUpdater.m */,
 				7CDD0BB919C8F35A00B7623D /* BB_ShuttleUpdater.h */,
+				7CDD0BBA19C8F35A00B7623D /* BB_ShuttleUpdater.m */,
+				4598D29A19D0D5FF00BF6339 /* BB_StopEstimatePair.h */,
+				4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 				7CDD0AB819C8D85E00B7623D /* main.m in Sources */,
 				7CDD0BB219C8DEE600B7623D /* BB_MapState.m in Sources */,
 				7CDD0BBB19C8F35A00B7623D /* BB_ShuttleUpdater.m in Sources */,
+				4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */,
 				7CDD0AC219C8D85E00B7623D /* BB_ViewController.m in Sources */,
 				455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */,
 				7CDD0BB819C8EB4F00B7623D /* BB_Stop.m in Sources */,

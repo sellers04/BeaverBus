@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "BB_StopEstimatePair.h"
 
 @interface BB_Shuttle : NSObject
 
@@ -20,6 +21,10 @@
 @property(strong, nonatomic) GMSMarker *marker;
 @property(strong, nonatomic) NSString *imageName;
 @property(strong, nonatomic) NSMutableArray *stopsEtaList;
+
+@property(strong, nonatomic) NSMutableArray *stopEstimatePairs;
+
+
 
 - (void)updateAll:(BB_Shuttle *)newShuttle;
 - (void)updateMarker;

@@ -35,21 +35,37 @@ static BB_MapState *mapState = NULL;
 - (void)initMapView
 {
     [GMSServices provideAPIKey:@"AIzaSyBw44K1O1MlTgjVm7mWC2jUqH2WQlFIA_k"];
-    //ew LatLng(44.563731, -123.279534);
     // Create a GMSCameraPosition that tells the map to display the
     // coordinate -33.86,151.20 at zoom level 6.
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:44.563731
                                                             longitude:-123.279534
                                                                  zoom:14.5];
-    
     _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     _mapView.myLocationEnabled = YES;
+
     _mapView.settings.compassButton = YES;
+
+    _mapView.delegate = self;
  
     [self addRoutePolylines];
-
 }
 
+-(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
+{
+    //NSLog(@"Tapped marker");
+    for (BB_Shuttle *shuttle in _shuttles) {
+        if([marker isEqual:shuttle.marker]){
+            //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
+            _selectedShuttle = shuttle;
+            [_tableView reloadData];
+            break;
+        }
+    }
+
+    
+    
+    return YES;
+}
 
 -(void)initStopMarkers
 {
@@ -60,8 +76,18 @@ static BB_MapState *mapState = NULL;
         CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(stop.latitude, stop.longitude);
 
         GMSMarker *newMarker = [GMSMarker markerWithPosition:loc];
-       // newMarker.title = [NSString stringWithFormat:@"Lat: %f, Long: %f",stop.latitude,stop.longitude];
+        
+                              //Debugging, displays routeIds as title of marker
+         
+        NSString *baseString = @"";
+        for (NSNumber *num in stop.etaArray) {
+            baseString = [baseString  stringByAppendingFormat:@"%d ,", [num integerValue]];
+        }
+        newMarker.title = baseString;
 
+        if((arc4random() % 3) == 2)
+            [newMarker setIcon:[UIImage imageNamed:@"marker"]];
+        
         newMarker.map = _mapView;
 
         stop.marker = newMarker;
@@ -69,6 +95,7 @@ static BB_MapState *mapState = NULL;
         //_stopMarkers = [_stopMarkers setByAddingObject:newMarker];
         //NSLog(@"made it here: %d with marker %@", i, newMarker);
     }
+    
 }
 
 -(void)initShuttleMarkers
@@ -93,12 +120,14 @@ static BB_MapState *mapState = NULL;
             [newMarker setOpacity:0];
 
         }
-        NSLog(@"Image name: %@", shuttle.imageName);
+        //NSLog(@"Image name: %@", shuttle.imageName);
         UIImage *iconImage = [UIImage imageNamed:shuttle.imageName];
         UIImage *scaledImage = [self imageWithImage:iconImage scaledToSize:CGSizeMake(34.72, 50)];
         [newMarker setIcon:scaledImage];
         [newMarker setTitle:shuttle.name];
         newMarker.rotation = heading;
+        
+        
         
         newMarker.map = _mapView;
 
@@ -113,95 +142,7 @@ static BB_MapState *mapState = NULL;
 
     //[((BB_Shuttle *)[_shuttles objectAtIndex:index]) updateAll:newShuttle];
 }
-/*
--(void)updateShuttleData
-{
-    for (id obj in _shuttles) {
-        BB_Shuttle *shuttle = (BB_Shuttle *) obj;
 
-        for (id tempObj in _tempShuttles){
-            BB_Shuttle *tempShuttle = (BB_Shuttle *) tempObj;
-
-
-            //Double route
-            if ([tempShuttle.routeID  isEqual: @2]){
-                
-            }
-            else{
-
-
-            }
-
-
-            if (tempShuttle.routeID){
-            }
-        }
-
-
-    }
-
-
-
-
-
-    for (int i = 0; i < [_tempShuttles count]; i++) {
-        BB_Shuttle *tempShuttle = [_tempShuttles objectAtIndex:i];
-        if (tempShuttle.routeID) {
-            <#statements#>
-        }
-    }
-
-}
-*/
-
-/*
--(void)initMapMarkers
-{
-    
-    
-    //NSLog(@"Made it to initMapMarker. Count : %d", [_stops count]);
-    int stopsLength = [_stops count];
-    int shuttlesLength = [_shuttles count];
-
-        for(int i = 0; i < stopsLength; i++){
-            BB_Stop *stop = [_stops objectAtIndex:i];
-            CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(stop.latitude, stop.longitude);
-            
-            GMSMarker *newMarker = [GMSMarker markerWithPosition:loc];
-            
-            newMarker.map = _mapView;
-
-            _stopMarkers = [_stopMarkers setByAddingObject:newMarker];
-            //NSLog(@"made it here: %d with marker %@", i, newMarker);
-        }
-        NSLog(@"ShuttlesLength : %d", shuttlesLength);
-        for(int i = 0; i < shuttlesLength; i++){
-            BB_Shuttle *shuttle = [_shuttles objectAtIndex:i];
-            CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
-            NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
-            GMSMarker *newMarker = [GMSMarker markerWithPosition:loc];
-
-            [newMarker setIcon:[UIImage imageNamed:@"shuttle_green"]];
-            [newMarker setTitle:shuttle.name];
-            newMarker.map = _mapView;
-
-            _shuttleMarkers = [_shuttleMarkers setByAddingObject:newMarker];
-        }
-
-        int mapPointsCount = [_mapPoints count];
-        NSLog(@"Mappoints count: %d", mapPointsCount);
-        for(int i = 0; i < mapPointsCount; i++){
-            CLLocation *point = [_mapPoints objectAtIndex:i];
-            double lat = [point coordinate].latitude;
-            double lon = [point coordinate].longitude;
-            GMSMarker *newMarker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(lat, lon)];
-            newMarker.map = _mapView;
-        }
-         
-
-  
-}
-*/
 
 -(void)addRoutePolylines
 {
