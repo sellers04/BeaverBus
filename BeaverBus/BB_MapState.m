@@ -42,12 +42,28 @@ static BB_MapState *mapState = NULL;
     
     _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     _mapView.myLocationEnabled = YES;
-    
+    _mapView.delegate = self;
  
     [self addRoutePolylines];
 
 }
 
+-(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
+{
+    //NSLog(@"Tapped marker");
+    for (BB_Shuttle *shuttle in _shuttles) {
+        if([marker isEqual:shuttle.marker]){
+            //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
+            _selectedShuttle = shuttle;
+            [_tableView reloadData];
+            break;
+        }
+    }
+
+    
+    
+    return YES;
+}
 
 -(void)initStopMarkers
 {
@@ -58,8 +74,18 @@ static BB_MapState *mapState = NULL;
         CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(stop.latitude, stop.longitude);
 
         GMSMarker *newMarker = [GMSMarker markerWithPosition:loc];
-       // newMarker.title = [NSString stringWithFormat:@"Lat: %f, Long: %f",stop.latitude,stop.longitude];
+        
+                              //Debugging, displays routeIds as title of marker
+         
+        NSString *baseString = @"";
+        for (NSNumber *num in stop.etaArray) {
+            baseString = [baseString  stringByAppendingFormat:@"%d ,", [num integerValue]];
+        }
+        newMarker.title = baseString;
 
+        if((arc4random() % 3) == 2)
+            [newMarker setIcon:[UIImage imageNamed:@"marker"]];
+        
         newMarker.map = _mapView;
 
         stop.marker = newMarker;
@@ -67,6 +93,7 @@ static BB_MapState *mapState = NULL;
         //_stopMarkers = [_stopMarkers setByAddingObject:newMarker];
         //NSLog(@"made it here: %d with marker %@", i, newMarker);
     }
+    
 }
 
 -(void)initShuttleMarkers
@@ -91,12 +118,14 @@ static BB_MapState *mapState = NULL;
             [newMarker setOpacity:0];
 
         }
-        NSLog(@"Image name: %@", shuttle.imageName);
+        //NSLog(@"Image name: %@", shuttle.imageName);
         UIImage *iconImage = [UIImage imageNamed:shuttle.imageName];
         UIImage *scaledImage = [self imageWithImage:iconImage scaledToSize:CGSizeMake(34.72, 50)];
         [newMarker setIcon:scaledImage];
         [newMarker setTitle:shuttle.name];
         newMarker.rotation = heading;
+        
+        
         
         newMarker.map = _mapView;
 
