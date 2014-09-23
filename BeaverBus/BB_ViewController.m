@@ -48,6 +48,8 @@
         
         self.bottomView = view;
         
+        [BB_MapState get].tableView = view;
+        
         self.bottomView.delegate = self;
         
         [self.view addSubview:self.bottomView];
@@ -116,30 +118,24 @@
 
 
 - (void)easyTableView:(EasyTableView *)easyTableView setDataForView:(UIView *)view forIndexPath:(NSIndexPath *)indexPath {
-    NSMutableArray *shuttles = [BB_MapState get].shuttles;
     //BB_Shuttle *shuttle = shuttles[0];
     BB_Shuttle *shuttle = [BB_MapState get].selectedShuttle;
     
     
-	// Set the image title for the given index
-	UILabel *label = (UILabel *)[view viewWithTag:LABEL_TAG];
-    
-    BB_StopCell *customView = view;
+    BB_StopCell *customView = (BB_StopCell*)view;
     
     customView.ETAToStop.text = [NSString stringWithFormat:@"%@", ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:[indexPath item]]).eta];
     
     if([indexPath row] < 3){
         customView.indexNumber.text = [NSString stringWithFormat:@"%d", ([indexPath item] + 1)];
+        customView.indexNumber.backgroundColor = [UIColor orangeColor];
     }else{
         customView.indexNumber.backgroundColor = customView.backgroundColor;
+        customView.indexNumber.text = @"";
     }
     
-    
     NSLog(@"IndexatPosition 0: %@ and row: %d", indexPath, [indexPath row]);
-    
 }
-
-
 
 
 - (void)didReceiveMemoryWarning

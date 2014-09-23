@@ -74,25 +74,18 @@ NSTimer *timer;
     sem = dispatch_semaphore_create(0);
     NSLog(@"created: sem is %@", sem);
     NSLog(@"Starting requests...");
-    [self getStops];
     
+    [self getStops];
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    //NSLog(@"Done stops");
+
     
     [self getShuttles];
-    
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     //[BB_MapState get].shuttles =
     //NSLog(@"Done shuttles");
 
     [self getEstimates];
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-
-    NSLog(@"waited: sem is %@", sem);
-
-    NSLog(@"Done with one");
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    NSLog(@"waited: sem is %@", sem);
 
     //Need both stops and shuttles before continuing...
     if (!mapState.stopsRequestComplete || !mapState.shuttleRequestComplete){
@@ -285,99 +278,56 @@ NSTimer *timer;
 
 
     NSURLSessionDataTask *getDataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-<<<<<<< HEAD
-        NSError *jsonParsingError = nil;
-        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
-        //NSLog(@"StopArray : %@", jsonArray);
-        
-        NSMutableArray *stopsArray = [[NSMutableArray alloc] init];
-        int count = [jsonArray count];
-        NSMutableArray *seenRouteLocs = [[NSMutableArray alloc] init];
-        //NSLog(@"jsonArray count: %d", [jsonArray count]);
-        for(int i = 0; i < count; i++){
-            BOOL found = false;
-            id obj = [jsonArray objectAtIndex:i];
-            NSNumber *routeId = [NSNumber numberWithInteger:[[obj objectForKey:@"RouteID"] integerValue]];
-            double latitude = [[obj objectForKey:@"Latitude"] doubleValue];
-            double longitude = [[obj objectForKey:@"Longitude"] doubleValue];
-
-            
-            
-
-            for (CLLocation *locIter in seenRouteLocs) {
-                if ([locIter coordinate].latitude == latitude && [locIter coordinate].longitude == longitude) {
-                    [((BB_Stop*)[stopsArray objectAtIndex:[seenRouteLocs indexOfObject:locIter]]).servicedRoutes addObject:routeId];
-                    //NSLog(@"Duplicate. Adding %@ to stop", routeId);
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
-                //NSLog(@"New Stop");
-                BB_Stop *newStop = [[BB_Stop alloc] init];
-                newStop.servicedRoutes = [[NSMutableArray alloc] initWithObjects:routeId, nil];
-                newStop.name = [obj objectForKey:@"Description"];
-                
-                newStop.latitude = latitude;
-                newStop.longitude = longitude;
-                
-                newStop.etaArray = [NSMutableArray arrayWithObjects:@-1, @-1, @-1, @-1, nil];
-                
-                CLLocation *loc = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-                [seenRouteLocs addObject:loc];
-                [stopsArray addObject:newStop];
-            }
-
-        }
-        mapState.stops = stopsArray;
-        //seenRouteLocs = NULL;
-
-
-
-        
-        
-        for (BB_Stop *stop in stopsArray) {
-            //NSLog(@"Stop: %@. Coords: %f , %f . With servicedRoutes: %@",stop.name, stop.latitude, stop.longitude, stop.servicedRoutes);
-            //NSLog(@"%@", stop.servicedRoutes);
-        }
-        
-        //NSLog(@"Finished first request mapstateStops count: %d", [[BB_MapState get].stops count]);
         if (error == nil){
-
             NSError *jsonParsingError = nil;
             NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
             //NSLog(@"StopArray : %@", jsonArray);
             
             NSMutableArray *stopsArray = [[NSMutableArray alloc] init];
             int count = [jsonArray count];
-            NSMutableArray *routePoints = [[NSMutableArray alloc] init];
+            NSMutableArray *seenRouteLocs = [[NSMutableArray alloc] init];
             //NSLog(@"jsonArray count: %d", [jsonArray count]);
             for(int i = 0; i < count; i++){
+                BOOL found = false;
                 id obj = [jsonArray objectAtIndex:i];
+                NSNumber *routeId = [NSNumber numberWithInteger:[[obj objectForKey:@"RouteID"] integerValue]];
+                double latitude = [[obj objectForKey:@"Latitude"] doubleValue];
+                double longitude = [[obj objectForKey:@"Longitude"] doubleValue];
+
                 
-                BB_Stop *newStop = [[BB_Stop alloc] init];
-                newStop.latitude = [[obj objectForKey:@"Latitude"] doubleValue];
-                newStop.longitude = [[obj objectForKey:@"Longitude"] doubleValue];
+                
 
+                for (CLLocation *locIter in seenRouteLocs) {
+                    if ([locIter coordinate].latitude == latitude && [locIter coordinate].longitude == longitude) {
+                        [((BB_Stop*)[stopsArray objectAtIndex:[seenRouteLocs indexOfObject:locIter]]).servicedRoutes addObject:routeId];
+                        //NSLog(@"Duplicate. Adding %@ to stop", routeId);
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found){
+                    //NSLog(@"New Stop");
+                    BB_Stop *newStop = [[BB_Stop alloc] init];
+                    newStop.servicedRoutes = [[NSMutableArray alloc] initWithObjects:routeId, nil];
+                    newStop.name = [obj objectForKey:@"Description"];
+                    
+                    newStop.latitude = latitude;
+                    newStop.longitude = longitude;
+                    
+                    newStop.etaArray = [NSMutableArray arrayWithObjects:@-1, @-1, @-1, @-1, nil];
+                    
+                    CLLocation *loc = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+                    [seenRouteLocs addObject:loc];
+                    [stopsArray addObject:newStop];
+                }
 
-
-                newStop.name = [obj objectForKey:@"Description"];
-                newStop.etaArray = [NSMutableArray arrayWithObjects:@-1, @-1, @-1, @-1, nil];
-                //NSLog(@"newStop name: %@", newStop.name);
-                [stopsArray addObject:newStop];
-                //NSLog(@"stopsArray : %@", stopsArray);
             }
-            NSLog(@"Stops stuff");
-            //NSLog(@"StopsArray count: %d", [stopsArray count]);
             mapState.stops = stopsArray;
-            //NSLog(@"Finished first request mapstateStops count: %d", [[BB_MapState get].stops count]);
+            //seenRouteLocs = NULL;
             mapState.stopsRequestComplete = true;
-
+            
             dispatch_semaphore_signal(sem);
-            NSLog(@"signaled stops: sem is %@", sem);
-        }
-        else{
+        }else{
             mapState.stopsRequestComplete = false;
             dispatch_semaphore_signal(sem);
             NSLog(@"signaled stops: sem is %@", sem);
@@ -473,64 +423,8 @@ NSTimer *timer;
     
     NSURLSessionDataTask *getDataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSError *jsonParsingError = nil;
-        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
-        //NSLog(@"ShuttleArray : %@", jsonArray);
-        
-        //NSMutableArray *shuttlesArray = [[NSMutableArray alloc] init];
-        int count = [jsonArray count];
-        //BOOL firstWestSeen = false;
-        //NSLog(@"shuttle jsonArray count: %d", [jsonArray count]);
-
-        //TODO: Figure out bool array for setting online states if no shuttle found
-        bool onlineStates[] = {false, false, false, false};
-
-        for(int i = 0; i < count; i++){
-            id obj = [jsonArray objectAtIndex:i];
-
-
-
-            BB_Shuttle *newShuttle = [[BB_Shuttle alloc] init];
-            newShuttle.latitude = [[obj objectForKey:@"Latitude"] doubleValue];
-            newShuttle.longitude = [[obj objectForKey:@"Longitude"] doubleValue];
-            newShuttle.vehicleID = [obj objectForKey:@"VehicleId"];
-            newShuttle.routeID =[obj objectForKey:@"RouteID"];
-            newShuttle.heading = [obj objectForKey:@"Heading"];
-            newShuttle.name = [obj objectForKey:@"Name"];
-            newShuttle.isOnline = true;
-
-            //NSLog(@"\nOLD LAT: %f \n NEW LAT: %f \n", ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:i]).latitude, newShuttle.latitude);
-
-            //NSLog(@"Heading is: %@", newShuttle.heading);
-            //NSLog(@"RouteID: %d", [[obj objectForKey:@"RouteID"] integerValue]);
-            switch ([[obj objectForKey:@"RouteID"] integerValue]) {
-                case NORTH:
-                    newShuttle.imageName = @"shuttle_green";
-                    [mapState setShuttle:0 withNewShuttle:newShuttle];
-                    //newShuttle.name = @"North";
-                    onlineStates[0] = true;
-                    break;
-                case WEST:
-                    newShuttle.imageName = @"shuttle_purple";
-                    if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == newShuttle.vehicleID){
-                        [mapState setShuttle:1 withNewShuttle:newShuttle];
-                        onlineStates[1] = true;
-                    }
-                    else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == newShuttle.vehicleID){
-                        [mapState setShuttle:2 withNewShuttle:newShuttle];
-                        onlineStates[2] = true;
-                    }
-                    else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).isOnline == FALSE){
-                        [mapState setShuttle:1 withNewShuttle:newShuttle];
-                        onlineStates[1] = true;
-                    }
-                    else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).isOnline == FALSE){
-                        [mapState setShuttle:2 withNewShuttle:newShuttle];
-                        onlineStates[2] = true;
-                    }
-
         if (error == nil){
-
+            
             NSError *jsonParsingError = nil;
             NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
             //NSLog(@"ShuttleArray : %@", jsonArray);
@@ -539,15 +433,13 @@ NSTimer *timer;
             int count = [jsonArray count];
             //BOOL firstWestSeen = false;
             NSLog(@"shuttle jsonArray count: %d", [jsonArray count]);
-
+            
             //TODO: Figure out bool array for setting online states if no shuttle found
             bool onlineStates[] = {false, false, false, false};
-
+            
             for(int i = 0; i < count; i++){
                 id obj = [jsonArray objectAtIndex:i];
-
-
-
+            
                 BB_Shuttle *newShuttle = [[BB_Shuttle alloc] init];
                 newShuttle.latitude = [[obj objectForKey:@"Latitude"] doubleValue];
                 newShuttle.longitude = [[obj objectForKey:@"Longitude"] doubleValue];
@@ -556,10 +448,11 @@ NSTimer *timer;
                 newShuttle.heading = [obj objectForKey:@"Heading"];
                 newShuttle.name = [obj objectForKey:@"Name"];
                 newShuttle.isOnline = true;
-
+                
                 //NSLog(@"\nOLD LAT: %f \n NEW LAT: %f \n", ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:i]).latitude, newShuttle.latitude);
-
-                NSLog(@"Heading is: %@", newShuttle.heading);
+                
+                //NSLog(@"Heading is: %@", newShuttle.heading);
+                //NSLog(@"RouteID: %d", [[obj objectForKey:@"RouteID"] integerValue]);
                 switch ([[obj objectForKey:@"RouteID"] integerValue]) {
                     case NORTH:
                         newShuttle.imageName = @"shuttle_green";
@@ -585,10 +478,6 @@ NSTimer *timer;
                             [mapState setShuttle:2 withNewShuttle:newShuttle];
                             onlineStates[2] = true;
                         }
-
-                        /*if(!firstWestSeen) newShuttle.name = @"West 1";
-                        else newShuttle.name = @"West 2";*/
-                        break;
                     case EAST:
                         newShuttle.imageName = @"shuttle_orange";
                         [mapState setShuttle:3 withNewShuttle:newShuttle];
@@ -601,25 +490,22 @@ NSTimer *timer;
                 NSLog(@"Shuttlename as set: %@", newShuttle.imageName);
             }
             //NSLog(@"Shuttlename as set: %@", newShuttle.imageName);
-        }
-
-
             for (int i = 0; i < 4; i++) {
                 if (!onlineStates[i]){
                     ((BB_Shuttle *)[mapState.shuttles objectAtIndex:i]).isOnline = false;
-
+                    
                 }
                 else ((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).isOnline = true;
             }
-
-          //  NSLog(@"ShuttlesArray len: %d", [shuttlesArray count]);
-
+            
+            //  NSLog(@"ShuttlesArray len: %d", [shuttlesArray count]);
+            
             mapState.shuttleRequestComplete = true;
             dispatch_semaphore_signal(sem);
             NSLog(@"signaled shuttles: sem is %@", sem);
         }
         else {
-
+            
             mapState.shuttleRequestComplete = false;
             dispatch_semaphore_signal(sem);
             NSLog(@"signaled shuttles: sem is %@", sem);
