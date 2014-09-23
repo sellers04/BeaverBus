@@ -24,11 +24,10 @@
     //Show load screen here
 
     [[BB_MapState get] initMapView];
-    [[BB_ShuttleUpdater get] initialNetworkRequest];
+    [BB_MapState get].didInitialRequest = [[BB_ShuttleUpdater get] initialNetworkRequest];
 
     //Remove load screen here
 
-    
     
 
     return YES;

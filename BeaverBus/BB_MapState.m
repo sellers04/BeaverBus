@@ -20,10 +20,12 @@ static BB_MapState *mapState = NULL;
 
 + (BB_MapState *)get
 {
+    
     @synchronized(mapState)
     {
         if (!mapState || mapState == NULL){
             mapState = [[BB_MapState alloc] init];
+
         }
         return mapState;
     }

@@ -29,6 +29,11 @@
 
 @property (strong, nonatomic) NSMutableArray *mapPoints;
 
+@property (nonatomic) BOOL stopsRequestComplete;
+@property (nonatomic) BOOL shuttleRequestComplete;
+@property (nonatomic) BOOL didInitialRequest;
+
+
 + (BB_MapState *)get;
 - (void)initMapView;
 - (void)initStopMarkers;
