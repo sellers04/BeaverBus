@@ -23,7 +23,7 @@
 @property(strong, nonatomic) NSMutableArray *stopsEtaList;
 
 @property(strong, nonatomic) NSMutableArray *stopEstimatePairs;
-
+@property(strong, nonatomic) UIColor *color;
 
 
 - (void)updateAll:(BB_Shuttle *)newShuttle;
