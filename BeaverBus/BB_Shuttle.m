@@ -20,6 +20,7 @@
     _routeID = newShuttle.routeID;
     _isOnline = newShuttle.isOnline;
     _imageName = newShuttle.imageName;
+    _color = newShuttle.color;
 }
 
 

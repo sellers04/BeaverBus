@@ -213,6 +213,7 @@ NSTimer *timer;
         for (NSNumber *num in stop.servicedRoutes) {
             
             BB_StopEstimatePair *newPair = [[BB_StopEstimatePair alloc] init];
+            BB_StopEstimatePair *altPair = [[BB_StopEstimatePair alloc] init];
             
             switch ([num integerValue]) {
                 case NORTH_ROUTE:
@@ -225,8 +226,9 @@ NSTimer *timer;
                     newPair.marker = stop.marker;
                     [west1Estimates addObject:newPair];
                     //May cause problems. pass by value?
-                    newPair.eta = stop.etaArray[WEST2_ETA];
-                    newPair.marker = stop.marker;
+                    altPair.eta = stop.etaArray[WEST2_ETA];
+                    altPair.marker = stop.marker;
+                    [west2Estimates addObject:altPair];
                     break;
                 case EAST_ROUTE:
                     newPair.eta = stop.etaArray[EAST_ETA];
@@ -451,15 +453,20 @@ NSTimer *timer;
                 
                 //NSLog(@"Heading is: %@", newShuttle.heading);
                 //NSLog(@"RouteID: %d", [[obj objectForKey:@"RouteID"] integerValue]);
+                
+            
+                
                 switch ([[obj objectForKey:@"RouteID"] integerValue]) {
                     case NORTH:
                         newShuttle.imageName = @"shuttle_green";
+                        newShuttle.color = [UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]; //Green
                         [mapState setShuttle:0 withNewShuttle:newShuttle];
                         //newShuttle.name = @"North";
                         onlineStates[0] = true;
                         break;
                     case WEST:
                         newShuttle.imageName = @"shuttle_purple";
+                        newShuttle.color = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
                         if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == newShuttle.vehicleID){
                             [mapState setShuttle:1 withNewShuttle:newShuttle];
                             onlineStates[1] = true;
@@ -476,8 +483,10 @@ NSTimer *timer;
                             [mapState setShuttle:2 withNewShuttle:newShuttle];
                             onlineStates[2] = true;
                         }
+                        break;
                     case EAST:
                         newShuttle.imageName = @"shuttle_orange";
+                        newShuttle.color = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
                         [mapState setShuttle:3 withNewShuttle:newShuttle];
                         //newShuttle.name = @"East";
                         onlineStates[3] = true;

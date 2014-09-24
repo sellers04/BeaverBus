@@ -60,6 +60,10 @@ UIView *updateErrorView;
         
         [BB_MapState get].tableView = view;
         
+        
+        view.layer.borderWidth = 1;
+        view.layer.borderColor = [[UIColor blackColor] CGColor];
+        
         self.bottomView.delegate = self;
         
         [self.view addSubview:self.bottomView];
@@ -147,21 +151,31 @@ UIView *updateErrorView;
 - (void)easyTableView:(EasyTableView *)easyTableView setDataForView:(UIView *)view forIndexPath:(NSIndexPath *)indexPath {
     //BB_Shuttle *shuttle = shuttles[0];
     BB_Shuttle *shuttle = [BB_MapState get].selectedShuttle;
-    
+    NSLog(@"EasyTableView setDataForView: %@", shuttle.name);
     
     BB_StopCell *customView = (BB_StopCell*)view;
     
     customView.ETAToStop.text = [NSString stringWithFormat:@"%@", ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:[indexPath item]]).eta];
     
+    
+    for (int i = 0; i < [shuttle.stopEstimatePairs count]; i++) {
+        if (i < 3) {
+            ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:i]).marker.icon = [UIImage imageNamed:[NSString stringWithFormat:@"marker%d", (i+1)]];
+        }else{
+            ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:i]).marker.icon = [UIImage imageNamed:@"marker"];
+        }
+    }
+    
     if([indexPath row] < 3){
         customView.indexNumber.text = [NSString stringWithFormat:@"%d", ([indexPath item] + 1)];
-        customView.indexNumber.backgroundColor = [UIColor orangeColor];
+        customView.indexNumber.backgroundColor = shuttle.color;
     }else{
+        
         customView.indexNumber.backgroundColor = customView.backgroundColor;
         customView.indexNumber.text = @"";
     }
     
-    NSLog(@"IndexatPosition 0: %@ and row: %d", indexPath, [indexPath row]);
+    //NSLog(@"IndexatPosition 0: %@ and row: %d", indexPath, [indexPath row]);
 }
 
 

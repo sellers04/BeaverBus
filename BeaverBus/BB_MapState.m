@@ -55,9 +55,10 @@ static BB_MapState *mapState = NULL;
     //NSLog(@"Tapped marker");
     for (BB_Shuttle *shuttle in _shuttles) {
         if([marker isEqual:shuttle.marker]){
-            //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
+            NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
             _selectedShuttle = shuttle;
             [_tableView reloadData];
+            NSLog(@"%@", [shuttle.stopEstimatePairs objectAtIndex:0]);
             break;
         }
     }
@@ -184,17 +185,17 @@ static BB_MapState *mapState = NULL;
 
     GMSPolyline *northPolyline = [GMSPolyline polylineWithPath:northPath];
     [northPolyline setStrokeWidth:3];
-    northPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor greenColor]]];
+    northPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]];
     northPolyline.map = _mapView;
-
+    
     GMSPolyline *eastPolyline = [GMSPolyline polylineWithPath:eastPath];
     [eastPolyline setStrokeWidth:3];
-    eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor yellowColor]]];
+    eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]];
     eastPolyline.map = _mapView;
 
     GMSPolyline *westPolyline = [GMSPolyline polylineWithPath:westPath];
     [westPolyline setStrokeWidth:3];
-    westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor purpleColor]]];
+    westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]];
     westPolyline.map = _mapView;
 
 }
