@@ -138,6 +138,8 @@ NSTimer *timer;
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     [self distributeStops];
     
+    [BB_MapState get].stopsInvalid = true;
+    
     //NSLog(@"Done waiting");
     [self animateHandler];
 }

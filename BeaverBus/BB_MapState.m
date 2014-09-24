@@ -12,7 +12,7 @@
 #import "BB_CustomInfoWindow.h"
 
 static BB_MapState *mapState = NULL;
-
+BOOL bottomInfoWindowShowing = false;
 
 @implementation BB_MapState
 
@@ -212,8 +212,49 @@ static BB_MapState *mapState = NULL;
     for (BB_Shuttle *shuttle in _shuttles) {
         if([marker isEqual:shuttle.marker]){
             //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
-            _selectedShuttle = shuttle;
-            [_tableView reloadData];
+
+
+            
+            
+            
+            
+            if (!bottomInfoWindowShowing) {
+                //_tableView.hidden = false;
+                //_tableView.hidden = FALSE;
+                //[BB_MapState get].tableView.alpha = .5;
+                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [UIView animateWithDuration:2.0 animations:^{
+//                        //_tableView.backgroundColor = [UIColor blackColor];
+//                        
+//                        [BB_MapState get].tableView.alpha = 1;
+//                        [BB_MapState get].tableView.frame = [BB_MapState get].tableVisibleRect;
+//                    }];
+                    //bottomInfoWindowShowing = true;
+                    if(![shuttle isEqual:_selectedShuttle]){
+                        [BB_MapState get].stopsInvalid = true;
+                        [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                            [BB_MapState get].tableView.alpha = .5;
+                            [BB_MapState get].tableView.frame = [BB_MapState get].tableInvisibleRect;
+                        } completion:^(BOOL finished) {
+                            _selectedShuttle = shuttle;
+                            [_tableView reloadData];
+                            [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                [BB_MapState get].tableView.alpha = 1;
+                                [BB_MapState get].tableView.frame = [BB_MapState get].tableVisibleRect;
+                            } completion:^(BOOL finished) {
+                                
+                            }];
+                        }];
+                    }
+                    
+                    
+
+                });
+
+
+                
+            }
+            
             //break;
             return nil;
         }

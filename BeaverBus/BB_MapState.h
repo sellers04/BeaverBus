@@ -33,6 +33,10 @@
 @property (nonatomic) BOOL shuttleRequestComplete;
 @property (nonatomic) BOOL didInitialRequest;
 
+@property CGRect tableInvisibleRect;
+@property CGRect tableVisibleRect;
+
+@property BOOL stopsInvalid;
 
 + (BB_MapState *)get;
 - (void)initMapView;
