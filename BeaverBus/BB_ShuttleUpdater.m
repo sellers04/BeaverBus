@@ -77,10 +77,11 @@ NSTimer *timer;
     NSLog(@"Starting requests...");
     
     [self getStops];
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+
 
     
     [self getShuttles];
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     //[BB_MapState get].shuttles =
     //NSLog(@"Done shuttles");
@@ -268,12 +269,14 @@ NSTimer *timer;
 
 
 - (BOOL) getStops{
+    NSLog(@"getStops()");
     NSURL *url = [NSURL URLWithString:@"http://osushuttles.com/Services/JSONPRelay.svc/GetStops"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"GET";
 
 
     NSURLSessionDataTask *getDataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"stops getDataTask completion handler");
         if (error == nil){
             NSError *jsonParsingError = nil;
             NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];

@@ -9,6 +9,7 @@
 #import "BB_MapState.h"
 #import "BB_Stop.h"
 #import "BB_Shuttle.h"
+#import "BB_CustomInfoWindow.h"
 
 static BB_MapState *mapState = NULL;
 
@@ -52,15 +53,11 @@ static BB_MapState *mapState = NULL;
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
-    //NSLog(@"Tapped marker");
-    for (BB_Shuttle *shuttle in _shuttles) {
-        if([marker isEqual:shuttle.marker]){
-            //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
-            _selectedShuttle = shuttle;
-            [_tableView reloadData];
-            break;
-        }
-    }
+
+    [_mapView setSelectedMarker:marker];
+
+
+    NSLog(@"Tapped marker");
 
     
     
@@ -84,10 +81,13 @@ static BB_MapState *mapState = NULL;
             baseString = [baseString  stringByAppendingFormat:@"%d ,", [num integerValue]];
         }
         newMarker.title = baseString;
+        //newMarker.infoWindowAnchor = CGPointMake(0.44f, 0.45f);
 
         if((arc4random() % 3) == 2)
             [newMarker setIcon:[UIImage imageNamed:@"marker"]];
+
         
+
         newMarker.map = _mapView;
 
         stop.marker = newMarker;
@@ -209,4 +209,29 @@ static BB_MapState *mapState = NULL;
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
+    NSLog(@"MarkerInfoWindow");
+
+    for (BB_Shuttle *shuttle in _shuttles) {
+        if([marker isEqual:shuttle.marker]){
+            //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
+            _selectedShuttle = shuttle;
+            [_tableView reloadData];
+            //break;
+            return nil;
+        }
+    }
+
+    //BB_CustomInfoWindow *stopInfoWindow = [[[NSBundle mainBundle] loadNibNamed:@"InfoWindow" owner:self options:nil] objectAtIndex:0];
+
+    UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    stopInfoWindow.backgroundColor = [UIColor redColor];
+
+    return stopInfoWindow;
+
+}
+
+
 @end
