@@ -214,10 +214,7 @@ BOOL bottomInfoWindowShowing = false;
 
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
-NSLog(@"I am a shuttle!");
-        //_selectedShuttle = marker.userData;
-        //[_tableView reloadData];
-
+        NSLog(@"I am a shuttle!");
 
         if (!bottomInfoWindowShowing) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -230,7 +227,6 @@ NSLog(@"I am a shuttle!");
                 }
                  completion:^(BOOL finished)
                 {
-                    // _selectedShuttle = shuttle;
                     _selectedShuttle = marker.userData;
                     [_tableView reloadData];
                     [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseOut animations:
@@ -243,17 +239,10 @@ NSLog(@"I am a shuttle!");
                     }];
                 }];
 
-
-
             });
 
 
-            
-
         }
-        
-        
-        
         
         return nil;
         
@@ -261,6 +250,7 @@ NSLog(@"I am a shuttle!");
 
      else if ([marker.userData isKindOfClass:[BB_Stop class]]){
          NSLog(@"I am a stop!");
+
         BB_Stop *stop = marker.userData;
         NSMutableArray *stopETABoxes = [[NSMutableArray alloc] init];
         int xPosition = 0;
@@ -273,16 +263,16 @@ NSLog(@"I am a shuttle!");
                 stopETABox.ETA.text = [[stop.etaArray objectAtIndex:i] stringValue];
                 switch (i) {
                     case 0:
-                        stopETABox.colorBox.backgroundColor = [UIColor greenColor];
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]; //Green
                         break;
                     case 1:
-                        stopETABox.colorBox.backgroundColor = [UIColor purpleColor];
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
                         break;
                     case 2:
-                        stopETABox.colorBox.backgroundColor = [UIColor magentaColor];
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
                         break;
                     case 3:
-                        stopETABox.colorBox.backgroundColor = [UIColor orangeColor];
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
                         break;
                     default:
                         stopETABox.colorBox.backgroundColor = [UIColor grayColor];
@@ -298,6 +288,8 @@ NSLog(@"I am a shuttle!");
         }
 
         UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, 60)];
+         stopInfoWindow.layer.cornerRadius = 5;
+         stopInfoWindow.layer.masksToBounds = YES;
         stopInfoWindow.backgroundColor = [UIColor whiteColor];
 
         for (int i = 0; i < [stopETABoxes count]; i++){
