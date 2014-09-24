@@ -139,11 +139,15 @@ NSTimer *timer;
 
     [self distributeStops];
     
+    [BB_MapState get].stopsInvalid = true;
+    
     //NSLog(@"Done waiting");
     [self animateHandler];
 
     //Redraw the infowindow by setting the selected marker again
-    mapState.mapView.selectedMarker = mapState.mapView.selectedMarker;
+    if ([mapState.mapView.selectedMarker isKindOfClass:[BB_Stop class]]){
+        mapState.mapView.selectedMarker = mapState.mapView.selectedMarker;
+    }
 
 }
 

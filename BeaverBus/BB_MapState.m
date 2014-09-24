@@ -13,7 +13,7 @@
 #import "BB_CustomInfoWindow.h"
 
 static BB_MapState *mapState = NULL;
-
+BOOL bottomInfoWindowShowing = false;
 
 @implementation BB_MapState
 
@@ -211,22 +211,62 @@ static BB_MapState *mapState = NULL;
 
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
-    NSLog(@"MarkerInfoWindow");
 
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
+NSLog(@"I am a shuttle!");
+        //_selectedShuttle = marker.userData;
+        //[_tableView reloadData];
 
-        _selectedShuttle = marker.userData;
-        [_tableView reloadData];
+
+        if (!bottomInfoWindowShowing) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+                [BB_MapState get].stopsInvalid = true;
+                [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseIn animations:
+                 ^{
+                    [BB_MapState get].tableView.alpha = .5;
+                    [BB_MapState get].tableView.frame = [BB_MapState get].tableInvisibleRect;
+                }
+                 completion:^(BOOL finished)
+                {
+                    // _selectedShuttle = shuttle;
+                    _selectedShuttle = marker.userData;
+                    [_tableView reloadData];
+                    [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseOut animations:
+                     ^{
+                        [BB_MapState get].tableView.alpha = 1;
+                        [BB_MapState get].tableView.frame = [BB_MapState get].tableVisibleRect;
+                     }
+                    completion:^(BOOL finished)
+                    {
+                    }];
+                }];
+
+
+
+            });
+
+
+            
+
+        }
+        
+        
+        
+        
         return nil;
+        
+    }
 
-    } else if ([marker.userData isKindOfClass:[BB_Stop class]]){
-
+     else if ([marker.userData isKindOfClass:[BB_Stop class]]){
+         NSLog(@"I am a stop!");
         BB_Stop *stop = marker.userData;
         NSMutableArray *stopETABoxes = [[NSMutableArray alloc] init];
         int xPosition = 0;
 
         for (int i = 0; i < [stop.etaArray count]; i++){
+
             if ([[stop.etaArray objectAtIndex:i] integerValue] > -1){
 
                 BB_StopETABox *stopETABox = [[[NSBundle mainBundle] loadNibNamed:@"StopETABox" owner:self options:nil] objectAtIndex:0];
@@ -252,23 +292,23 @@ static BB_MapState *mapState = NULL;
                 xPosition += 40;
 
                 [stopETABoxes addObject:stopETABox];
+                NSLog(@"Added the ETA: %@", [[stop.etaArray objectAtIndex:i] stringValue]);
             }
-        }
 
+        }
 
         UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, 60)];
         stopInfoWindow.backgroundColor = [UIColor whiteColor];
 
         for (int i = 0; i < [stopETABoxes count]; i++){
             [stopInfoWindow addSubview:[stopETABoxes objectAtIndex:i]];
-
         }
- 
-        return stopInfoWindow;
-    }
 
-    return nil;
+
+         return stopInfoWindow;
+
 
 }
-
+    return nil;
+}
 @end

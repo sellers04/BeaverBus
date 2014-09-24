@@ -10,10 +10,13 @@
 #import "BB_StopEstimatePair.h"
 #include "BB_MapState.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <UIKit/UIKit.h>
+
 
 @interface BB_ViewController ()
 
 @property (strong, nonatomic) IBOutlet UIView *mainView;
+
 
 @end
 
@@ -23,6 +26,7 @@
 
 UIView *updateErrorView;
 
+NSMutableArray *changedStopEstimatePairs;
 
 @synthesize bottomView = _bottomView;
 
@@ -31,7 +35,8 @@ UIView *updateErrorView;
 {
     [super viewDidLoad];
 
-
+    changedStopEstimatePairs = [[NSMutableArray alloc] init];
+    
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
 
@@ -45,7 +50,8 @@ UIView *updateErrorView;
 
     self.view = [BB_MapState get].mapView;
 
-[self.view addSubview:myLocationButton];
+    
+    [self.view addSubview:myLocationButton];
 
     if ([BB_MapState get].didInitialRequest){
 
@@ -54,10 +60,19 @@ UIView *updateErrorView;
         //[MApBaseView addSubview: [BB_MapState get].mapView];
         //self.view =
         
-        EasyTableView *view = [[EasyTableView alloc] initWithFrame:CGRectMake(10, screenHeight-100, screenWidth-20, 90) numberOfColumns:8 ofWidth:60];
+        CGRect tableVisibleRect = CGRectMake(10, screenHeight-100, screenWidth-20, 90);
+        CGRect tableInvisibleRect = CGRectMake(10, screenHeight+10, screenWidth-20, 90);
+        
+        [BB_MapState get].tableVisibleRect = tableVisibleRect;
+        [BB_MapState get].tableInvisibleRect = tableInvisibleRect;
+        
+        EasyTableView *view = [[EasyTableView alloc] initWithFrame:tableInvisibleRect numberOfColumns:8 ofWidth:60];
+        _bottomView.backgroundColor = [UIColor orangeColor];
         
         self.bottomView = view;
         
+        //view.hidden = true;
+ 
         [BB_MapState get].tableView = view;
         
         
@@ -84,6 +99,12 @@ UIView *updateErrorView;
     }
 
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+
+    
 }
 
 -(NSUInteger)numberOfSectionsInEasyTableView:(EasyTableView *)easyTableView
@@ -151,19 +172,27 @@ UIView *updateErrorView;
 - (void)easyTableView:(EasyTableView *)easyTableView setDataForView:(UIView *)view forIndexPath:(NSIndexPath *)indexPath {
     //BB_Shuttle *shuttle = shuttles[0];
     BB_Shuttle *shuttle = [BB_MapState get].selectedShuttle;
-    NSLog(@"EasyTableView setDataForView: %@", shuttle.name);
+    //NSLog(@"EasyTableView setDataForView: %@", shuttle.name);
     
     BB_StopCell *customView = (BB_StopCell*)view;
     
     customView.ETAToStop.text = [NSString stringWithFormat:@"%@", ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:[indexPath item]]).eta];
     
     
-    for (int i = 0; i < [shuttle.stopEstimatePairs count]; i++) {
-        if (i < 3) {
-            ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:i]).marker.icon = [UIImage imageNamed:[NSString stringWithFormat:@"marker%d", (i+1)]];
-        }else{
-            ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:i]).marker.icon = [UIImage imageNamed:@"marker"];
+    
+    if([BB_MapState get].stopsInvalid){
+        for (BB_StopEstimatePair* pair in changedStopEstimatePairs) {
+            pair.marker.icon = [UIImage imageNamed:@"marker"];
+
         }
+        [changedStopEstimatePairs removeAllObjects];
+        for (int i = 0; i < [shuttle.stopEstimatePairs count]; i++) {
+            if (i < 3) {
+                ((BB_StopEstimatePair*)[shuttle.stopEstimatePairs objectAtIndex:i]).marker.icon = [UIImage imageNamed:[NSString stringWithFormat:@"marker%d", (i+1)]];
+                [changedStopEstimatePairs addObject:[shuttle.stopEstimatePairs objectAtIndex:i]];
+            }
+        }
+        [BB_MapState get].stopsInvalid = false;
     }
     
     if([indexPath row] < 3){
