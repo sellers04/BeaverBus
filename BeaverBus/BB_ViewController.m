@@ -60,8 +60,8 @@ NSMutableArray *changedStopEstimatePairs;
         //[MApBaseView addSubview: [BB_MapState get].mapView];
         //self.view =
         
-        CGRect tableVisibleRect = CGRectMake(10, screenHeight-100, screenWidth-20, 90);
-        CGRect tableInvisibleRect = CGRectMake(10, screenHeight+10, screenWidth-20, 90);
+        CGRect tableVisibleRect = CGRectMake(10, screenHeight-91, screenWidth-20, 81);
+        CGRect tableInvisibleRect = CGRectMake(10, screenHeight+10, screenWidth-20, 81);
         
         [BB_MapState get].tableVisibleRect = tableVisibleRect;
         [BB_MapState get].tableInvisibleRect = tableInvisibleRect;
@@ -195,13 +195,20 @@ NSMutableArray *changedStopEstimatePairs;
         [BB_MapState get].stopsInvalid = false;
     }
     
+    customView.indexNumber.font = [UIFont fontWithName:@".Helvetica Neue Interface" size:13];
+    
+    //customView.indexNumber.textColor = [UIColor blackColor];
     if([indexPath row] < 3){
         customView.indexNumber.text = [NSString stringWithFormat:@"%d", ([indexPath item] + 1)];
+        //NSLog(@"Font name: %@", customView.indexNumber.font.familyName);
+        customView.indexNumber.textColor = [UIColor whiteColor];
         customView.indexNumber.backgroundColor = shuttle.color;
     }else{
+        customView.indexNumber.textColor = [UIColor darkGrayColor];
+        customView.indexNumber.backgroundColor = [UIColor lightTextColor];
         
-        customView.indexNumber.backgroundColor = customView.backgroundColor;
-        customView.indexNumber.text = @"";
+        customView.indexNumber.text = [NSString stringWithFormat:@"%d", ([indexPath item] + 1)];
+        
     }
     
     //NSLog(@"IndexatPosition 0: %@ and row: %d", indexPath, [indexPath row]);

@@ -79,8 +79,7 @@ BOOL bottomInfoWindowShowing = false;
         newMarker.title = baseString;
         //newMarker.infoWindowAnchor = CGPointMake(0.44f, 0.45f);
 
-        if((arc4random() % 3) == 2)
-            [newMarker setIcon:[UIImage imageNamed:@"marker"]];
+        [newMarker setIcon:[UIImage imageNamed:@"marker"]];
 
         
 
@@ -119,8 +118,8 @@ BOOL bottomInfoWindowShowing = false;
         }
         //NSLog(@"Image name: %@", shuttle.imageName);
         UIImage *iconImage = [UIImage imageNamed:shuttle.imageName];
-        UIImage *scaledImage = [self imageWithImage:iconImage scaledToSize:CGSizeMake(34.72, 50)];
-        [newMarker setIcon:scaledImage];
+        //UIImage *scaledImage = [self imageWithImage:iconImage scaledToSize:CGSizeMake(34.72, 50)];
+        [newMarker setIcon:iconImage];
         [newMarker setTitle:shuttle.name];
         newMarker.rotation = heading;
         
