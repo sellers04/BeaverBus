@@ -9,6 +9,7 @@
 #import "BB_MapState.h"
 #import "BB_Stop.h"
 #import "BB_Shuttle.h"
+#import "BB_StopETABox.h"
 #import "BB_CustomInfoWindow.h"
 
 static BB_MapState *mapState = NULL;
@@ -85,6 +86,7 @@ static BB_MapState *mapState = NULL;
 
         newMarker.map = _mapView;
 
+        newMarker.userData = stop;
         stop.marker = newMarker;
 
         //_stopMarkers = [_stopMarkers setByAddingObject:newMarker];
@@ -125,6 +127,8 @@ static BB_MapState *mapState = NULL;
         
         
         newMarker.map = _mapView;
+
+        newMarker.userData = shuttle;
 
         shuttle.marker = newMarker;
        // _shuttleMarkers = [_shuttleMarkers setByAddingObject:newMarker];
@@ -209,24 +213,62 @@ static BB_MapState *mapState = NULL;
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
     NSLog(@"MarkerInfoWindow");
 
-    for (BB_Shuttle *shuttle in _shuttles) {
-        if([marker isEqual:shuttle.marker]){
-            //NSLog(@"Woo. clicked shuttle: %@", shuttle.name);
-            _selectedShuttle = shuttle;
-            [_tableView reloadData];
-            //break;
-            return nil;
+
+    if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
+
+        _selectedShuttle = marker.userData;
+        [_tableView reloadData];
+        return nil;
+
+    } else if ([marker.userData isKindOfClass:[BB_Stop class]]){
+
+        BB_Stop *stop = marker.userData;
+        NSMutableArray *stopETABoxes = [[NSMutableArray alloc] init];
+        int xPosition = 0;
+
+        for (int i = 0; i < [stop.etaArray count]; i++){
+            if ([[stop.etaArray objectAtIndex:i] integerValue] > -1){
+
+                BB_StopETABox *stopETABox = [[[NSBundle mainBundle] loadNibNamed:@"StopETABox" owner:self options:nil] objectAtIndex:0];
+                stopETABox.ETA.text = [[stop.etaArray objectAtIndex:i] stringValue];
+                switch (i) {
+                    case 0:
+                        stopETABox.colorBox.backgroundColor = [UIColor greenColor];
+                        break;
+                    case 1:
+                        stopETABox.colorBox.backgroundColor = [UIColor purpleColor];
+                        break;
+                    case 2:
+                        stopETABox.colorBox.backgroundColor = [UIColor magentaColor];
+                        break;
+                    case 3:
+                        stopETABox.colorBox.backgroundColor = [UIColor orangeColor];
+                        break;
+                    default:
+                        stopETABox.colorBox.backgroundColor = [UIColor grayColor];
+                        break;
+                }
+                stopETABox.frame = CGRectMake(xPosition, 0, stopETABox.frame.size.width, stopETABox.frame.size.height);
+                xPosition += 40;
+
+                [stopETABoxes addObject:stopETABox];
+            }
         }
+
+
+        UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, 60)];
+        stopInfoWindow.backgroundColor = [UIColor whiteColor];
+
+        for (int i = 0; i < [stopETABoxes count]; i++){
+            [stopInfoWindow addSubview:[stopETABoxes objectAtIndex:i]];
+
+        }
+ 
+        return stopInfoWindow;
     }
 
-    //BB_CustomInfoWindow *stopInfoWindow = [[[NSBundle mainBundle] loadNibNamed:@"InfoWindow" owner:self options:nil] objectAtIndex:0];
-
-    UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    stopInfoWindow.backgroundColor = [UIColor redColor];
-
-    return stopInfoWindow;
+    return nil;
 
 }
-
 
 @end

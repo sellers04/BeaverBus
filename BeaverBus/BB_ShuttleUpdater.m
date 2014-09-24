@@ -136,10 +136,15 @@ NSTimer *timer;
 
     [self getEstimates];
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+
     [self distributeStops];
     
     //NSLog(@"Done waiting");
     [self animateHandler];
+
+    //Redraw the infowindow by setting the selected marker again
+    mapState.mapView.selectedMarker = mapState.mapView.selectedMarker;
+
 }
 
 
