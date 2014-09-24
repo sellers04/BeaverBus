@@ -35,6 +35,10 @@ NSMutableArray *changedStopEstimatePairs;
 {
     [super viewDidLoad];
 
+    self.navigationItem.leftBarButtonItem=[self OSULogoBar];
+   // self.navigationItem.rightBarButtonItem =[self optionsBar];
+    self.navigationItem.title = @"Beaver Bus Tracker";
+
     changedStopEstimatePairs = [[NSMutableArray alloc] init];
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
@@ -99,6 +103,30 @@ NSMutableArray *changedStopEstimatePairs;
     }
 
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+-(UIBarButtonItem *)OSULogoBar
+{
+
+    UIImage *image = [UIImage imageNamed:@"osu_icon.png"];
+    CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
+    [button setImage:image forState:UIControlStateNormal];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    return item;
+}
+
+-(UIBarButtonItem *)optionsBar
+{
+
+    UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
+    CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
+    [button setImage:image forState:UIControlStateNormal];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    return item;
 }
 
 -(void)viewDidAppear:(BOOL)animated
