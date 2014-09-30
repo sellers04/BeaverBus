@@ -104,12 +104,14 @@ BOOL bottomInfoWindowShowing = false;
         GMSMarker *newMarker;
         newMarker.groundAnchor = CGPointMake(0.5, 0.5);
         if (shuttle.isOnline){
+           // NSLog(@"shuttle ONLINE %@", shuttle.name);
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
             //NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
             newMarker = [GMSMarker markerWithPosition:loc];
             
         }
         else{
+            //NSLog(@"shuttle OFFLINE %@", shuttle.name);
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(0,0);
            // NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
             newMarker = [GMSMarker markerWithPosition:loc];
@@ -187,12 +189,12 @@ BOOL bottomInfoWindowShowing = false;
     
     GMSPolyline *eastPolyline = [GMSPolyline polylineWithPath:eastPath];
     [eastPolyline setStrokeWidth:3];
-    eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]];
+    eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]];
     eastPolyline.map = _mapView;
 
     GMSPolyline *westPolyline = [GMSPolyline polylineWithPath:westPath];
     [westPolyline setStrokeWidth:3];
-    westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]];
+    westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]];
     westPolyline.map = _mapView;
 
 }
@@ -265,13 +267,13 @@ BOOL bottomInfoWindowShowing = false;
                         stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]; //Green
                         break;
                     case 1:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
                         break;
                     case 2:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
                         break;
                     case 3:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
+                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
                         break;
                     default:
                         stopETABox.colorBox.backgroundColor = [UIColor grayColor];

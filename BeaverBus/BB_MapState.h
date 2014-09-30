@@ -18,6 +18,9 @@
 @property (strong, nonatomic) NSMutableArray *shuttles;
 @property (strong, nonatomic) NSMutableArray *stops;
 
+@property (strong, nonatomic) NSMutableDictionary *stopsDict;
+
+
 @property (strong, nonatomic) NSMutableDictionary *stopMarkers;
 @property (strong, nonatomic) NSMutableDictionary *shuttleMarkers;
 
