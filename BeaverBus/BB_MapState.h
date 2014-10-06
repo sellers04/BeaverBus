@@ -32,6 +32,10 @@
 
 @property (strong, nonatomic) NSMutableArray *mapPoints;
 
+@property (strong, nonatomic) GMSPolyline *northPolyline;
+@property (strong, nonatomic) GMSPolyline *westPolyline;
+@property (strong, nonatomic) GMSPolyline *eastPolyline;
+
 @property (nonatomic) BOOL stopsRequestComplete;
 @property (nonatomic) BOOL shuttleRequestComplete;
 @property (nonatomic) BOOL didInitialRequest;
