@@ -25,21 +25,5 @@
 }
 
 
-
--(void)updateMarker
-{
-    double startLat = _marker.position.latitude;
-    double startLon = _marker.position.longitude;
-
-    double endLat = _latitude;
-    double endLon = _longitude;
-
-
-
-    //  [_marker setPosition:<#(CLLocationCoordinate2D)#>];
-    
-    
-}
-
 @end
 

@@ -19,7 +19,6 @@ static BB_MapState *mapState = NULL;
 
 + (BB_MapState *)get
 {
-    
     @synchronized(mapState)
     {
         if (!mapState || mapState == NULL){
@@ -30,12 +29,10 @@ static BB_MapState *mapState = NULL;
     }
 }
 
-
 - (void)initMapView
 {
     [GMSServices provideAPIKey:@"AIzaSyBw44K1O1MlTgjVm7mWC2jUqH2WQlFIA_k"];
-    // Create a GMSCameraPosition that tells the map to display the
-    // coordinate -33.86,151.20 at zoom level 6.
+
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:44.563731
                                                             longitude:-123.279534
                                                                  zoom:14.5];
@@ -52,24 +49,20 @@ static BB_MapState *mapState = NULL;
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
-
     [_mapView setSelectedMarker:marker];
-
-
+    [_mapView animateToLocation:marker.position];
     return YES;
-
 }
 
 -(void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
+    //If a marker was deselected, set route line widths to normal
     if ([_mapView selectedMarker] != nil){
         [_mapView setSelectedMarker:nil];
         [_westPolyline setStrokeWidth:3];
         [_eastPolyline setStrokeWidth:3];
         [_northPolyline setStrokeWidth:3];
     }
-
-
 }
 
 -(void)initStopMarkers
@@ -82,30 +75,22 @@ static BB_MapState *mapState = NULL;
 
         GMSMarker *newMarker = [GMSMarker markerWithPosition:loc];
         
-                              //Debugging, displays routeIds as title of marker
-         
-        NSString *baseString = @"";
+        //Debugging, displays routeIds as title of marker
+       /* NSString *baseString = @"";
         for (NSNumber *num in stop.etaArray) {
             baseString = [baseString  stringByAppendingFormat:@"%d ,", [num integerValue]];
         }
-        //newMarker.title = baseString;
-        [newMarker setTitle:baseString];
-        //newMarker.infoWindowAnchor = CGPointMake(0.44f, 0.45f);
+        [newMarker setTitle:baseString];*/
+
+        [newMarker setTitle:@"Route Inactive"];
 
         [newMarker setIcon:[UIImage imageNamed:@"marker"]];
-
         [newMarker setZIndex:1];
         [newMarker setMap:_mapView];
-
         [newMarker setUserData:stop];
 
         [stop setMarker:newMarker];
-        //stop.marker = newMarker; ???
-
-        //_stopMarkers = [_stopMarkers setByAddingObject:newMarker];
-        //NSLog(@"made it here: %d with marker %@", i, newMarker);
     }
-    
 }
 
 -(void)initShuttleMarkers
@@ -118,51 +103,34 @@ static BB_MapState *mapState = NULL;
         GMSMarker *newMarker;
 
         if (shuttle.isOnline){
-           // NSLog(@"shuttle ONLINE %@", shuttle.name);
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
-            //NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
             newMarker = [GMSMarker markerWithPosition:loc];
-            
         }
         else{
-            //NSLog(@"shuttle OFFLINE %@", shuttle.name);
+            //Shuttle offline, give fake coordinates and set to invisible
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(0,0);
-           // NSLog(@"Shuttle is : %f, %f", shuttle.latitude, shuttle.longitude);
             newMarker = [GMSMarker markerWithPosition:loc];
             [newMarker setOpacity:0];
-
         }
-        //NSLog(@"Image name: %@", shuttle.imageName);
+
         UIImage *iconImage = [UIImage imageNamed:shuttle.imageName];
-        //UIImage *scaledImage = [self imageWithImage:iconImage scaledToSize:CGSizeMake(34.72, 50)];
         [newMarker setIcon:iconImage];
         [newMarker setTitle:shuttle.name];
-        //newMarker.rotation = heading;
         [newMarker setRotation:heading];
         [newMarker setGroundAnchor:CGPointMake(0.5, 0.5)];
         [newMarker setZIndex:0];
         [newMarker setMap:_mapView];
-
-
         [newMarker setInfoWindowAnchor:CGPointMake(0.5, 0.5)];
-        //newMarker.map = _mapView;
-
         [newMarker setUserData:shuttle];
-        //newMarker.userData = shuttle;
-
         [newMarker setFlat:YES];
-        shuttle.marker = newMarker;
-       // _shuttleMarkers = [_shuttleMarkers setByAddingObject:newMarker];
+
+        [shuttle setMarker:newMarker];
     }
 }
 
 -(void)setShuttle:(int)index withNewShuttle:(BB_Shuttle*)newShuttle{
-
     [[_shuttles objectAtIndex:index] updateAll:newShuttle];
-
-    //[((BB_Shuttle *)[_shuttles objectAtIndex:index]) updateAll:newShuttle];
 }
-
 
 -(void)addRoutePolylines
 {
@@ -201,69 +169,62 @@ static BB_MapState *mapState = NULL;
     [westPath addCoordinate:CLLocationCoordinate2DMake(44.558254, -123.281967)];[westPath addCoordinate:CLLocationCoordinate2DMake(44.558305, -123.280559)];
     [westPath addCoordinate:CLLocationCoordinate2DMake(44.558993, -123.279550)];
 
-
     _northPolyline = [GMSPolyline polylineWithPath:northPath];
     [_northPolyline setStrokeWidth:3];
-    _northPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]];
-    _northPolyline.map = _mapView;
+    [_northPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]]]; //Green
+    [_northPolyline setMap:_mapView];
     
     _eastPolyline = [GMSPolyline polylineWithPath:eastPath];
     [_eastPolyline setStrokeWidth:3];
-    _eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]];
-    _eastPolyline.map = _mapView;
+    [_eastPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]]]; //Purple
+    [_eastPolyline setMap:_mapView];
 
     _westPolyline = [GMSPolyline polylineWithPath:westPath];
     [_westPolyline setStrokeWidth:3];
-    _westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]];
-    _westPolyline.map = _mapView;
-
+    [_westPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]]]; //Yellow
+    [_westPolyline setMap:_mapView];
 }
-
-- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    //UIGraphicsBeginImageContext(newSize);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
-    // Pass 1.0 to force exact pixel size.
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
-
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
 
-        if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@9]){
+        //Set the thickness of selected shuttle's associated route
+
+        if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@9]){ //West Route
             [_westPolyline setStrokeWidth:6];
             [_eastPolyline setStrokeWidth:3];
             [_northPolyline setStrokeWidth:3];
         }
-        else if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@8]){
+        else if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@8]){ //East Route
             [_eastPolyline setStrokeWidth:6];
             [_westPolyline setStrokeWidth:3];
             [_northPolyline setStrokeWidth:3];
         }
-        else if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@7]){
+        else if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@7]){ //North Route
             [_northPolyline setStrokeWidth:6];
             [_westPolyline setStrokeWidth:3];
             [_eastPolyline setStrokeWidth:3];
         }
     }
 
+    else if ([marker.userData isKindOfClass:[BB_Stop class]]){
 
-     else if ([marker.userData isKindOfClass:[BB_Stop class]]){
-         NSLog(@"I am a stop!");
+        [_eastPolyline setStrokeWidth:3];
+        [_westPolyline setStrokeWidth:3];
+        [_northPolyline setStrokeWidth:3];
+
+        //Create dynamic stop ETA info window
 
         BB_Stop *stop = marker.userData;
         NSMutableArray *stopETABoxes = [[NSMutableArray alloc] init];
         int xPosition = 0;
+        int numEtaFound = 0;
 
         for (int i = 0; i < [stop.etaArray count]; i++){
 
             if ([[stop.etaArray objectAtIndex:i] integerValue] > -1){
-
+                numEtaFound++;
                 BB_StopETABox *stopETABox = [[[NSBundle mainBundle] loadNibNamed:@"StopETABox" owner:self options:nil] objectAtIndex:0];
                 if ([[stop.etaArray objectAtIndex:i] integerValue] <= 1){
                     stopETABox.ETA.text = @"~1";
@@ -289,27 +250,29 @@ static BB_MapState *mapState = NULL;
                 }
                 stopETABox.frame = CGRectMake(xPosition, 0, stopETABox.frame.size.width, stopETABox.frame.size.height);
                 xPosition += 40;
-
                 [stopETABoxes addObject:stopETABox];
-                NSLog(@"Added the ETA: %@", [[stop.etaArray objectAtIndex:i] stringValue]);
             }
+        }
 
+        //There were no shuttles with ETAs found for this stop
+        if (numEtaFound == 0){
+            return nil;
         }
 
         UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, 60)];
-         stopInfoWindow.layer.cornerRadius = 5;
-         stopInfoWindow.layer.masksToBounds = YES;
+        stopInfoWindow.layer.cornerRadius = 5;
+        stopInfoWindow.layer.masksToBounds = YES;
         stopInfoWindow.backgroundColor = [UIColor whiteColor];
 
         for (int i = 0; i < [stopETABoxes count]; i++){
             [stopInfoWindow addSubview:[stopETABoxes objectAtIndex:i]];
         }
 
+        //The custom infowindow for stop
+        return stopInfoWindow;
+    }
 
-         return stopInfoWindow;
-
-
-}
+    //The default infowindow for shuttle
     return nil;
 }
 @end

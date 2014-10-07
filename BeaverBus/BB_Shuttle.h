@@ -28,6 +28,5 @@
 
 
 - (void)updateAll:(BB_Shuttle *)newShuttle;
-- (void)updateMarker;
 
 @end

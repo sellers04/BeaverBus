@@ -17,7 +17,6 @@
 
 @property (strong, nonatomic) IBOutlet UIView *mainView;
 
-
 @end
 
 #define LABEL_TAG 100
@@ -25,7 +24,6 @@
 @implementation BB_ViewController
 
 UIView *updateErrorView;
-
 NSMutableArray *changedStopEstimatePairs;
 
 
@@ -43,7 +41,6 @@ NSMutableArray *changedStopEstimatePairs;
 
     self.view = [BB_MapState get].mapView;
 
-
     if (![BB_MapState get].didInitialRequest){
         //Initial request failed, show try again dialog
         [networkFailAlert show];
@@ -55,7 +52,6 @@ NSMutableArray *changedStopEstimatePairs;
 
 -(UIBarButtonItem *)OSULogoBar
 {
-
     UIImage *image = [UIImage imageNamed:@"osu_icon.png"];
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
     UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
@@ -67,7 +63,6 @@ NSMutableArray *changedStopEstimatePairs;
 
 -(UIBarButtonItem *)optionsBar
 {
-
     UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
     UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
@@ -77,16 +72,12 @@ NSMutableArray *changedStopEstimatePairs;
 
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
 
-
     return item;
 }
 
 - (void)openOptionsMenu
 {
-    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"OptionsView" owner:self options:nil];
-    UIView *mainView = [subviewArray objectAtIndex:0];
-    [self.view addSubview:mainView];
-
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -95,18 +86,17 @@ NSMutableArray *changedStopEstimatePairs;
     
 }
 
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
-
-        //repeat the initial network request
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+        //Repeat the initial network request
         if (![[BB_ShuttleUpdater get] initialNetworkRequest]) {
             UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
             [networkFailAlert show];
         }
-
 }
 
-- (void)moveToMyLocation:(id) sender{
+- (void)moveToMyLocation:(id) sender
+{
     CLLocation *location = [BB_MapState get].mapView.myLocation;
     if (location){
         [[BB_MapState get].mapView animateToLocation:location.coordinate];
@@ -114,7 +104,8 @@ NSMutableArray *changedStopEstimatePairs;
 
 }
 
-- (void)showUpdateErrorView{
+- (void)showUpdateErrorView
+{
 
 }
 

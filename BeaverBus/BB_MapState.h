@@ -35,7 +35,6 @@
 @property (nonatomic) BOOL shuttleRequestComplete;
 @property (nonatomic) BOOL didInitialRequest;
 
-
 @property BOOL stopsInvalid;
 
 + (BB_MapState *)get;
@@ -44,6 +43,5 @@
 - (void)initShuttleMarkers;
 - (void)addRoutePolylines;
 - (void)setShuttle:(int)index withNewShuttle:(BB_Shuttle *)newShuttle;
-- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end
