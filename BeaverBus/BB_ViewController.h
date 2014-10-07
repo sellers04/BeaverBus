@@ -12,8 +12,6 @@
 #include "BB_ShuttleUpdater.h"
 
 
-@interface BB_ViewController : UIViewController <EasyTableViewDelegate, UIAlertViewDelegate>
-
-@property(nonatomic) EasyTableView *bottomView;
+@interface BB_ViewController : UIViewController <UIAlertViewDelegate>
 
 @end

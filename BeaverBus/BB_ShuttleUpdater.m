@@ -12,6 +12,7 @@
 #import "BB_Shuttle.h"
 #import "BB_MapState.h"
 #import "BB_ViewController.h"
+#import <math.h>
 
 
 int const NORTH = 1;
@@ -175,13 +176,17 @@ NSTimer *timer;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 
     for (BB_Shuttle *shuttle in shuttles) {
-        [shuttle.marker setRotation:([shuttle.heading doubleValue])];
+
+        if (shuttle.groundSpeed > 0){
+            [shuttle.marker setRotation:([shuttle.heading doubleValue])];
+        }
         //[shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];
 
 
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+       // dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];
-        });
+       // });
+
 
     }
     double incAmount = .00005;
@@ -284,7 +289,6 @@ NSTimer *timer;
     ((BB_Shuttle*)shuttles[2]).stopEstimatePairs = west2Estimates;
     ((BB_Shuttle*)shuttles[3]).stopEstimatePairs = eastEstimates;
     NSLog(@"%d, %d, %d, %d", [northEstimates count], [west1Estimates count], [west2Estimates count], [eastEstimates count]);
-    [mapState.tableView reloadData];
 
 }
 
@@ -307,7 +311,7 @@ NSTimer *timer;
             int count = [jsonArray count];
             NSMutableArray *seenRouteLocs = [[NSMutableArray alloc] init];
 
-            NSMutableDictionary* stopsDict = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary* stopIDObjectPairs = [[NSMutableDictionary alloc] init];
 
             //NSLog(@"jsonArray count: %d", [jsonArray count]);
             for(int i = 0; i < count; i++){
@@ -322,7 +326,7 @@ NSTimer *timer;
                         [((BB_Stop*)[stopsArray objectAtIndex:[seenRouteLocs indexOfObject:locIter]]).servicedRoutes addObject:routeId];
                         //NSLog(@"Duplicate. Adding %@ to stop", routeId);
 
-                        [stopsDict setObject:((BB_Stop*)[stopsArray objectAtIndex:[seenRouteLocs indexOfObject:locIter]]) forKey:[obj objectForKey:@"RouteStopID"]];
+                        [stopIDObjectPairs setObject:((BB_Stop*)[stopsArray objectAtIndex:[seenRouteLocs indexOfObject:locIter]]) forKey:[obj objectForKey:@"RouteStopID"]];
 
                         found = true;
                         break;
@@ -345,12 +349,12 @@ NSTimer *timer;
                     [seenRouteLocs addObject:loc];
                     [stopsArray addObject:newStop];
 
-                    [stopsDict setObject:newStop forKey:[obj objectForKey:@"RouteStopID"]];
+                    [stopIDObjectPairs setObject:newStop forKey:[obj objectForKey:@"RouteStopID"]];
                 }
 
             }
 
-            mapState.stopsDict = stopsDict;
+            mapState.stopIDObjectPairs = stopIDObjectPairs;
 
             mapState.stops = stopsArray;
             //seenRouteLocs = NULL;
@@ -388,7 +392,7 @@ NSTimer *timer;
 
             NSArray *jsonVehicleEstimates = [obj objectForKey:@"VehicleEstimates"];
 
-            BB_Stop *stop = [mapState.stopsDict objectForKey:stopId];
+            BB_Stop *stop = [mapState.stopIDObjectPairs objectForKey:stopId];
 
             //for (BB_Stop *tempStop in mapState.stops){
 
@@ -404,7 +408,11 @@ NSTimer *timer;
                 case NORTH_ROUTE:
                    // temp = [[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] integerValue];
 
-                    num = floor([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                    num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+
+                    //NSLog(@"Pre-round: %f", ([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60));
+                    //NSLog(@"Post-round: %f", round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60));
+
                     stop.etaArray[NORTH_ETA] = [NSNumber numberWithDouble:num];
                     break;
 
@@ -554,6 +562,7 @@ NSTimer *timer;
                 newShuttle.routeID =[obj objectForKey:@"RouteID"];
                 newShuttle.heading = [obj objectForKey:@"Heading"];
                 newShuttle.name = [obj objectForKey:@"Name"];
+                newShuttle.groundSpeed = [[obj objectForKey:@"GroundSpeed"] doubleValue];
                 newShuttle.isOnline = true;
                 
                 //NSLog(@"\nOLD LAT: %f \n NEW LAT: %f \n", ((BB_Shuttle*)[[BB_MapState get].shuttles objectAtIndex:i]).latitude, newShuttle.latitude);

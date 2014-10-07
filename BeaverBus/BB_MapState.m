@@ -13,11 +13,8 @@
 #import "BB_CustomInfoWindow.h"
 
 static BB_MapState *mapState = NULL;
-BOOL bottomInfoWindowShowing = false;
 
 @implementation BB_MapState
-
-
 
 
 + (BB_MapState *)get
@@ -91,17 +88,19 @@ BOOL bottomInfoWindowShowing = false;
         for (NSNumber *num in stop.etaArray) {
             baseString = [baseString  stringByAppendingFormat:@"%d ,", [num integerValue]];
         }
-        newMarker.title = baseString;
+        //newMarker.title = baseString;
+        [newMarker setTitle:baseString];
         //newMarker.infoWindowAnchor = CGPointMake(0.44f, 0.45f);
 
         [newMarker setIcon:[UIImage imageNamed:@"marker"]];
 
-        
+        [newMarker setZIndex:1];
+        [newMarker setMap:_mapView];
 
-        newMarker.map = _mapView;
+        [newMarker setUserData:stop];
 
-        newMarker.userData = stop;
-        stop.marker = newMarker;
+        [stop setMarker:newMarker];
+        //stop.marker = newMarker; ???
 
         //_stopMarkers = [_stopMarkers setByAddingObject:newMarker];
         //NSLog(@"made it here: %d with marker %@", i, newMarker);
@@ -117,7 +116,7 @@ BOOL bottomInfoWindowShowing = false;
         BB_Shuttle *shuttle = [_shuttles objectAtIndex:i];
         CLLocationDegrees heading = [shuttle.heading doubleValue];
         GMSMarker *newMarker;
-        newMarker.groundAnchor = CGPointMake(0.5, 0.5);
+
         if (shuttle.isOnline){
            // NSLog(@"shuttle ONLINE %@", shuttle.name);
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
@@ -140,8 +139,12 @@ BOOL bottomInfoWindowShowing = false;
         [newMarker setTitle:shuttle.name];
         //newMarker.rotation = heading;
         [newMarker setRotation:heading];
+        [newMarker setGroundAnchor:CGPointMake(0.5, 0.5)];
+        [newMarker setZIndex:0];
         [newMarker setMap:_mapView];
-        
+
+
+        [newMarker setInfoWindowAnchor:CGPointMake(0.5, 0.5)];
         //newMarker.map = _mapView;
 
         [newMarker setUserData:shuttle];
@@ -250,43 +253,6 @@ BOOL bottomInfoWindowShowing = false;
     }
 
 
-
-
-      /*  NSLog(@"I am a shuttle!");
-
-        if (!bottomInfoWindowShowing) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-
-                [BB_MapState get].stopsInvalid = true;
-                [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseIn animations:
-                 ^{
-                    [BB_MapState get].tableView.alpha = .5;
-                    [BB_MapState get].tableView.frame = [BB_MapState get].tableInvisibleRect;
-                }
-                 completion:^(BOOL finished)
-                {
-                    _selectedShuttle = marker.userData;
-                    [_tableView reloadData];
-                    [UIView transitionWithView:[BB_MapState get].tableView duration:.4 options:UIViewAnimationOptionCurveEaseOut animations:
-                     ^{
-                        [BB_MapState get].tableView.alpha = 1;
-                        [BB_MapState get].tableView.frame = [BB_MapState get].tableVisibleRect;
-                     }
-                    completion:^(BOOL finished)
-                    {
-                    }];
-                }];
-
-            });
-
-
-        }
-        
-        return nil;
-       */
-        
-
-
      else if ([marker.userData isKindOfClass:[BB_Stop class]]){
          NSLog(@"I am a stop!");
 
@@ -299,7 +265,11 @@ BOOL bottomInfoWindowShowing = false;
             if ([[stop.etaArray objectAtIndex:i] integerValue] > -1){
 
                 BB_StopETABox *stopETABox = [[[NSBundle mainBundle] loadNibNamed:@"StopETABox" owner:self options:nil] objectAtIndex:0];
-                stopETABox.ETA.text = [[stop.etaArray objectAtIndex:i] stringValue];
+                if ([[stop.etaArray objectAtIndex:i] integerValue] <= 1){
+                    stopETABox.ETA.text = @"~1";
+                } else {
+                    stopETABox.ETA.text = [[stop.etaArray objectAtIndex:i] stringValue];
+                }
                 switch (i) {
                     case 0:
                         stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]; //Green

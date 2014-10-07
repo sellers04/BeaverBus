@@ -20,6 +20,7 @@
 @property(nonatomic) BOOL isOnline;
 @property(strong, nonatomic) GMSMarker *marker;
 @property(strong, nonatomic) NSString *imageName;
+@property(nonatomic) double groundSpeed;
 @property(strong, nonatomic) NSMutableArray *stopsEtaList;
 
 @property(strong, nonatomic) NSMutableArray *stopEstimatePairs;

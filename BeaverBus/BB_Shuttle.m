@@ -21,6 +21,7 @@
     _isOnline = newShuttle.isOnline;
     _imageName = newShuttle.imageName;
     _color = newShuttle.color;
+    _groundSpeed = newShuttle.groundSpeed;
 }
 
 

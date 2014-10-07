@@ -18,17 +18,12 @@
 @property (strong, nonatomic) NSMutableArray *shuttles;
 @property (strong, nonatomic) NSMutableArray *stops;
 
-@property (strong, nonatomic) NSMutableDictionary *stopsDict;
-
+@property (strong, nonatomic) NSMutableDictionary *stopIDObjectPairs;
 
 @property (strong, nonatomic) NSMutableDictionary *stopMarkers;
 @property (strong, nonatomic) NSMutableDictionary *shuttleMarkers;
 
 @property (strong, nonatomic) BB_Shuttle *selectedShuttle;
-
-@property (strong, nonatomic) EasyTableView *tableView;
-//@property (strong, nonatomic) NSSet *stopMarkers;
-//@property (strong, nonatomic) NSSet *shuttleMarkers;
 
 @property (strong, nonatomic) NSMutableArray *mapPoints;
 
@@ -40,8 +35,6 @@
 @property (nonatomic) BOOL shuttleRequestComplete;
 @property (nonatomic) BOOL didInitialRequest;
 
-@property CGRect tableInvisibleRect;
-@property CGRect tableVisibleRect;
 
 @property BOOL stopsInvalid;
 
@@ -49,7 +42,6 @@
 - (void)initMapView;
 - (void)initStopMarkers;
 - (void)initShuttleMarkers;
-//- (void)initMapMarkers;
 - (void)addRoutePolylines;
 - (void)setShuttle:(int)index withNewShuttle:(BB_Shuttle *)newShuttle;
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;

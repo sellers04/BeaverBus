@@ -15,9 +15,6 @@
 @implementation BB_AppDelegate
 
 
-
-
-
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
@@ -28,14 +25,11 @@
 
     //Remove load screen here
 
-    
-
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
     // Override point for customization after application launch.
     return YES;
 }
