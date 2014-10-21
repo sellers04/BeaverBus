@@ -50,7 +50,12 @@ static BB_MapState *mapState = NULL;
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
     [_mapView setSelectedMarker:marker];
-    [_mapView animateToLocation:marker.position];
+
+    if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
+        //If shuttle, move map to it
+        [_mapView animateToLocation:marker.position];
+    }
+    
     return YES;
 }
 
@@ -90,6 +95,7 @@ static BB_MapState *mapState = NULL;
         [newMarker setUserData:stop];
 
         [stop setMarker:newMarker];
+        _stopsVisible = true;
     }
 }
 
@@ -259,10 +265,17 @@ static BB_MapState *mapState = NULL;
             return nil;
         }
 
-        UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, 60)];
+        UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, (((BB_StopETABox *)[stopETABoxes objectAtIndex:0]).frame.size.height) + 10)];
         stopInfoWindow.layer.cornerRadius = 5;
         stopInfoWindow.layer.masksToBounds = YES;
-        stopInfoWindow.backgroundColor = [UIColor whiteColor];
+        stopInfoWindow.backgroundColor = [UIColor clearColor];
+
+        /*
+        UIImageView *bottomArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infowindow_arrow"]];
+        [bottomArrow setContentMode:UIViewContentModeScaleAspectFit];
+        NSLog(@"image frame: %@", NSStringFromCGSize(bottomArrow.image.size));
+        [stopInfoWindow addSubview:bottomArrow];
+         */
 
         for (int i = 0; i < [stopETABoxes count]; i++){
             [stopInfoWindow addSubview:[stopETABoxes objectAtIndex:i]];
@@ -275,4 +288,29 @@ static BB_MapState *mapState = NULL;
     //The default infowindow for shuttle
     return nil;
 }
+
+
+- (void)changeStopsVisibility{
+    if (_stopsVisible){
+
+        [_mapView setSelectedMarker:nil];
+
+        for (BB_Stop *stop in _stops){
+            [stop.marker setOpacity:0];
+            [stop.marker setTappable:NO];
+        }
+        _stopsVisible = false;
+    } else {
+        for (BB_Stop *stop in _stops){
+            [stop.marker setOpacity:1];
+            [stop.marker setTappable:YES];
+        }
+        _stopsVisible = true;
+    }
+
+
+
+}
+
+
 @end

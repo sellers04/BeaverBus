@@ -14,4 +14,11 @@
 
 @interface BB_ViewController : UIViewController <UIAlertViewDelegate>
 
+@property BOOL optionsMenuIsOpen;
+
++ (BB_ViewController *)get;
+- (void)slideUpdateErrorView;
+- (void)showNetworkErrorAlert;
+
 @end
+

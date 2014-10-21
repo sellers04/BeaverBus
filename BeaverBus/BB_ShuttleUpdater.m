@@ -12,6 +12,7 @@
 #import "BB_Shuttle.h"
 #import "BB_MapState.h"
 #import "BB_ViewController.h"
+#import "Reachability.h"
 #import <math.h>
 
 int const NORTH_ROUTE = 7;
@@ -57,8 +58,17 @@ NSTimer *timer;
     }
 }
 
+- (BOOL)connected
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
+}
+
 - (BOOL)initialNetworkRequest
 {
+
+
     NSLog(@"initialNetworkRequest");
 
     mapState.shuttles = [[NSMutableArray alloc] init];
@@ -69,28 +79,36 @@ NSTimer *timer;
     }
 
     sem = dispatch_semaphore_create(0);
-    
-    [self getStops];
-    [self getShuttles];
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
 
-    [self getEstimates];
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    if (![self connected]) {
+        // not connected
+        [BB_ViewController get].showNetworkErrorAlert;
+    } else {
+        // connected, do some internet stuff
+            [self getStops];
+    }
+
+
+
+    //[self getShuttles:YES];
+   // dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+   // dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+
+   // [self getEstimates:YES];
+  //  dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
 
     //TODO: also check for successful getEstimates
     if (!mapState.stopsRequestComplete || !mapState.shuttleRequestComplete){
         //If either failed, return early
-        return false;
+       // return false;
     }
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [mapState initStopMarkers];
-        [mapState initShuttleMarkers];
-        [self distributeStops];
-    });
+    //dispatch_async(dispatch_get_main_queue(), ^{
+       // [mapState initStopMarkers];
+       // [mapState initShuttleMarkers];
+       // [self distributeStops];
+    //});
 
-    [self startShuttleUpdaterHandler];
 
     return true;
 }
@@ -103,6 +121,11 @@ NSTimer *timer;
     timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(updateEvent) userInfo:nil repeats:TRUE];
 }
 
+- (void)stopShuttleUpdaterHandler
+{
+    [timer invalidate];
+}
+
 - (void)updateEvent
 {
     NSLog(@"updateEvent");
@@ -110,36 +133,53 @@ NSTimer *timer;
     mapState.shuttleRequestComplete = false;
     sem = dispatch_semaphore_create(0);
 
-    [self getShuttles];
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    if (![self connected]) {
+        // not connected, show some error window/view
+        [BB_ViewController get].slideUpdateErrorView;
+       // [BB_ViewController get].showUpdateErrorView;
+    } else {
+        // connected, do some internet stuff
+        [self getShuttles:NO];
+    }
+
+   // [self getShuttles:NO];
+
+ //  dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
 
     if (mapState.shuttleRequestComplete){
         //Successful update
-        [self animateHandler];
+     //   [self animateHandler];
     } else {
         //Failed to update
+       // NSLog(@"failed to update");
         //TODO: show update fail error
+    //    [[BB_ViewController get] showUpdateErrorView];
     }
 
     //TODO: check for getEstimates fail
-    [self getEstimates];
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+   // [self getEstimates:NO];
 
-    [self distributeStops];
+    //dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+
+    //[self distributeStops];
     
-    [BB_MapState get].stopsInvalid = true;
+    //[BB_MapState get].stopsInvalid = true;
 
-    //Redraw the infowindow by setting the selected marker again
-    if ([mapState.mapView.selectedMarker.userData isKindOfClass:[BB_Stop class]]){
-        mapState.mapView.selectedMarker = mapState.mapView.selectedMarker;
-    }
+
 }
 
 -(void)animateHandler
 {
+    NSLog(@"inside anim");
     NSMutableArray *shuttles = [BB_MapState get].shuttles;
 
     for (BB_Shuttle *shuttle in shuttles) {
+
+        //If a shuttle comes online after update, make its marker visible
+        if (shuttle.marker.opacity == 0){
+            shuttle.marker.opacity = 1;
+        }
+
         //Heading goes to 0 when at a stop, and looks strange. Try to avoid?
         if ([shuttle.heading doubleValue] != 0 || shuttle.groundSpeed != 0){
             [shuttle.marker setRotation:([shuttle.heading doubleValue])];
@@ -226,10 +266,21 @@ NSTimer *timer;
     ((BB_Shuttle*)shuttles[3]).stopEstimatePairs = eastEstimates;
     //NSLog(@"%d, %d, %d, %d", [northEstimates count], [west1Estimates count], [west2Estimates count], [eastEstimates count]);
 
+
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+    //Redraw the infowindow by setting the selected marker again
+        if ([mapState.mapView.selectedMarker.userData isKindOfClass:[BB_Stop class]]){
+            mapState.mapView.selectedMarker = mapState.mapView.selectedMarker;
+        }
+    });
+
 }
 
 
-- (BOOL) getStops{
+- (BOOL) getStops
+{
     NSLog(@"getStops()");
     NSURL *url = [NSURL URLWithString:@"http://osushuttles.com/Services/JSONPRelay.svc/GetStops"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -292,19 +343,24 @@ NSTimer *timer;
             //seenRouteLocs = NULL;
             mapState.stopsRequestComplete = true;
             
-            dispatch_semaphore_signal(sem);
+           // dispatch_semaphore_signal(sem);
+            [self getShuttles:YES];
         }else{
+
             mapState.stopsRequestComplete = false;
-            dispatch_semaphore_signal(sem);
+           // dispatch_semaphore_signal(sem);
+
         }
     }];
+
     [getDataTask resume];
     
     return true;
 }
 
-- (BOOL) getEstimates
+- (BOOL) getEstimates:(BOOL)initialRequest
 {
+    NSLog(@"getEstimates");
     NSURL *url = [NSURL URLWithString:@"http://www.osushuttles.com/Services/JSONPRelay.svc/GetRouteStopArrivals"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"GET";
@@ -325,53 +381,87 @@ NSTimer *timer;
             double num;
             switch ([[obj objectForKey:@"RouteID"] integerValue]){
                 case NORTH_ROUTE:
-                    num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                    stop.etaArray[NORTH_ETA] = [NSNumber numberWithDouble:num];
+                    if ([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"OnRoute"] boolValue] == false){
+                        stop.etaArray[NORTH_ETA] = @-1;
+                    } else{
+                        num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                        stop.etaArray[NORTH_ETA] = [NSNumber numberWithDouble:num];
+                    }
                     break;
 
                 case WEST_ROUTE:
                     vehicleId = [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"VehicleID"];
 
                     if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleId){
-                        num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        if ([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"OnRoute"] boolValue] == false){
+                            stop.etaArray[WEST1_ETA] = @-1;
+                        } else {
+                            num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                            stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        }
                     }
 
                     else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleId){
+                        if ([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"OnRoute"] boolValue] == false){
+                            stop.etaArray[WEST2_ETA] = @-1;
+                        } else {
                         num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
                         stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                        }
                     }
 
                     vehicleId = [[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"VehicleID"];
 
                     if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleId){
-                        num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        if ([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"OnRoute"] boolValue] == false){
+                            stop.etaArray[WEST1_ETA] = @-1;
+                        } else {
+                            num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                            stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        }
                     }
                     else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleId){
-                        num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                        if ([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"OnRoute"] boolValue] == false){
+                            stop.etaArray[WEST2_ETA] = @-1;
+                        } else {
+                            num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                            stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                        }
                     }
                     break;
 
                 case EAST_ROUTE:
-                    num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                    stop.etaArray[EAST_ETA] = [NSNumber numberWithDouble:num];
+                    if ([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"OnRoute"] boolValue] == false){
+                        stop.etaArray[EAST_ETA] = @-1;
+                    } else{
+                        num = round([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                        stop.etaArray[EAST_ETA] = [NSNumber numberWithDouble:num];
+                    }
                     break;
             }
         }
 
-        dispatch_semaphore_signal(sem);
+       // dispatch_semaphore_signal(sem);
+
+
+        if (initialRequest){
+            dispatch_async(dispatch_get_main_queue(), ^{
+            [mapState initStopMarkers];
+            [mapState initShuttleMarkers];
+                [self startShuttleUpdaterHandler];
+            });
+        }
+        [self distributeStops];
 
     }];
-
+//dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     [getDataTask resume];
-
+//});
     return true;
 
 }
 
-- (BOOL) getShuttles
+- (BOOL) getShuttles:(BOOL)initialRequest
 {
     //NSURL *url = [NSURL URLWithString:@"http://portal.campusops.oregonstate.edu/files/shuttle/GetMapVehiclePoints.txt"];
     NSURL *url = [NSURL URLWithString:@"http://www.osushuttles.com/Services/JSONPRelay.svc/GetMapVehiclePoints"];
@@ -450,16 +540,26 @@ NSTimer *timer;
             }
 
             mapState.shuttleRequestComplete = true;
-            dispatch_semaphore_signal(sem);
+           // dispatch_semaphore_signal(sem);
+
+                     if (!initialRequest){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self animateHandler];
+                });
+            }
+            [self getEstimates:initialRequest];
         } else { //Error was non-nil
             mapState.shuttleRequestComplete = false;
-            dispatch_semaphore_signal(sem);
+           // dispatch_semaphore_signal(sem);
         }
 
     }];
 
+    //NSLog(@"task: %@", getDataTask.taskDescription);
+   //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+
     [getDataTask resume];
-    
+  // });
     return true;
 }
 

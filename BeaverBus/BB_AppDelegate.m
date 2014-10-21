@@ -17,11 +17,12 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
 
     //Show load screen here
 
     [[BB_MapState get] initMapView];
-    [BB_MapState get].didInitialRequest = [[BB_ShuttleUpdater get] initialNetworkRequest];
+    [[BB_ShuttleUpdater get] initialNetworkRequest];
 
     //Remove load screen here
 

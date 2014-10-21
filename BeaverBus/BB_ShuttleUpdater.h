@@ -17,5 +17,5 @@
 + (BB_ShuttleUpdater *)get;
 - (BOOL)initialNetworkRequest;
 - (void)startShuttleUpdaterHandler;
-
+- (void)stopShuttleUpdaterHandler;
 @end

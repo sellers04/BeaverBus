@@ -8,14 +8,18 @@
 
 #import "BB_ViewController.h"
 #import "BB_StopEstimatePair.h"
-#include "BB_MapState.h"
+#import "BB_MapState.h"
+#import "PopUpViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <UIKit/UIKit.h>
 
+static BB_ViewController *mainViewController = NULL;
 
 @interface BB_ViewController ()
 
 @property (strong, nonatomic) IBOutlet UIView *mainView;
+@property (strong, nonatomic) PopUpViewController *popViewController;
+
 
 @end
 
@@ -26,24 +30,46 @@
 UIView *updateErrorView;
 NSMutableArray *changedStopEstimatePairs;
 
++ (BB_ViewController *)get
+{
+    @synchronized(mainViewController)
+    {
+        if (!mainViewController || mainViewController == NULL){
+            mainViewController = [[BB_ViewController alloc] init];
+        }
+        return mainViewController;
+    }
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.navigationItem.leftBarButtonItem=[self OSULogoBar];
-    self.navigationItem.rightBarButtonItem =[self optionsBar];
+    self.navigationItem.leftBarButtonItem = [self OSULogoBar];
+
+    _optionsMenuIsOpen = false;
+    self.navigationItem.rightBarButtonItem = [self optionsBar];
+
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Gudea-Bold" size:22],
+       NSFontAttributeName,
+      nil]];
+
+
     self.navigationItem.title = @"Beaver Bus Tracker";
+
 
     changedStopEstimatePairs = [[NSMutableArray alloc] init];
 
-    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+
 
     self.view = [BB_MapState get].mapView;
 
     if (![BB_MapState get].didInitialRequest){
         //Initial request failed, show try again dialog
-        [networkFailAlert show];
+     //   [networkFailAlert show];
     }
     // Else, continue
 
@@ -66,18 +92,26 @@ NSMutableArray *changedStopEstimatePairs;
     UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
     UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
-    [button setImage:image forState:UIControlStateNormal];
-
-    [button addTarget:self action:@selector(openOptionsMenu) forControlEvents:UIControlEventValueChanged];
-
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(openOptionsMenu) forControlEvents:UIControlEventTouchUpInside];
+    [button setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = item;
 
     return item;
 }
 
 - (void)openOptionsMenu
 {
-    
+    if (!_optionsMenuIsOpen){
+                _popViewController = [[PopUpViewController alloc] initWithNibName:@"PopUpViewController" bundle:nil];
+        [_popViewController setTitle:@"Options"];
+        [_popViewController showInView:self.view withImage:nil withMessage:@"" animated:YES controller:self];
+
+    } else {
+      
+        [_popViewController removeAnimate];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -88,24 +122,28 @@ NSMutableArray *changedStopEstimatePairs;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    [[BB_ShuttleUpdater get] initialNetworkRequest];
         //Repeat the initial network request
+    /*
         if (![[BB_ShuttleUpdater get] initialNetworkRequest]) {
-            UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+            UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Please check your device's connection." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
             [networkFailAlert show];
         }
+     */
 }
 
-- (void)moveToMyLocation:(id) sender
+- (void)slideUpdateErrorView
 {
-    CLLocation *location = [BB_MapState get].mapView.myLocation;
-    if (location){
-        [[BB_MapState get].mapView animateToLocation:location.coordinate];
-    }
-
+    
 }
 
-- (void)showUpdateErrorView
+
+- (void)showNetworkErrorAlert
 {
+
+    NSLog(@"show the update error view");
+    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Please check your device's connection." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+    [networkFailAlert show];
 
 }
 

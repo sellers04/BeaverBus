@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSMutableArray *tempShuttles;
 @property (strong, nonatomic) NSMutableArray *shuttles;
 @property (strong, nonatomic) NSMutableArray *stops;
+@property BOOL stopsVisible;
 
 @property (strong, nonatomic) NSMutableDictionary *stopIDObjectPairs;
 
@@ -37,11 +38,13 @@
 
 @property BOOL stopsInvalid;
 
+
 + (BB_MapState *)get;
 - (void)initMapView;
 - (void)initStopMarkers;
 - (void)initShuttleMarkers;
 - (void)addRoutePolylines;
 - (void)setShuttle:(int)index withNewShuttle:(BB_Shuttle *)newShuttle;
+- (void)changeStopsVisibility;
 
 @end
