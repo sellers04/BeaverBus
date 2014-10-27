@@ -11,6 +11,7 @@
 #import "BB_Shuttle.h"
 #import "BB_StopETABox.h"
 #import "BB_CustomInfoWindow.h"
+#import "BB_MapLabelView.h"
 
 static BB_MapState *mapState = NULL;
 
@@ -49,12 +50,19 @@ static BB_MapState *mapState = NULL;
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
-    [_mapView setSelectedMarker:marker];
+
+    if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
+        [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
+    }
+
+
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
         //If shuttle, move map to it
         [_mapView animateToLocation:marker.position];
     }
+
+    [_mapView setSelectedMarker:marker];
     
     return YES;
 }
@@ -63,6 +71,9 @@ static BB_MapState *mapState = NULL;
 {
     //If a marker was deselected, set route line widths to normal
     if ([_mapView selectedMarker] != nil){
+        if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
+            [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
+        }
         [_mapView setSelectedMarker:nil];
         [_westPolyline setStrokeWidth:3];
         [_eastPolyline setStrokeWidth:3];
@@ -93,6 +104,7 @@ static BB_MapState *mapState = NULL;
         [newMarker setZIndex:1];
         [newMarker setMap:_mapView];
         [newMarker setUserData:stop];
+        [newMarker setOpacity:0.75];
 
         [stop setMarker:newMarker];
         _stopsVisible = true;
@@ -111,6 +123,7 @@ static BB_MapState *mapState = NULL;
         if (shuttle.isOnline){
             CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude);
             newMarker = [GMSMarker markerWithPosition:loc];
+            [newMarker setOpacity:0.85];
         }
         else{
             //Shuttle offline, give fake coordinates and set to invisible
@@ -216,6 +229,10 @@ static BB_MapState *mapState = NULL;
 
     else if ([marker.userData isKindOfClass:[BB_Stop class]]){
 
+        [marker setIcon:[UIImage imageNamed:@"marker_selected"]];
+
+
+
         [_eastPolyline setStrokeWidth:3];
         [_westPolyline setStrokeWidth:3];
         [_northPolyline setStrokeWidth:3];
@@ -264,8 +281,7 @@ static BB_MapState *mapState = NULL;
         if (numEtaFound == 0){
             return nil;
         }
-
-        UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, (((BB_StopETABox *)[stopETABoxes objectAtIndex:0]).frame.size.height) + 10)];
+                UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, (((BB_StopETABox *)[stopETABoxes objectAtIndex:0]).frame.size.height) + 10)];
         stopInfoWindow.layer.cornerRadius = 5;
         stopInfoWindow.layer.masksToBounds = YES;
         stopInfoWindow.backgroundColor = [UIColor clearColor];
@@ -302,7 +318,7 @@ static BB_MapState *mapState = NULL;
         _stopsVisible = false;
     } else {
         for (BB_Stop *stop in _stops){
-            [stop.marker setOpacity:1];
+            [stop.marker setOpacity:0.75];
             [stop.marker setTappable:YES];
         }
         _stopsVisible = true;

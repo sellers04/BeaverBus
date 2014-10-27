@@ -10,6 +10,7 @@
 #import "BB_StopEstimatePair.h"
 #import "BB_MapState.h"
 #import "PopUpViewController.h"
+#import "BB_MapLabelView.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <UIKit/UIKit.h>
 
@@ -74,6 +75,26 @@ NSMutableArray *changedStopEstimatePairs;
     // Else, continue
 
 	// Do any additional setup after loading the view, typically from a nib.
+
+
+    //TODO: map label subview
+    //UIView *mapLabel = [[[NSBundle mainBundle] loadNibNamed:@"MapLabelView" owner:self options:nil] objectAtIndex:0];
+/*
+
+
+    float percentage = .7f;
+    int xpos = self.view.frame.size.width * ((1-percentage) / 2);
+int ypos = self.view.frame.size.height * ((1-percentage) / 2);
+    int width = self.view.frame.size.width * (1-percentage);
+    int height = self.view.frame.size.height * (1-percentage);
+
+   // mapLabel.frame = CGRectMake(xpos, ypos, width, height);
+
+    UIView *mapLabel = [[UIView alloc] initWithFrame:CGRectMake(xpos, ypos, width, height)];
+    [mapLabel setBackgroundColor:[UIColor whiteColor]];
+
+    [self.view addSubview:mapLabel];
+*/
 }
 
 -(UIBarButtonItem *)OSULogoBar
@@ -134,7 +155,10 @@ NSMutableArray *changedStopEstimatePairs;
 
 - (void)slideUpdateErrorView
 {
-    
+    //Do not use this code whatsoever
+   // UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Connection could not be established" message:@"Please check your device's connection." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+   // [networkFailAlert show];
+
 }
 
 
