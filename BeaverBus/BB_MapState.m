@@ -50,25 +50,42 @@ static BB_MapState *mapState = NULL;
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
+    [_mapView animateToLocation:marker.position];
 
     if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
         [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //[[BB_ViewController get].mapLabel setText:((BB_Stop *)marker.userData).name];
+           // [[BB_ViewController get] setMapLabelText:((BB_Stop *)marker.userData).name];
+            _mainViewController.mapLabel.text = ((BB_Stop *)marker.userData).name;
+
+        });
+        NSLog(@"txt is: %@", [BB_ViewController get].mapLabel.text);
     }
 
 
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
         //If shuttle, move map to it
-        [_mapView animateToLocation:marker.position];
+
+       // [[BB_ViewController get].mapLabel setText:((BB_Shuttle *)marker.userData).name];
+        //[[BB_ViewController get] setMapLabelText:((BB_Shuttle *)marker.userData).name];
+        _mainViewController.mapLabel.text = ((BB_Shuttle *)marker.userData).name;
+        NSLog(@"txt is: %@", [BB_ViewController get].mapLabel.text);
     }
 
     [_mapView setSelectedMarker:marker];
     
+   // [[BB_ViewController get] setMapLabelVisibility:YES];
+    _mainViewController.mapLabel.hidden = NO;
+   
     return YES;
 }
 
 -(void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
+    _mainViewController.mapLabel.hidden = YES;
     //If a marker was deselected, set route line widths to normal
     if ([_mapView selectedMarker] != nil){
         if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
@@ -206,6 +223,9 @@ static BB_MapState *mapState = NULL;
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
 
+
+
+
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
 
         //Set the thickness of selected shuttle's associated route
@@ -281,7 +301,7 @@ static BB_MapState *mapState = NULL;
         if (numEtaFound == 0){
             return nil;
         }
-                UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [stopETABoxes count]*40, (((BB_StopETABox *)[stopETABoxes objectAtIndex:0]).frame.size.height) + 10)];
+                UIView *stopInfoWindow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ([stopETABoxes count]*40), (((BB_StopETABox *)[stopETABoxes objectAtIndex:0]).frame.size.height))];
         stopInfoWindow.layer.cornerRadius = 5;
         stopInfoWindow.layer.masksToBounds = YES;
         stopInfoWindow.backgroundColor = [UIColor clearColor];

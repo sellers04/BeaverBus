@@ -13,7 +13,6 @@
 		7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE019D337500053E3A6 /* StopETABox.xib */; };
 		7C7FDFE419D338480053E3A6 /* BB_StopETABox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */; };
 		7C7FDFE819E489340053E3A6 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7FDFE719E489340053E3A6 /* GoogleMaps.framework */; };
-		7C92FA3119FEBCA0004A44B5 /* MapLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA3019FEBCA0004A44B5 /* MapLabelView.xib */; };
 		7C92FA3419FEBE9A004A44B5 /* BB_MapLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C92FA3319FEBE9A004A44B5 /* BB_MapLabelView.m */; };
 		7CC348ED19E71EBD00183D25 /* PopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC348EB19E71EBD00183D25 /* PopUpViewController.m */; };
 		7CC348EE19E71EBD00183D25 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348EC19E71EBD00183D25 /* PopUpViewController.xib */; };
@@ -21,7 +20,6 @@
 		7CC348F319E7471C00183D25 /* Gudea-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F019E7471C00183D25 /* Gudea-Italic.otf */; };
 		7CC348F419E7471C00183D25 /* Gudea-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F119E7471C00183D25 /* Gudea-Regular.otf */; };
 		7CC348F719F7124300183D25 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC348F619F7124300183D25 /* Reachability.m */; };
-		7CC348F919F71A0D00183D25 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F819F71A0C00183D25 /* ErrorView.xib */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
 		7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
@@ -77,7 +75,6 @@
 		7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopETABox.h; sourceTree = "<group>"; };
 		7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopETABox.m; sourceTree = "<group>"; };
 		7C7FDFE719E489340053E3A6 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../Downloads/GoogleMaps-iOS-1.8.1/GoogleMaps.framework"; sourceTree = "<group>"; };
-		7C92FA3019FEBCA0004A44B5 /* MapLabelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapLabelView.xib; sourceTree = "<group>"; };
 		7C92FA3219FEBE9A004A44B5 /* BB_MapLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_MapLabelView.h; sourceTree = "<group>"; };
 		7C92FA3319FEBE9A004A44B5 /* BB_MapLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_MapLabelView.m; sourceTree = "<group>"; };
 		7CC348EA19E71EBD00183D25 /* PopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpViewController.h; path = ../PopUpViewController.h; sourceTree = "<group>"; };
@@ -88,7 +85,6 @@
 		7CC348F119E7471C00183D25 /* Gudea-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Regular.otf"; sourceTree = "<group>"; };
 		7CC348F519F7124300183D25 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../Reachability.h; sourceTree = "<group>"; };
 		7CC348F619F7124300183D25 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability.m; sourceTree = "<group>"; };
-		7CC348F819F71A0C00183D25 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AAB19C8D85E00B7623D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -226,8 +222,6 @@
 		7CDD0AB119C8D85E00B7623D /* BeaverBus */ = {
 			isa = PBXGroup;
 			children = (
-				7CC348F819F71A0C00183D25 /* ErrorView.xib */,
-				7C92FA3019FEBCA0004A44B5 /* MapLabelView.xib */,
 				7C92FA3219FEBE9A004A44B5 /* BB_MapLabelView.h */,
 				7C92FA3319FEBE9A004A44B5 /* BB_MapLabelView.m */,
 				7CC348F519F7124300183D25 /* Reachability.h */,
@@ -422,7 +416,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */,
-				7CC348F919F71A0D00183D25 /* ErrorView.xib in Resources */,
 				7CC348F219E7471C00183D25 /* Gudea-Bold.otf in Resources */,
 				7CDD0AC419C8D85E00B7623D /* Images.xcassets in Resources */,
 				7CDD0AB619C8D85E00B7623D /* InfoPlist.strings in Resources */,
@@ -431,7 +424,6 @@
 				7CC348EE19E71EBD00183D25 /* PopUpViewController.xib in Resources */,
 				7CF5E37619CB46190042950F /* GoogleMaps.bundle in Resources */,
 				4550460F19CC985F004EC589 /* StopCell.xib in Resources */,
-				7C92FA3119FEBCA0004A44B5 /* MapLabelView.xib in Resources */,
 				7CC348F419E7471C00183D25 /* Gudea-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

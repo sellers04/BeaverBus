@@ -38,6 +38,8 @@
 
 @property BOOL stopsInvalid;
 
+@property BB_ViewController *mainViewController;
+
 
 + (BB_MapState *)get;
 - (void)initMapView;

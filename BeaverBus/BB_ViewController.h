@@ -15,6 +15,7 @@
 @interface BB_ViewController : UIViewController <UIAlertViewDelegate>
 
 @property BOOL optionsMenuIsOpen;
+@property (nonatomic, strong) UILabel *mapLabel;
 
 + (BB_ViewController *)get;
 - (void)slideUpdateErrorView;

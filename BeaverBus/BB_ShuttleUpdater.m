@@ -78,7 +78,7 @@ NSTimer *timer;
     }
 
     if (![self connected]) {
-        [BB_ViewController get].showNetworkErrorAlert;
+        [[BB_ViewController get] showNetworkErrorAlert];
     } else {
         //getStops >> getShuttles >> getEstimates >> startShuttleUpdater >> distributeStops
         [self getStops];
@@ -106,7 +106,7 @@ NSTimer *timer;
 
     if (![self connected]) {
         // not connected, show some error window/view
-        [BB_ViewController get].slideUpdateErrorView;
+        [[BB_ViewController get] slideUpdateErrorView];
     } else {
         //getShuttles >> getEstimates >> distributeStops
         [self getShuttles:NO];

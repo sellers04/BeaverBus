@@ -11,6 +11,7 @@
 #import "BB_MapState.h"
 #import "PopUpViewController.h"
 #import "BB_MapLabelView.h"
+#import "BB_Stop.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <UIKit/UIKit.h>
 
@@ -47,6 +48,8 @@ NSMutableArray *changedStopEstimatePairs;
 {
     [super viewDidLoad];
 
+    [BB_MapState get].mainViewController = self;
+
     self.navigationItem.leftBarButtonItem = [self OSULogoBar];
 
     _optionsMenuIsOpen = false;
@@ -68,6 +71,14 @@ NSMutableArray *changedStopEstimatePairs;
 
     self.view = [BB_MapState get].mapView;
 
+    UIButton *addFavoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
+    [addFavoriteButton setTitle:@"Add Fav" forState:UIControlStateNormal];
+    addFavoriteButton.frame = CGRectMake(0, self.view.frame.size.height - 40, 80, 40.0);
+    addFavoriteButton.backgroundColor = [UIColor whiteColor];
+    addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:addFavoriteButton];
+
     if (![BB_MapState get].didInitialRequest){
         //Initial request failed, show try again dialog
      //   [networkFailAlert show];
@@ -79,22 +90,10 @@ NSMutableArray *changedStopEstimatePairs;
 
     //TODO: map label subview
     //UIView *mapLabel = [[[NSBundle mainBundle] loadNibNamed:@"MapLabelView" owner:self options:nil] objectAtIndex:0];
-/*
 
 
-    float percentage = .7f;
-    int xpos = self.view.frame.size.width * ((1-percentage) / 2);
-int ypos = self.view.frame.size.height * ((1-percentage) / 2);
-    int width = self.view.frame.size.width * (1-percentage);
-    int height = self.view.frame.size.height * (1-percentage);
 
-   // mapLabel.frame = CGRectMake(xpos, ypos, width, height);
 
-    UIView *mapLabel = [[UIView alloc] initWithFrame:CGRectMake(xpos, ypos, width, height)];
-    [mapLabel setBackgroundColor:[UIColor whiteColor]];
-
-    [self.view addSubview:mapLabel];
-*/
 }
 
 -(UIBarButtonItem *)OSULogoBar
@@ -128,7 +127,6 @@ int ypos = self.view.frame.size.height * ((1-percentage) / 2);
                 _popViewController = [[PopUpViewController alloc] initWithNibName:@"PopUpViewController" bundle:nil];
         [_popViewController setTitle:@"Options"];
         [_popViewController showInView:self.view withImage:nil withMessage:@"" animated:YES controller:self];
-
     } else {
       
         [_popViewController removeAnimate];
@@ -137,8 +135,52 @@ int ypos = self.view.frame.size.height * ((1-percentage) / 2);
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    float percentage = .7f;
+
+    int width = self.view.frame.size.width * (percentage);
+    NSLog(@"width is: %d", width);
+    //int height = self.view.frame.size.height * (1-percentage);
+
+    // mapLabel.frame = CGRectMake(xpos, ypos, width, height);
+    NSString *mapLabelText = @"OSU";
+
+    _mapLabel = [[UILabel alloc] init];
+    [_mapLabel setText:mapLabelText];
+    float widthIs = [_mapLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width * percentage, self.view.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_mapLabel.font} context:nil].size.width;
+    NSLog(@"float: %F", widthIs);
+
+    [_mapLabel setFrame:CGRectMake(0, 0, widthIs, 25)];
+    [_mapLabel setCenter:CGPointMake(self.view.frame.size.width / 2, 25)];
+
+    [_mapLabel setTextAlignment:NSTextAlignmentCenter];
+    [_mapLabel setBackgroundColor:[UIColor whiteColor]];
+    _mapLabel.layer.cornerRadius = 5;
+    _mapLabel.layer.masksToBounds = YES;
+    _mapLabel.layer.borderWidth = 4;
+    _mapLabel.layer.borderColor = (__bridge CGColorRef)([UIColor blackColor]);
+    [_mapLabel setAlpha:0.8];
+    [_mapLabel setHidden:YES];
+    [self.view addSubview:_mapLabel];
+
+
 
     
+}
+
+- (void)addFavorite
+{
+    NSLog(@"Add Favorite");
+    UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
+    UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+
+    favoriteName.text = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).name;
+
+    [favoriteBar addSubview:favoriteName];
+
+    favoriteBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:favoriteBar];
+
+
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
