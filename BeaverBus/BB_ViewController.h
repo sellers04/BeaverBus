@@ -16,6 +16,7 @@
 
 @property BOOL optionsMenuIsOpen;
 @property (nonatomic, strong) UILabel *mapLabel;
+@property (nonatomic, strong) UIButton *addFavoriteButton;
 
 + (BB_ViewController *)get;
 - (void)slideUpdateErrorView;

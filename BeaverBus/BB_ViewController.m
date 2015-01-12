@@ -12,6 +12,7 @@
 #import "PopUpViewController.h"
 #import "BB_MapLabelView.h"
 #import "BB_Stop.h"
+#import "MBProgressHUD.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <UIKit/UIKit.h>
 
@@ -21,6 +22,7 @@ static BB_ViewController *mainViewController = NULL;
 
 @property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) PopUpViewController *popViewController;
+@property NSMutableArray *favoriteRows;
 
 
 @end
@@ -50,6 +52,8 @@ NSMutableArray *changedStopEstimatePairs;
 
     [BB_MapState get].mainViewController = self;
 
+    _favoriteRows = [[NSMutableArray alloc] init];
+
     self.navigationItem.leftBarButtonItem = [self OSULogoBar];
 
     _optionsMenuIsOpen = false;
@@ -71,13 +75,14 @@ NSMutableArray *changedStopEstimatePairs;
 
     self.view = [BB_MapState get].mapView;
 
-    UIButton *addFavoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
-    [addFavoriteButton setTitle:@"Add Fav" forState:UIControlStateNormal];
-    addFavoriteButton.frame = CGRectMake(0, self.view.frame.size.height - 40, 80, 40.0);
-    addFavoriteButton.backgroundColor = [UIColor whiteColor];
-    addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [self.view addSubview:addFavoriteButton];
+    _addFavoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
+    [_addFavoriteButton setTitle:@"Add Favorite" forState:UIControlStateNormal];
+    _addFavoriteButton.frame = CGRectMake(0, 0, 80, 40.0);
+    _addFavoriteButton.backgroundColor = [UIColor whiteColor];
+    //addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [_addFavoriteButton setHidden:YES];
+    [self.view addSubview:_addFavoriteButton];
 
     if (![BB_MapState get].didInitialRequest){
         //Initial request failed, show try again dialog
@@ -146,18 +151,19 @@ NSMutableArray *changedStopEstimatePairs;
 
     _mapLabel = [[UILabel alloc] init];
     [_mapLabel setText:mapLabelText];
-    float widthIs = [_mapLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width * percentage, self.view.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_mapLabel.font} context:nil].size.width;
-    NSLog(@"float: %F", widthIs);
+    /*float widthIs = [_mapLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width * percentage, self.view.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_mapLabel.font} context:nil].size.width;
+    NSLog(@"float: %F", widthIs);*/
 
-    [_mapLabel setFrame:CGRectMake(0, 0, widthIs, 25)];
+    //[_mapLabel setFrame:CGRectMake(0, 0, widthIs, 25)];
+    [_mapLabel setFrame:CGRectMake(0, 0, 180, 25)];
     [_mapLabel setCenter:CGPointMake(self.view.frame.size.width / 2, 25)];
 
     [_mapLabel setTextAlignment:NSTextAlignmentCenter];
     [_mapLabel setBackgroundColor:[UIColor whiteColor]];
     _mapLabel.layer.cornerRadius = 5;
     _mapLabel.layer.masksToBounds = YES;
-    _mapLabel.layer.borderWidth = 4;
-    _mapLabel.layer.borderColor = (__bridge CGColorRef)([UIColor blackColor]);
+    _mapLabel.layer.borderWidth = 1;
+    _mapLabel.layer.borderColor = [UIColor blackColor].CGColor;
     [_mapLabel setAlpha:0.8];
     [_mapLabel setHidden:YES];
     [self.view addSubview:_mapLabel];
@@ -169,18 +175,61 @@ NSMutableArray *changedStopEstimatePairs;
 
 - (void)addFavorite
 {
+    if ([_favoriteRows count] > 2){
+        //max favorites reached
+        MBProgressHUD *h = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        h.mode = MBProgressHUDModeText;
+        h.labelText = @"Can't add any more favorites";
+        h.labelFont = [UIFont boldSystemFontOfSize:12];
+
+        [h hide:YES afterDelay:1.75];
+    }
+    else {
     NSLog(@"Add Favorite");
-    UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
-    UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 35, self.view.frame.size.width*0.8, 25)];
+    //UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(60, 60, 300, 30)];
+    UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 30)];
+    UIView *favoriteEta = [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 100, 30)];
 
     favoriteName.text = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).name;
 
-    [favoriteBar addSubview:favoriteName];
-
+    [favoriteBar setBackgroundColor:[UIColor whiteColor]];
+    [favoriteBar setAlpha:0];
+    favoriteBar.layer.cornerRadius = 5;
+    favoriteBar.layer.masksToBounds = YES;
+    favoriteBar.layer.borderWidth = 1;
+    favoriteBar.layer.borderColor = [UIColor blackColor].CGColor;
     favoriteBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+
+    [favoriteBar addSubview:favoriteName];
+    [favoriteBar addSubview:favoriteEta];
+
+    int x = 0;
+    for (NSNumber *eta in ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).etaArray){
+        UILabel *etaLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 0, 30, 30)];
+        etaLabel.text = [eta stringValue];
+        x += 35;
+        [favoriteEta addSubview:etaLabel];
+    }
+
+
+    for (UIView *row in _favoriteRows){
+        [UIView animateWithDuration:0.25 animations:^{
+            row.frame = CGRectMake(0, row.frame.origin.y - favoriteBar.frame.size.height, self.view.frame.size.width*0.8, 30);
+        }];
+    }
+
+
+    [_favoriteRows addObject:favoriteBar];
+
     [self.view addSubview:favoriteBar];
 
 
+    [UIView animateWithDuration:0.4 animations:^{
+        favoriteBar.alpha = 0.75;
+            }];
+
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

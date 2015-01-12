@@ -51,22 +51,26 @@ static BB_MapState *mapState = NULL;
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
     [_mapView animateToLocation:marker.position];
+    [_mapView setSelectedMarker:marker];
 
     if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
+
+        [_mainViewController.addFavoriteButton setHidden:NO];
+
         [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //[[BB_ViewController get].mapLabel setText:((BB_Stop *)marker.userData).name];
-           // [[BB_ViewController get] setMapLabelText:((BB_Stop *)marker.userData).name];
-            _mainViewController.mapLabel.text = ((BB_Stop *)marker.userData).name;
 
-        });
+        _mainViewController.mapLabel.text = ((BB_Stop *)marker.userData).name;
+
+
         NSLog(@"txt is: %@", [BB_ViewController get].mapLabel.text);
     }
 
 
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
+
+        [_mainViewController.addFavoriteButton setHidden:YES];
         //If shuttle, move map to it
 
        // [[BB_ViewController get].mapLabel setText:((BB_Shuttle *)marker.userData).name];
@@ -75,7 +79,7 @@ static BB_MapState *mapState = NULL;
         NSLog(@"txt is: %@", [BB_ViewController get].mapLabel.text);
     }
 
-    [_mapView setSelectedMarker:marker];
+
     
    // [[BB_ViewController get] setMapLabelVisibility:YES];
     _mainViewController.mapLabel.hidden = NO;
@@ -86,6 +90,7 @@ static BB_MapState *mapState = NULL;
 -(void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
     _mainViewController.mapLabel.hidden = YES;
+    [_mainViewController.addFavoriteButton setHidden:YES];
     //If a marker was deselected, set route line widths to normal
     if ([_mapView selectedMarker] != nil){
         if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
