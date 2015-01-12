@@ -36,7 +36,7 @@ NSMutableArray *changedStopEstimatePairs;
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem=[self OSULogoBar];
-    self.navigationItem.rightBarButtonItem =[self optionsBar];
+   // self.navigationItem.rightBarButtonItem =[self optionsBar];
     self.navigationItem.title = @"Beaver Bus Tracker";
 
     changedStopEstimatePairs = [[NSMutableArray alloc] init];
@@ -44,18 +44,18 @@ NSMutableArray *changedStopEstimatePairs;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
 
-/*
+
     UIButton *myLocationButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
     [myLocationButton addTarget:self action:@selector(moveToMyLocation:) forControlEvents:UIControlEventTouchUpInside];
     [myLocationButton setTitle:@"My LOC" forState:UIControlStateNormal];
-    myLocationButton.frame = CGRectMake(10, 10, 90, 50);*/
+    myLocationButton.frame = CGRectMake(10, 10, 90, 50);
 
     UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Try again or press Home" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
 
     self.view = [BB_MapState get].mapView;
 
     
-    //[self.view addSubview:myLocationButton];
+    [self.view addSubview:myLocationButton];
 
     if ([BB_MapState get].didInitialRequest){
 
@@ -124,21 +124,9 @@ NSMutableArray *changedStopEstimatePairs;
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
     UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
     [button setImage:image forState:UIControlStateNormal];
-
-    [button addTarget:self action:@selector(openOptionsMenu) forControlEvents:UIControlEventValueChanged];
-
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
 
-
     return item;
-}
-
-- (void)openOptionsMenu
-{
-    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"OptionsView" owner:self options:nil];
-    UIView *mainView = [subviewArray objectAtIndex:0];
-    [self.view addSubview:mainView];
-
 }
 
 -(void)viewDidAppear:(BOOL)animated

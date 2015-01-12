@@ -131,7 +131,7 @@ NSTimer *timer;
 
     if (mapState.shuttleRequestComplete){
         //Successful update
-        //NSLog(@"Done waiting");
+        NSLog(@"Done waiting");
         [self animateHandler];
     } else {
 
@@ -150,13 +150,8 @@ NSTimer *timer;
     [self animateHandler];
 
     //Redraw the infowindow by setting the selected marker again
-    if ([mapState.mapView.selectedMarker.userData isKindOfClass:[BB_Stop class]]){
-        NSLog(@"selected should be refreshed here");
+    if ([mapState.mapView.selectedMarker isKindOfClass:[BB_Stop class]]){
         mapState.mapView.selectedMarker = mapState.mapView.selectedMarker;
-    }
-
-    if (mapState.mapView.selectedMarker != NULL){
-        NSLog(@"selected not null");
     }
 
 }
@@ -399,44 +394,38 @@ NSTimer *timer;
             //}
 
             NSNumber *vehicleId;
-            double num;
+
             switch ([[obj objectForKey:@"RouteID"] integerValue]){
                 case NORTH_ROUTE:
                    // temp = [[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] integerValue];
 
-                    num = floor([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                    stop.etaArray[NORTH_ETA] = [NSNumber numberWithDouble:num];
+                    stop.etaArray[NORTH_ETA] = [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"];
                     break;
 
                 case WEST_ROUTE:
                     vehicleId = [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"VehicleID"];
 
                     if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleId){
-                        num = floor([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        stop.etaArray[WEST1_ETA] = [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"];
                     }
 
                     else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleId){
-                        num = floor([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                        stop.etaArray[WEST2_ETA] = [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"];
                     }
 
                     vehicleId = [[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"VehicleID"];
 
                     if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleId){
-                        num = floor([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        stop.etaArray[WEST1_ETA] = [[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"];
                     }
                     else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleId){
-                        num = floor([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                        stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                        stop.etaArray[WEST2_ETA] = [[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"];
                     }
                     break;
 
                 case EAST_ROUTE:
                     //NSLog(@"EAST seconds to stop: %@", [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"]);
-                    num = floor([[[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                    stop.etaArray[EAST_ETA] = [NSNumber numberWithDouble:num];
+                    stop.etaArray[EAST_ETA] = [[jsonVehicleEstimates objectAtIndex:0] objectForKey:@"SecondsToStop"];
                     break;
 
             }

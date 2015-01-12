@@ -13,7 +13,6 @@
 		4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */; };
 		7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE019D337500053E3A6 /* StopETABox.xib */; };
 		7C7FDFE419D338480053E3A6 /* BB_StopETABox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */; };
-		7C7FDFE619E309020053E3A6 /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE519E309020053E3A6 /* OptionsView.xib */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
 		7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
@@ -69,7 +68,6 @@
 		7C7FDFE019D337500053E3A6 /* StopETABox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StopETABox.xib; sourceTree = "<group>"; };
 		7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopETABox.h; sourceTree = "<group>"; };
 		7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopETABox.m; sourceTree = "<group>"; };
-		7C7FDFE519E309020053E3A6 /* OptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AAB19C8D85E00B7623D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -208,7 +206,6 @@
 			children = (
 				4550460E19CC985F004EC589 /* StopCell.xib */,
 				7C7FDFE019D337500053E3A6 /* StopETABox.xib */,
-				7C7FDFE519E309020053E3A6 /* OptionsView.xib */,
 				7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */,
 				7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */,
 				455E5F8919CC9FAD007620AD /* BB_StopCell.h */,
@@ -390,7 +387,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C7FDFE619E309020053E3A6 /* OptionsView.xib in Resources */,
 				7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */,
 				7CDD0AC419C8D85E00B7623D /* Images.xcassets in Resources */,
 				7CDD0AB619C8D85E00B7623D /* InfoPlist.strings in Resources */,

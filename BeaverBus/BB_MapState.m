@@ -46,7 +46,6 @@ BOOL bottomInfoWindowShowing = false;
     _mapView.myLocationEnabled = YES;
 
     _mapView.settings.compassButton = YES;
-    _mapView.settings.myLocationButton = YES;
 
     _mapView.delegate = self;
  
@@ -57,22 +56,8 @@ BOOL bottomInfoWindowShowing = false;
 {
 
     [_mapView setSelectedMarker:marker];
-
-
+    
     return YES;
-
-}
-
--(void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    if ([_mapView selectedMarker] != nil){
-        [_mapView setSelectedMarker:nil];
-        [_westPolyline setStrokeWidth:3];
-        [_eastPolyline setStrokeWidth:3];
-        [_northPolyline setStrokeWidth:3];
-    }
-
-
 }
 
 -(void)initStopMarkers
@@ -138,16 +123,14 @@ BOOL bottomInfoWindowShowing = false;
         //UIImage *scaledImage = [self imageWithImage:iconImage scaledToSize:CGSizeMake(34.72, 50)];
         [newMarker setIcon:iconImage];
         [newMarker setTitle:shuttle.name];
-        //newMarker.rotation = heading;
-        [newMarker setRotation:heading];
-        [newMarker setMap:_mapView];
+        newMarker.rotation = heading;
         
-        //newMarker.map = _mapView;
+        
+        
+        newMarker.map = _mapView;
 
-        [newMarker setUserData:shuttle];
-        //newMarker.userData = shuttle;
+        newMarker.userData = shuttle;
 
-        [newMarker setFlat:YES];
         shuttle.marker = newMarker;
        // _shuttleMarkers = [_shuttleMarkers setByAddingObject:newMarker];
     }
@@ -199,20 +182,20 @@ BOOL bottomInfoWindowShowing = false;
     [westPath addCoordinate:CLLocationCoordinate2DMake(44.558993, -123.279550)];
 
 
-    _northPolyline = [GMSPolyline polylineWithPath:northPath];
-    [_northPolyline setStrokeWidth:3];
-    _northPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]];
-    _northPolyline.map = _mapView;
+    GMSPolyline *northPolyline = [GMSPolyline polylineWithPath:northPath];
+    [northPolyline setStrokeWidth:3];
+    northPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]];
+    northPolyline.map = _mapView;
     
-    _eastPolyline = [GMSPolyline polylineWithPath:eastPath];
-    [_eastPolyline setStrokeWidth:3];
-    _eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]];
-    _eastPolyline.map = _mapView;
+    GMSPolyline *eastPolyline = [GMSPolyline polylineWithPath:eastPath];
+    [eastPolyline setStrokeWidth:3];
+    eastPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]];
+    eastPolyline.map = _mapView;
 
-    _westPolyline = [GMSPolyline polylineWithPath:westPath];
-    [_westPolyline setStrokeWidth:3];
-    _westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]];
-    _westPolyline.map = _mapView;
+    GMSPolyline *westPolyline = [GMSPolyline polylineWithPath:westPath];
+    [westPolyline setStrokeWidth:3];
+    westPolyline.spans = @[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]];
+    westPolyline.map = _mapView;
 
 }
 
@@ -230,29 +213,9 @@ BOOL bottomInfoWindowShowing = false;
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
 
+
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
-
-        if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@9]){
-            [_westPolyline setStrokeWidth:6];
-            [_eastPolyline setStrokeWidth:3];
-            [_northPolyline setStrokeWidth:3];
-        }
-        else if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@8]){
-            [_eastPolyline setStrokeWidth:6];
-            [_westPolyline setStrokeWidth:3];
-            [_northPolyline setStrokeWidth:3];
-        }
-        else if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@7]){
-            [_northPolyline setStrokeWidth:6];
-            [_westPolyline setStrokeWidth:3];
-            [_eastPolyline setStrokeWidth:3];
-        }
-    }
-
-
-
-
-      /*  NSLog(@"I am a shuttle!");
+        NSLog(@"I am a shuttle!");
 
         if (!bottomInfoWindowShowing) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -283,9 +246,8 @@ BOOL bottomInfoWindowShowing = false;
         }
         
         return nil;
-       */
         
-
+    }
 
      else if ([marker.userData isKindOfClass:[BB_Stop class]]){
          NSLog(@"I am a stop!");
