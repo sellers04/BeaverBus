@@ -23,8 +23,6 @@ static BB_ViewController *mainViewController = NULL;
 
 
 @property (strong, nonatomic) PopUpViewController *popViewController;
-@property NSMutableArray *favoriteRows;
-
 
 @end
 
@@ -58,7 +56,6 @@ NSMutableArray *changedStopEstimatePairs;
 
     [BB_MapState get].mainViewController = self;
 
-    _favoriteRows = [[NSMutableArray alloc] init];
     
     _menuViewController = [[BB_MenuViewController alloc] initWithNibName:@"BB_MenuViewController" bundle:nil];
 
@@ -84,7 +81,7 @@ NSMutableArray *changedStopEstimatePairs;
 
     _addFavoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
-    [_addFavoriteButton setTitle:@"Add Favorite" forState:UIControlStateNormal];
+    
     _addFavoriteButton.frame = CGRectMake(0, 0, 80, 40.0);
     _addFavoriteButton.backgroundColor = [UIColor whiteColor];
     //addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -203,9 +200,44 @@ NSMutableArray *changedStopEstimatePairs;
     
 }
 
+- (void)setFavoriteButton
+{
+
+
+
+    if (((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite){
+        [_addFavoriteButton setTitle:@"Remove Favorite" forState:UIControlStateNormal];
+        [_addFavoriteButton removeTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
+        [_addFavoriteButton addTarget:self action:@selector(removeFavorite) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else{
+        [_addFavoriteButton setTitle:@"Add Favorite" forState:UIControlStateNormal];
+        [_addFavoriteButton removeTarget:self action:@selector(removeFavorite) forControlEvents:UIControlEventTouchUpInside];
+        [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
+    }
+
+
+}
+
+
+- (void)removeFavorite
+{
+    NSLog(@"Removed favorite");
+
+    ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite = FALSE;
+
+    [self setFavoriteButton];
+
+}
+
+- (void)refreshFavorite{}
+
+
 - (void)addFavorite
 {
-    if ([_favoriteRows count] > 2){
+
+
+    if ([[BB_MapState get].favorites count] > 2){
         //max favorites reached
         MBProgressHUD *h = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         h.mode = MBProgressHUDModeText;
@@ -214,6 +246,82 @@ NSMutableArray *changedStopEstimatePairs;
 
         [h hide:YES afterDelay:1.75];
     }
+
+    else {
+
+        BB_Favorite *newFavorite = [[BB_Favorite alloc] init];
+        newFavorite.favoriteStop = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData);
+
+        newFavorite.favoriteStop.isFavorite = TRUE;
+        //((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite = TRUE;
+
+        NSLog(@"Add Favorite");
+
+        [self setFavoriteButton];
+
+
+
+
+
+        UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 35, self.view.frame.size.width*0.8, 25)];
+        //UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(60, 60, 300, 30)];
+        UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 30)];
+        UIView *favoriteEta = [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 100, 30)];
+        [favoriteEta setTag:1];//For accessing later to update ETAs
+
+        favoriteName.text = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).name;
+
+        [favoriteBar setBackgroundColor:[UIColor whiteColor]];
+        [favoriteBar setAlpha:0];
+        favoriteBar.layer.cornerRadius = 5;
+        favoriteBar.layer.masksToBounds = YES;
+        favoriteBar.layer.borderWidth = 1;
+        favoriteBar.layer.borderColor = [UIColor blackColor].CGColor;
+        favoriteBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+
+        [favoriteBar addSubview:favoriteName];
+        [favoriteBar addSubview:favoriteEta];
+
+
+
+
+        newFavorite.favoriteBar = favoriteBar;
+
+
+        int x = 0;
+        for (NSNumber *eta in ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).etaArray){
+            UILabel *etaLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 0, 30, 30)];
+            etaLabel.text = [eta stringValue];
+            x += 35;
+            [favoriteEta addSubview:etaLabel];
+        }
+
+
+
+        for (BB_Favorite *fav in [BB_MapState get].favorites){
+            [UIView animateWithDuration:0.25 animations:^{
+                fav.favoriteBar.frame = CGRectMake(0, fav.favoriteBar.frame.origin.y - favoriteBar.frame.size.height, self.view.frame.size.width*0.8, 30);
+            }];
+        }
+
+        [[BB_MapState get].favorites addObject:newFavorite];
+
+        [self.view addSubview:newFavorite.favoriteBar];
+     //   [self.view addSubview:favoriteBar];
+
+
+        [UIView animateWithDuration:0.4 animations:^{
+            newFavorite.favoriteBar.alpha = 0.75;
+        }];
+        
+    }
+
+
+
+}
+
+
+     /*
     else {
     NSLog(@"Add Favorite");
     UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 35, self.view.frame.size.width*0.8, 25)];
@@ -260,7 +368,9 @@ NSMutableArray *changedStopEstimatePairs;
             }];
 
     }
-}
+     
+     */
+
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {

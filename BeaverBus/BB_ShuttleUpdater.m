@@ -491,8 +491,39 @@ NSTimer *timer;
                     }
                     break;
             }
+
+
+            for (BB_Favorite *fav in mapState.favorites){
+                if ([stop.name isEqualToString:fav.favoriteStop.name]){
+                    //
+                    for (UIView *i in fav.favoriteBar.subviews){
+                        if ([i isKindOfClass:[UILabel class]]){
+                            UILabel *favoriteEta = (UILabel *)i;
+                            if (favoriteEta.tag == 1){
+                                int x = 0;
+                                for (UIView *j in favoriteEta.subviews){
+                                    if ([j isKindOfClass:[UILabel class]]){
+                                        UILabel *eta = (UILabel *)j;
+                                        //[eta setText:[fav.favoriteStop.etaArray objectAtIndex:x]];
+                                        [eta setText:@"1"];
+                                    }
+                                    x++;
+                                }
+                            }
+                        }
+                    }
+
+                    [fav.favoriteBar setNeedsDisplay];
+                    //
+                }
+            }
+
+
         }
 
+
+
+      
 
         if (initialRequest){
             dispatch_async(dispatch_get_main_queue(), ^{

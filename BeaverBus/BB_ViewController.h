@@ -11,6 +11,8 @@
 #include "BB_StopCell.h"
 #include "BB_ShuttleUpdater.h"
 @class BB_MenuViewController;
+#include "BB_Favorite.h"
+
 
 @interface BB_ViewController : UIViewController <UIAlertViewDelegate> 
 
@@ -24,7 +26,11 @@
 -(UIView *)getMainView;
 - (void)slideUpdateErrorView;
 - (void)showNetworkErrorAlert;
+
 -(void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen;
+
+- (void)setFavoriteButton;
+
 
 @end
 
