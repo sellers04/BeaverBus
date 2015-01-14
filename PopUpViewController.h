@@ -18,7 +18,7 @@
 
 
 - (void)removeAnimate;
-- (void)showInView:(UIView *)aView withImage:(UIImage *)image withMessage:(NSString *)message animated:(BOOL)animated controller:(BB_ViewController *) mapViewController;
+- (void)showInView:(UIView *)aView withImage:(UIImage *)image withMessage:(NSString *)message animated:(BOOL)animated;
 
 
 @end

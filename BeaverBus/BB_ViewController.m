@@ -14,13 +14,14 @@
 #import "BB_Stop.h"
 #import "MBProgressHUD.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "BB_MenuViewController.h"
 #import <UIKit/UIKit.h>
 
 static BB_ViewController *mainViewController = NULL;
 
-@interface BB_ViewController ()
+@interface BB_ViewController () <UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) IBOutlet UIView *mainView;
+
 @property (strong, nonatomic) PopUpViewController *popViewController;
 @property NSMutableArray *favoriteRows;
 
@@ -30,6 +31,8 @@ static BB_ViewController *mainViewController = NULL;
 #define LABEL_TAG 100
 
 @implementation BB_ViewController
+
+@synthesize optionsMenuIsOpen = _optionsMenuIsOpen;
 
 UIView *updateErrorView;
 NSMutableArray *changedStopEstimatePairs;
@@ -45,7 +48,10 @@ NSMutableArray *changedStopEstimatePairs;
     }
 }
 
-
+-(UIView *)getMainView
+{
+    return [BB_MapState get].mapView;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,11 +59,13 @@ NSMutableArray *changedStopEstimatePairs;
     [BB_MapState get].mainViewController = self;
 
     _favoriteRows = [[NSMutableArray alloc] init];
+    
+    _menuViewController = [[BB_MenuViewController alloc] initWithNibName:@"BB_MenuViewController" bundle:nil];
 
     self.navigationItem.leftBarButtonItem = [self OSULogoBar];
 
-    _optionsMenuIsOpen = false;
-    self.navigationItem.rightBarButtonItem = [self optionsBar];
+    [self setOptionsMenuIsOpen:false];
+    //self.navigationItem.rightBarButtonItem = [self optionsBar];
 
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
@@ -66,13 +74,12 @@ NSMutableArray *changedStopEstimatePairs;
       nil]];
 
 
+    self.navigationItem.rightBarButtonItems = @[[self optionsBar], [self favoritesButton]];
     self.navigationItem.title = @"Beaver Bus Tracker";
 
 
     changedStopEstimatePairs = [[NSMutableArray alloc] init];
-
-
-
+    
     self.view = [BB_MapState get].mapView;
 
     _addFavoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -98,9 +105,9 @@ NSMutableArray *changedStopEstimatePairs;
 
 
 
+    
 
 }
-
 -(UIBarButtonItem *)OSULogoBar
 {
     UIImage *image = [UIImage imageNamed:@"osu_icon.png"];
@@ -121,21 +128,44 @@ NSMutableArray *changedStopEstimatePairs;
     [button addTarget:self action:@selector(openOptionsMenu) forControlEvents:UIControlEventTouchUpInside];
     [button setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = item;
 
+    return item;
+}
+
+-(UIBarButtonItem *)favoritesButton
+{
+    UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
+    CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(openOptionsMenu) forControlEvents:UIControlEventTouchUpInside];
+    [button setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
     return item;
 }
 
 - (void)openOptionsMenu
 {
+    NSLog(@"OptionsMenuIsOpen: %hhd", _optionsMenuIsOpen);
     if (!_optionsMenuIsOpen){
-                _popViewController = [[PopUpViewController alloc] initWithNibName:@"PopUpViewController" bundle:nil];
-        [_popViewController setTitle:@"Options"];
-        [_popViewController showInView:self.view withImage:nil withMessage:@"" animated:YES controller:self];
+                //_popViewController = [[PopUpViewController alloc] initWithNibName:@"PopUpViewController" bundle:nil];
+        CGRect menuFrame = CGRectMake(self.view.frame.size.width-100, 0, 100, 150);
+        NSLog(@"Here is rect: %@", NSStringFromCGRect(menuFrame));
+        [_menuViewController showInView:self.view withImage:nil withMessage:@"" animated:YES withFrame:menuFrame controller:self];
+        _optionsMenuIsOpen = true;
+//        [_popViewController setTitle:@"Options"];
+//        [_popViewController showInView:self.view withImage:nil withMessage:@"" animated:YES controller:self];
     } else {
-      
-        [_popViewController removeAnimate];
+        //[_popViewController removeAnimate];
+        [_menuViewController removeAnimate];
+        _optionsMenuIsOpen = false;
     }
+}
+
+-(void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen
+{
+    _optionsMenuIsOpen = optionsMenuIsOpen;
 }
 
 -(void)viewDidAppear:(BOOL)animated

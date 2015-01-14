@@ -45,11 +45,16 @@ static BB_MapState *mapState = NULL;
 
     _mapView.delegate = self;
  
+    
+    
     [self addRoutePolylines];
 }
 
+
+
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
+    NSLog(@"Tapped marker");
     [_mapView animateToLocation:marker.position];
     [_mapView setSelectedMarker:marker];
 
@@ -89,6 +94,14 @@ static BB_MapState *mapState = NULL;
 
 -(void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
+    NSLog(@"Tapped coord");
+    
+    if([_mainViewController optionsMenuIsOpen])
+    {
+        [[_mainViewController menuViewController] removeAnimate];
+        [_mainViewController setOptionsMenuIsOpen:false];
+    }
+    
     _mainViewController.mapLabel.hidden = YES;
     [_mainViewController.addFavoriteButton setHidden:YES];
     //If a marker was deselected, set route line widths to normal

@@ -91,19 +91,21 @@ static BB_MapState *mapState;
         }
     }];
 
-    _mapViewController.optionsMenuIsOpen = false;
+    //_mapViewController.optionsMenuIsOpen = false;
+    
 
 
 }
 
-- (void)showInView:(UIView *)aView withImage:(UIImage *)image withMessage:(NSString *)message animated:(BOOL)animated controller:(BB_ViewController *) mapViewController;
+//- (void)showInView:(UIView *)aView withImage:(UIImage *)image withMessage:(NSString *)message animated:(BOOL)animated controller:(BB_ViewController *) mapViewController;
+- (void)showInView:(UIView *)aView withImage:(UIImage *)image withMessage:(NSString *)message animated:(BOOL)animated
 {
-    _mapViewController = mapViewController;
-
+    //_mapViewController = mapViewController;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [aView addSubview:self.view];
         self.view.frame = aView.bounds;
-
+        NSLog(@"Show in View popup frame: %@", NSStringFromCGRect(self.view.frame));
 
         //self.logoImg.image = image;
         //self.messageLabel.text = message;
@@ -111,7 +113,7 @@ static BB_MapState *mapState;
             [self showAnimate];
         }
     });
-    _mapViewController.optionsMenuIsOpen = true;
+    //_mapViewController.optionsMenuIsOpen = true;
 }
 
 

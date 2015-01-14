@@ -10,6 +10,8 @@
 		4550460F19CC985F004EC589 /* StopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4550460E19CC985F004EC589 /* StopCell.xib */; };
 		455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 455E5F8A19CC9FAD007620AD /* BB_StopCell.m */; };
 		4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */; };
+		45A5AB7D1A643B330068728F /* BB_MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A5AB7B1A643B330068728F /* BB_MenuViewController.m */; };
+		45A5AB7E1A643B330068728F /* BB_MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */; };
 		7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE019D337500053E3A6 /* StopETABox.xib */; };
 		7C7FDFE419D338480053E3A6 /* BB_StopETABox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */; };
 		7C7FDFE819E489340053E3A6 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7FDFE719E489340053E3A6 /* GoogleMaps.framework */; };
@@ -72,6 +74,9 @@
 		455E5F8A19CC9FAD007620AD /* BB_StopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopCell.m; sourceTree = "<group>"; };
 		4598D29A19D0D5FF00BF6339 /* BB_StopEstimatePair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopEstimatePair.h; sourceTree = "<group>"; };
 		4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopEstimatePair.m; sourceTree = "<group>"; };
+		45A5AB7A1A643B330068728F /* BB_MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_MenuViewController.h; sourceTree = "<group>"; };
+		45A5AB7B1A643B330068728F /* BB_MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_MenuViewController.m; sourceTree = "<group>"; };
+		45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BB_MenuViewController.xib; sourceTree = "<group>"; };
 		7C7FDFE019D337500053E3A6 /* StopETABox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StopETABox.xib; sourceTree = "<group>"; };
 		7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopETABox.h; sourceTree = "<group>"; };
 		7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopETABox.m; sourceTree = "<group>"; };
@@ -286,6 +291,9 @@
 		7CDD0BAE19C8DE6300B7623D /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				45A5AB7A1A643B330068728F /* BB_MenuViewController.h */,
+				45A5AB7B1A643B330068728F /* BB_MenuViewController.m */,
+				45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */,
 				7CDD0AC019C8D85E00B7623D /* BB_ViewController.h */,
 				7CDD0AC119C8D85E00B7623D /* BB_ViewController.m */,
 			);
@@ -427,6 +435,7 @@
 				7CC348F319E7471C00183D25 /* Gudea-Italic.otf in Resources */,
 				7CDD0ABF19C8D85E00B7623D /* Main.storyboard in Resources */,
 				7CC348EE19E71EBD00183D25 /* PopUpViewController.xib in Resources */,
+				45A5AB7E1A643B330068728F /* BB_MenuViewController.xib in Resources */,
 				7CF5E37619CB46190042950F /* GoogleMaps.bundle in Resources */,
 				4550460F19CC985F004EC589 /* StopCell.xib in Resources */,
 				7CC348F419E7471C00183D25 /* Gudea-Regular.otf in Resources */,
@@ -448,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A5AB7D1A643B330068728F /* BB_MenuViewController.m in Sources */,
 				7CDD0ABC19C8D85E00B7623D /* BB_AppDelegate.m in Sources */,
 				7CDD0BB519C8EB3A00B7623D /* BB_Shuttle.m in Sources */,
 				7CDD0AB819C8D85E00B7623D /* main.m in Sources */,

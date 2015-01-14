@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import "BB_ViewController.h"
+#import "BB_MenuViewController.h"
 #import "BB_Shuttle.h"
 
 @interface BB_MapState : NSObject <GMSMapViewDelegate>

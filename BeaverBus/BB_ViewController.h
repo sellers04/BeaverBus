@@ -10,17 +10,21 @@
 #include "EasyTableView.h"
 #include "BB_StopCell.h"
 #include "BB_ShuttleUpdater.h"
+@class BB_MenuViewController;
+
+@interface BB_ViewController : UIViewController <UIAlertViewDelegate> 
 
 
-@interface BB_ViewController : UIViewController <UIAlertViewDelegate>
-
-@property BOOL optionsMenuIsOpen;
 @property (nonatomic, strong) UILabel *mapLabel;
 @property (nonatomic, strong) UIButton *addFavoriteButton;
+@property (nonatomic, strong) BB_MenuViewController *menuViewController;
+@property BOOL optionsMenuIsOpen;
 
 + (BB_ViewController *)get;
+-(UIView *)getMainView;
 - (void)slideUpdateErrorView;
 - (void)showNetworkErrorAlert;
+-(void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen;
 
 @end
 

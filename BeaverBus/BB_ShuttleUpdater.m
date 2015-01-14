@@ -460,22 +460,24 @@ NSTimer *timer;
                         }
                     }
 
-                    vehicleId = [[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"VehicleID"];
+                    if([jsonVehicleEstimates count] > 1){
+                        vehicleId = [[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"VehicleID"];
 
-                    if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleId){
-                        if ([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"OnRoute"] boolValue] == false){
-                            stop.etaArray[WEST1_ETA] = @-1;
-                        } else {
-                            num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                            stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                        if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:1]).vehicleID == vehicleId){
+                            if ([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"OnRoute"] boolValue] == false){
+                                stop.etaArray[WEST1_ETA] = @-1;
+                            } else {
+                                num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                                stop.etaArray[WEST1_ETA] = [NSNumber numberWithDouble:num];
+                            }
                         }
-                    }
-                    else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleId){
-                        if ([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"OnRoute"] boolValue] == false){
-                            stop.etaArray[WEST2_ETA] = @-1;
-                        } else {
-                            num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
-                            stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                        else if (((BB_Shuttle *)[mapState.shuttles objectAtIndex:2]).vehicleID == vehicleId){
+                            if ([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"OnRoute"] boolValue] == false){
+                                stop.etaArray[WEST2_ETA] = @-1;
+                            } else {
+                                num = round([[[jsonVehicleEstimates objectAtIndex:1] objectForKey:@"SecondsToStop"] doubleValue] / 60);
+                                stop.etaArray[WEST2_ETA] = [NSNumber numberWithDouble:num];
+                            }
                         }
                     }
                     break;
