@@ -44,6 +44,8 @@ static BB_MapState *mapState = NULL;
     _mapView.settings.myLocationButton = YES;
 
     _mapView.delegate = self;
+
+    _favorites = [[NSMutableArray alloc] init];
  
     [self addRoutePolylines];
 }
@@ -55,6 +57,7 @@ static BB_MapState *mapState = NULL;
 
     if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
 
+        [_mainViewController setFavoriteButton];
         [_mainViewController.addFavoriteButton setHidden:NO];
 
         [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];

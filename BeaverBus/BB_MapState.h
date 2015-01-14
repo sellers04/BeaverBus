@@ -13,6 +13,8 @@
 
 @interface BB_MapState : NSObject <GMSMapViewDelegate>
 
+@property (strong, nonatomic) NSMutableArray *favorites;
+
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *tempShuttles;
 @property (strong, nonatomic) NSMutableArray *shuttles;

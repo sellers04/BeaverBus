@@ -10,6 +10,7 @@
 #include "EasyTableView.h"
 #include "BB_StopCell.h"
 #include "BB_ShuttleUpdater.h"
+#include "BB_Favorite.h"
 
 
 @interface BB_ViewController : UIViewController <UIAlertViewDelegate>
@@ -21,6 +22,7 @@
 + (BB_ViewController *)get;
 - (void)slideUpdateErrorView;
 - (void)showNetworkErrorAlert;
+- (void)setFavoriteButton;
 
 @end
 

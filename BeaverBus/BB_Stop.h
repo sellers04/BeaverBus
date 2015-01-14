@@ -16,5 +16,6 @@
 @property(strong, nonatomic) GMSMarker *marker;
 @property(strong, nonatomic) NSMutableArray *etaArray;
 @property(strong, nonatomic) NSMutableArray *servicedRoutes;
+@property bool isFavorite;
 
 @end
