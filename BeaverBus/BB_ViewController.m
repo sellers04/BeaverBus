@@ -248,65 +248,25 @@ NSMutableArray *changedStopEstimatePairs;
     }
 
     else {
-
-        BB_Favorite *newFavorite = [[BB_Favorite alloc] init];
-        newFavorite.favoriteStop = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData);
-
-        newFavorite.favoriteStop.isFavorite = TRUE;
-        //((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite = TRUE;
-
-        NSLog(@"Add Favorite");
-
+        BB_Stop *selectedStop = [BB_MapState get].mapView.selectedMarker.userData;
+        CGRect frame = CGRectMake(10, self.view.frame.size.height-100, self.view.frame.size.width-20, 100);
+        BB_Favorite *newFavorite = [BB_Favorite initNewFavoriteWithStop:selectedStop andFrame:frame];
         [self setFavoriteButton];
 
 
 
-
-
-        UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 35, self.view.frame.size.width*0.8, 25)];
-        //UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(60, 60, 300, 30)];
-        UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 30)];
-        UIView *favoriteEta = [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 100, 30)];
-        [favoriteEta setTag:1];//For accessing later to update ETAs
-
-        favoriteName.text = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).name;
-
-        [favoriteBar setBackgroundColor:[UIColor whiteColor]];
-        [favoriteBar setAlpha:0];
-        favoriteBar.layer.cornerRadius = 5;
-        favoriteBar.layer.masksToBounds = YES;
-        favoriteBar.layer.borderWidth = 1;
-        favoriteBar.layer.borderColor = [UIColor blackColor].CGColor;
-        favoriteBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-
-        [favoriteBar addSubview:favoriteName];
-        [favoriteBar addSubview:favoriteEta];
-
-
-
-
-        newFavorite.favoriteBar = favoriteBar;
-
-
-        int x = 0;
-        for (NSNumber *eta in ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).etaArray){
-            UILabel *etaLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 0, 30, 30)];
-            etaLabel.text = [eta stringValue];
-            x += 35;
-            [favoriteEta addSubview:etaLabel];
-        }
-
-
-
-        for (BB_Favorite *fav in [BB_MapState get].favorites){
-            [UIView animateWithDuration:0.25 animations:^{
-                fav.favoriteBar.frame = CGRectMake(0, fav.favoriteBar.frame.origin.y - favoriteBar.frame.size.height, self.view.frame.size.width*0.8, 30);
-            }];
-        }
+//        for (BB_Favorite *fav in [BB_MapState get].favorites){
+//            [UIView animateWithDuration:0.25 animations:^{
+//                fav.favoriteBar.frame = CGRectMake(0, fav.favoriteBar.frame.origin.y - favoriteBar.frame.size.height, self.view.frame.size.width*0.8, 30);
+//                
+//            }];
+//        }
 
         [[BB_MapState get].favorites addObject:newFavorite];
 
         [self.view addSubview:newFavorite.favoriteBar];
+        
+        
      //   [self.view addSubview:favoriteBar];
 
 
