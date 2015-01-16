@@ -7,6 +7,7 @@
 //
 
 #import "BB_Favorite.h"
+#import "BB_MapState.h"
 
 @implementation BB_Favorite
 
@@ -53,7 +54,15 @@ int const EAST = 3;
         x += 35;
         [favoriteEta addSubview:etaLabel];
     }
-    
+
+
+    for (BB_Favorite *fav in [BB_MapState get].favorites){
+        [UIView animateWithDuration:0.25 animations:^{
+            fav.favoriteBar.frame = CGRectMake(frame.origin.x, fav.favoriteBar.frame.origin.y - favoriteBar.frame.size.height, frame.size.width, frame.size.height);
+
+        }];
+    }
+
     return newFavorite;
 }
 
@@ -69,8 +78,7 @@ int const EAST = 3;
             NSLog(@"Update favorite: %d with %@", i, eta);
             switch (i) {
                 case NORTH:
-                    //((UILabel*)_etaLabels[NORTH]).text = @"OGG";
-                    NSLog(@"North %@", ([self etaLabels]));
+                    ((UILabel*)_etaLabels[NORTH]).text = [eta stringValue];
                     break;
                 case WEST1:
                     ((UILabel*)_etaLabels[WEST1]).text = [eta stringValue];
@@ -85,7 +93,7 @@ int const EAST = 3;
                     break;
             }
         }
-        [_favoriteBar setNeedsDisplay];
+      //  [_favoriteBar setNeedsDisplay];
     });
     
 }

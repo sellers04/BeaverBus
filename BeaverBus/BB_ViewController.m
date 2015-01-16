@@ -249,18 +249,9 @@ NSMutableArray *changedStopEstimatePairs;
 
     else {
         BB_Stop *selectedStop = [BB_MapState get].mapView.selectedMarker.userData;
-        CGRect frame = CGRectMake(10, self.view.frame.size.height-100, self.view.frame.size.width-20, 100);
+        CGRect frame = CGRectMake(10, self.view.frame.size.height-50, self.view.frame.size.width-20, 30);
         BB_Favorite *newFavorite = [BB_Favorite initNewFavoriteWithStop:selectedStop andFrame:frame];
         [self setFavoriteButton];
-
-
-
-//        for (BB_Favorite *fav in [BB_MapState get].favorites){
-//            [UIView animateWithDuration:0.25 animations:^{
-//                fav.favoriteBar.frame = CGRectMake(0, fav.favoriteBar.frame.origin.y - favoriteBar.frame.size.height, self.view.frame.size.width*0.8, 30);
-//                
-//            }];
-//        }
 
         [[BB_MapState get].favorites addObject:newFavorite];
 
