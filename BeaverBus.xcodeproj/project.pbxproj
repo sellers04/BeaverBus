@@ -12,6 +12,7 @@
 		4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */; };
 		45A5AB7D1A643B330068728F /* BB_MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A5AB7B1A643B330068728F /* BB_MenuViewController.m */; };
 		45A5AB7E1A643B330068728F /* BB_MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */; };
+		45E1779C1A69947F004BB865 /* BB_FavoriteRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1779B1A69947F004BB865 /* BB_FavoriteRow.m */; };
 		7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE019D337500053E3A6 /* StopETABox.xib */; };
 		7C7FDFE419D338480053E3A6 /* BB_StopETABox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */; };
 		7C7FDFE819E489340053E3A6 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7FDFE719E489340053E3A6 /* GoogleMaps.framework */; };
@@ -79,6 +80,8 @@
 		45A5AB7A1A643B330068728F /* BB_MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_MenuViewController.h; sourceTree = "<group>"; };
 		45A5AB7B1A643B330068728F /* BB_MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_MenuViewController.m; sourceTree = "<group>"; };
 		45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BB_MenuViewController.xib; sourceTree = "<group>"; };
+		45E1779A1A69947F004BB865 /* BB_FavoriteRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BB_FavoriteRow.h; path = ../BB_FavoriteRow.h; sourceTree = "<group>"; };
+		45E1779B1A69947F004BB865 /* BB_FavoriteRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BB_FavoriteRow.m; path = ../BB_FavoriteRow.m; sourceTree = "<group>"; };
 		7C7FDFE019D337500053E3A6 /* StopETABox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StopETABox.xib; sourceTree = "<group>"; };
 		7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopETABox.h; sourceTree = "<group>"; };
 		7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopETABox.m; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 		7CDD0AB119C8D85E00B7623D /* BeaverBus */ = {
 			isa = PBXGroup;
 			children = (
+				45E1779A1A69947F004BB865 /* BB_FavoriteRow.h */,
+				45E1779B1A69947F004BB865 /* BB_FavoriteRow.m */,
 				7C92FA3A1A643CEB004A44B5 /* BB_Favorite.h */,
 				7C92FA3B1A643CEB004A44B5 /* BB_Favorite.m */,
 				7C92FA401A6452D8004A44B5 /* FavoriteRow.xib */,
@@ -476,6 +481,7 @@
 				4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */,
 				7C92FA3C1A643CEB004A44B5 /* BB_Favorite.m in Sources */,
 				7CDD0AC219C8D85E00B7623D /* BB_ViewController.m in Sources */,
+				45E1779C1A69947F004BB865 /* BB_FavoriteRow.m in Sources */,
 				7C92FA3419FEBE9A004A44B5 /* BB_MapLabelView.m in Sources */,
 				7CC348ED19E71EBD00183D25 /* PopUpViewController.m in Sources */,
 				455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */,

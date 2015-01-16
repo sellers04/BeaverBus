@@ -12,6 +12,7 @@
 #import "PopUpViewController.h"
 #import "BB_MapLabelView.h"
 #import "BB_Stop.h"
+
 #import "MBProgressHUD.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "BB_MenuViewController.h"
@@ -225,13 +226,35 @@ NSMutableArray *changedStopEstimatePairs;
     NSLog(@"Removed favorite");
 
     ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite = FALSE;
-
+    NSMutableArray *favorites = [[BB_MapState get] favorites];
+    for (BB_Favorite *fav in favorites) {
+        if([fav.favoriteStop isEqual:[BB_MapState get].mapView.selectedMarker.userData]){
+            [UIView animateWithDuration:0.4 animations:^{
+                fav.favoriteBar.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                [fav.favoriteBar removeFromSuperview];
+                [favorites removeObject:fav];
+                [BB_Favorite animateFavoritesAfterRemove];
+            }];
+            
+            
+        }
+    };
+    
     [self setFavoriteButton];
 
 }
 
 - (void)refreshFavorite{}
 
+
+-(void)handleFavoriteTap:(id)sender
+{
+    UIControl *tappedRow =(UIControl *) sender;
+    
+    
+    //[[BB_MapState get] onFavoriteTap:selectedStop];
+}
 
 - (void)addFavorite
 {
@@ -255,6 +278,18 @@ NSMutableArray *changedStopEstimatePairs;
 
         [[BB_MapState get].favorites addObject:newFavorite];
 
+    //    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleFavoriteTap:)];
+        
+     //   singleTap.numberOfTapsRequired = 1;
+       
+        [newFavorite.favoriteBar addTarget:self action:@selector(handleFavoriteTap:) forControlEvents:UIControlEventTouchUpInside];
+        
+       // [newFavorite.favoriteBar addGestureRecognizer:singleTap];
+        [newFavorite.favoriteBar setUserInteractionEnabled:true];
+        
+       
+ NSLog(@"what is selector: %hhd", [newFavorite.favoriteBar respondsToSelector:@selector(handleFavoriteTap:)]);
+        
         [self.view addSubview:newFavorite.favoriteBar];
         
         

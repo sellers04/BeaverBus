@@ -12,12 +12,15 @@
 @interface BB_Favorite : NSObject
 
 @property (strong, nonatomic) BB_Stop *favoriteStop;
-@property (strong, nonatomic) UIView *favoriteBar;
+@property (strong, nonatomic) UIControl *favoriteBar;
 @property (strong, nonatomic) UILabel *favoriteName;
 @property (strong, nonatomic) UIView *favoriteEtaContainer;
 @property (strong, nonatomic) NSMutableArray *etaLabels;
+@property (nonatomic) CGRect defaultFrame;
 
 +(BB_Favorite *)initNewFavoriteWithStop:(BB_Stop*)stop andFrame:(CGRect)frame;
 -(void)updateFavorite;
++(void)animateFavoritesAfterRemove;
++(void)handleFavoriteTap:(UITapGestureRecognizer *)sender;
 
 @end

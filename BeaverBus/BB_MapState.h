@@ -51,5 +51,6 @@
 - (void)addRoutePolylines;
 - (void)setShuttle:(int)index withNewShuttle:(BB_Shuttle *)newShuttle;
 - (void)changeStopsVisibility;
+- (void)onFavoriteTap:(BB_Stop *)stop;
 
 @end

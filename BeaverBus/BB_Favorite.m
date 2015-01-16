@@ -9,12 +9,22 @@
 #import "BB_Favorite.h"
 #import "BB_MapState.h"
 
+
 @implementation BB_Favorite
+
+
 
 int const NORTH = 0;
 int const WEST1 = 1;
 int const WEST2 = 2;
 int const EAST = 3;
+
++(void)handleFavoriteTap:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"TAPPED FAV STOP");
+    //[[BB_MapState get] onFavoriteTap:stop];
+    
+}
 
 +(BB_Favorite*)initNewFavoriteWithStop:(BB_Stop*)stop andFrame:(CGRect)frame
 {
@@ -23,7 +33,8 @@ int const EAST = 3;
     newFavorite.favoriteStop = stop;
     newFavorite.favoriteStop.isFavorite = TRUE;
     
-    UIView *favoriteBar = [[UIView alloc] initWithFrame:frame];
+    newFavorite.defaultFrame = frame;
+    UIControl *favoriteBar = [[UIControl alloc] initWithFrame:frame];
     
     UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 30)];
     UIView *favoriteEta = [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 100, 30)];
@@ -42,7 +53,24 @@ int const EAST = 3;
     [favoriteBar addSubview:favoriteName];
     [favoriteBar addSubview:favoriteEta];
     
+    
+    [favoriteBar setUserInteractionEnabled:true];
+    //[favoriteName setExclusiveTouch:true];
+     //[favoriteName setUserInteractionEnabled:true];
+    /*
+    SEL selector = @selector(handleFavoriteTap:);
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:[BB_Favorite class] action:@selector(handleFavoriteTap:)];
+    singleTap.numberOfTapsRequired = 1;
+    
+    [favoriteBar addGestureRecognizer:singleTap];
+    [favoriteBar setExclusiveTouch:YES];
+    [favoriteBar setUserInteractionEnabled:YES];
+    */
+    
+    
+    
     newFavorite.favoriteBar = favoriteBar;
+    
     
     newFavorite.etaLabels = [[NSMutableArray alloc] init];
     
@@ -65,6 +93,23 @@ int const EAST = 3;
 
     return newFavorite;
 }
+
+
+
+
++(void)animateFavoritesAfterRemove
+{
+    NSUInteger count = [[[BB_MapState get] favorites] count];
+    for (BB_Favorite *fav in [BB_MapState get].favorites){
+        count--;
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            fav.favoriteBar.frame = CGRectMake(fav.defaultFrame.origin.x, fav.defaultFrame.origin.y-(count*fav.defaultFrame.size.height), fav.defaultFrame.size.width, fav.defaultFrame.size.height);
+                                     }];
+        
+    }
+}
+
 
 -(void)updateFavorite
 {

@@ -30,7 +30,7 @@
 -(void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen;
 
 - (void)setFavoriteButton;
-
+-(void)handleFavoriteTap:(id) sender;
 
 @end
 

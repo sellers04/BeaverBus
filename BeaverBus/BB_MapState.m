@@ -52,7 +52,11 @@ static BB_MapState *mapState = NULL;
     [self addRoutePolylines];
 }
 
-
+-(void)onFavoriteTap:(BB_Stop *)stop
+{
+    //[_mapView setCamera:[GMSCameraPosition cameraWithLatitude:stop.latitude longitude:stop.longitude zoom:14.5]];
+    [_mapView setSelectedMarker:stop.marker];
+}
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
@@ -243,9 +247,6 @@ static BB_MapState *mapState = NULL;
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
-
-
-
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
 
