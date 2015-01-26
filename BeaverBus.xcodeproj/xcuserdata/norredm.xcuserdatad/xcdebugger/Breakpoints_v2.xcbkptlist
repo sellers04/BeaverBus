@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeaverBus/BB_Favorite.m"
-            timestampString = "443126558.238338"
+            timestampString = "443561531.322055"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "+animateFavoritesAfterRemove"
             landmarkType = "5">
          </BreakpointContent>

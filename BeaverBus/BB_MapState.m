@@ -15,6 +15,7 @@
 
 static BB_MapState *mapState = NULL;
 
+
 @implementation BB_MapState
 
 
@@ -46,16 +47,20 @@ static BB_MapState *mapState = NULL;
     _mapView.delegate = self;
 
     _favorites = [[NSMutableArray alloc] init];
- 
-    
+
+    //_defaultFavoriteFrame = CGRectMake(10, _mapView.frame.size.height-50, _mapView.frame.size.width-20, 30);
     
     [self addRoutePolylines];
+    
+    NSLog(@"initmapview: %@", _mapView);
 }
+
 
 -(void)onFavoriteTap:(BB_Stop *)stop
 {
     //[_mapView setCamera:[GMSCameraPosition cameraWithLatitude:stop.latitude longitude:stop.longitude zoom:14.5]];
     [_mapView setSelectedMarker:stop.marker];
+    [_mapView animateToLocation:stop.marker.position];
 }
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
@@ -151,6 +156,8 @@ static BB_MapState *mapState = NULL;
         [stop setMarker:newMarker];
         _stopsVisible = true;
     }
+    [BB_Favorite restoreFavorites];
+    
 }
 
 -(void)initShuttleMarkers

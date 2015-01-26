@@ -42,6 +42,7 @@
 @property BOOL stopsInvalid;
 
 @property BB_ViewController *mainViewController;
+@property CGRect defaultFavoriteFrame;
 
 
 + (BB_MapState *)get;

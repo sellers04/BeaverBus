@@ -89,10 +89,14 @@ NSMutableArray *changedStopEstimatePairs;
     [_addFavoriteButton setHidden:YES];
     [self.view addSubview:_addFavoriteButton];
 
+    
+    
     if (![BB_MapState get].didInitialRequest){
+        
         //Initial request failed, show try again dialog
      //   [networkFailAlert show];
     }
+    
     // Else, continue
 
 	// Do any additional setup after loading the view, typically from a nib.
@@ -102,10 +106,9 @@ NSMutableArray *changedStopEstimatePairs;
     //UIView *mapLabel = [[[NSBundle mainBundle] loadNibNamed:@"MapLabelView" owner:self options:nil] objectAtIndex:0];
 
 
-
-    
-
 }
+
+
 -(UIBarButtonItem *)OSULogoBar
 {
     UIImage *image = [UIImage imageNamed:@"osu_icon.png"];
@@ -195,6 +198,12 @@ NSMutableArray *changedStopEstimatePairs;
     [_mapLabel setAlpha:0.8];
     [_mapLabel setHidden:YES];
     [self.view addSubview:_mapLabel];
+    
+    
+    
+    
+    NSLog(@"!!view is: %@", self.view);
+    //z[BB_Favorite restoreFavorites];
 
 
 
@@ -253,7 +262,7 @@ NSMutableArray *changedStopEstimatePairs;
     UIControl *tappedRow =(UIControl *) sender;
     
     
-    //[[BB_MapState get] onFavoriteTap:selectedStop];
+    //+[[BB_MapState get] onFavoriteTap:selectedStop];
 }
 
 - (void)addFavorite
@@ -271,39 +280,26 @@ NSMutableArray *changedStopEstimatePairs;
     }
 
     else {
-        BB_Stop *selectedStop = [BB_MapState get].mapView.selectedMarker.userData;
         CGRect frame = CGRectMake(10, self.view.frame.size.height-50, self.view.frame.size.width-20, 30);
+        
+        
+        
+        BB_Stop *selectedStop = [BB_MapState get].mapView.selectedMarker.userData;
+
+        
         BB_Favorite *newFavorite = [BB_Favorite initNewFavoriteWithStop:selectedStop andFrame:frame];
+        
         [self setFavoriteButton];
-
-        [[BB_MapState get].favorites addObject:newFavorite];
-
-    //    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleFavoriteTap:)];
-        
-     //   singleTap.numberOfTapsRequired = 1;
-       
-        [newFavorite.favoriteBar addTarget:self action:@selector(handleFavoriteTap:) forControlEvents:UIControlEventTouchUpInside];
-        
-       // [newFavorite.favoriteBar addGestureRecognizer:singleTap];
-        [newFavorite.favoriteBar setUserInteractionEnabled:true];
-        
-       
- NSLog(@"what is selector: %hhd", [newFavorite.favoriteBar respondsToSelector:@selector(handleFavoriteTap:)]);
-        
         [self.view addSubview:newFavorite.favoriteBar];
+
         
         
-     //   [self.view addSubview:favoriteBar];
-
-
         [UIView animateWithDuration:0.4 animations:^{
             newFavorite.favoriteBar.alpha = 0.75;
         }];
-        
     }
-
-
-
+    
+    
 }
 
 

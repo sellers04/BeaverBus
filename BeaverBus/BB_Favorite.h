@@ -22,5 +22,6 @@
 -(void)updateFavorite;
 +(void)animateFavoritesAfterRemove;
 +(void)handleFavoriteTap:(UITapGestureRecognizer *)sender;
++(void)restoreFavorites;
 
 @end

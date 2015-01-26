@@ -31,6 +31,7 @@
 
 - (void)setFavoriteButton;
 -(void)handleFavoriteTap:(id) sender;
+- (void)addFavorite;
 
 @end
 
