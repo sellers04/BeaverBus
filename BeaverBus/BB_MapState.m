@@ -61,6 +61,9 @@ static BB_MapState *mapState = NULL;
     //[_mapView setCamera:[GMSCameraPosition cameraWithLatitude:stop.latitude longitude:stop.longitude zoom:14.5]];
     [_mapView setSelectedMarker:stop.marker];
     [_mapView animateToLocation:stop.marker.position];
+
+    [_mainViewController setFavoriteButton];
+    [_mainViewController.addFavoriteButton setHidden:NO];
 }
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker

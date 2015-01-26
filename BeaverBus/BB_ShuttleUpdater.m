@@ -106,7 +106,6 @@ NSTimer *timer;
 
     if (![self connected]) {
         // not connected, show some error window/view
-        [[BB_ViewController get] slideUpdateErrorView];
     } else {
         //getShuttles >> getEstimates >> distributeStops
         [self getShuttles:NO];

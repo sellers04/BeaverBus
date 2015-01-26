@@ -12,7 +12,6 @@
 #import "PopUpViewController.h"
 #import "BB_MapLabelView.h"
 #import "BB_Stop.h"
-
 #import "MBProgressHUD.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "BB_MenuViewController.h"
@@ -21,7 +20,6 @@
 static BB_ViewController *mainViewController = NULL;
 
 @interface BB_ViewController () <UIGestureRecognizerDelegate>
-
 
 @property (strong, nonatomic) PopUpViewController *popViewController;
 
@@ -47,17 +45,17 @@ NSMutableArray *changedStopEstimatePairs;
     }
 }
 
--(UIView *)getMainView
+- (UIView *)getMainView
 {
     return [BB_MapState get].mapView;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     [BB_MapState get].mainViewController = self;
 
-    
     _menuViewController = [[BB_MenuViewController alloc] initWithNibName:@"BB_MenuViewController" bundle:nil];
 
     self.navigationItem.leftBarButtonItem = [self OSULogoBar];
@@ -71,10 +69,8 @@ NSMutableArray *changedStopEstimatePairs;
        NSFontAttributeName,
       nil]];
 
-
     self.navigationItem.rightBarButtonItems = @[[self optionsBar], [self favoritesButton]];
     self.navigationItem.title = @"Beaver Bus Tracker";
-
 
     changedStopEstimatePairs = [[NSMutableArray alloc] init];
     
@@ -88,28 +84,21 @@ NSMutableArray *changedStopEstimatePairs;
     //addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [_addFavoriteButton setHidden:YES];
     [self.view addSubview:_addFavoriteButton];
-
-    
     
     if (![BB_MapState get].didInitialRequest){
-        
         //Initial request failed, show try again dialog
      //   [networkFailAlert show];
     }
-    
     // Else, continue
-
-	// Do any additional setup after loading the view, typically from a nib.
 
 
     //TODO: map label subview
     //UIView *mapLabel = [[[NSBundle mainBundle] loadNibNamed:@"MapLabelView" owner:self options:nil] objectAtIndex:0];
 
-
 }
 
 
--(UIBarButtonItem *)OSULogoBar
+- (UIBarButtonItem *)OSULogoBar
 {
     UIImage *image = [UIImage imageNamed:@"osu_icon.png"];
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -120,7 +109,7 @@ NSMutableArray *changedStopEstimatePairs;
     return item;
 }
 
--(UIBarButtonItem *)optionsBar
+- (UIBarButtonItem *)optionsBar
 {
     UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -133,7 +122,7 @@ NSMutableArray *changedStopEstimatePairs;
     return item;
 }
 
--(UIBarButtonItem *)favoritesButton
+- (UIBarButtonItem *)favoritesButton
 {
     UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
     CGRect buttonFrame = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -148,11 +137,10 @@ NSMutableArray *changedStopEstimatePairs;
 
 - (void)openOptionsMenu
 {
-    NSLog(@"OptionsMenuIsOpen: %hhd", _optionsMenuIsOpen);
     if (!_optionsMenuIsOpen){
                 //_popViewController = [[PopUpViewController alloc] initWithNibName:@"PopUpViewController" bundle:nil];
         CGRect menuFrame = CGRectMake(self.view.frame.size.width-100, 0, 100, 150);
-        NSLog(@"Here is rect: %@", NSStringFromCGRect(menuFrame));
+
         [_menuViewController showInView:self.view withImage:nil withMessage:@"" animated:YES withFrame:menuFrame controller:self];
         _optionsMenuIsOpen = true;
 //        [_popViewController setTitle:@"Options"];
@@ -164,28 +152,19 @@ NSMutableArray *changedStopEstimatePairs;
     }
 }
 
--(void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen
+- (void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen
 {
     _optionsMenuIsOpen = optionsMenuIsOpen;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    float percentage = .7f;
 
-    int width = self.view.frame.size.width * (percentage);
-    NSLog(@"width is: %d", width);
-    //int height = self.view.frame.size.height * (1-percentage);
-
-    // mapLabel.frame = CGRectMake(xpos, ypos, width, height);
     NSString *mapLabelText = @"OSU";
 
     _mapLabel = [[UILabel alloc] init];
     [_mapLabel setText:mapLabelText];
-    /*float widthIs = [_mapLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width * percentage, self.view.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_mapLabel.font} context:nil].size.width;
-    NSLog(@"float: %F", widthIs);*/
 
-    //[_mapLabel setFrame:CGRectMake(0, 0, widthIs, 25)];
     [_mapLabel setFrame:CGRectMake(0, 0, 180, 25)];
     [_mapLabel setCenter:CGPointMake(self.view.frame.size.width / 2, 25)];
 
@@ -198,22 +177,11 @@ NSMutableArray *changedStopEstimatePairs;
     [_mapLabel setAlpha:0.8];
     [_mapLabel setHidden:YES];
     [self.view addSubview:_mapLabel];
-    
-    
-    
-    
-    NSLog(@"!!view is: %@", self.view);
-    //z[BB_Favorite restoreFavorites];
 
-
-
-    
 }
 
 - (void)setFavoriteButton
 {
-
-
 
     if (((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite){
         [_addFavoriteButton setTitle:@"Remove Favorite" forState:UIControlStateNormal];
@@ -226,7 +194,6 @@ NSMutableArray *changedStopEstimatePairs;
         [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
     }
 
-
 }
 
 
@@ -234,41 +201,14 @@ NSMutableArray *changedStopEstimatePairs;
 {
     NSLog(@"Removed favorite");
 
-    ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite = FALSE;
-    NSMutableArray *favorites = [[BB_MapState get] favorites];
-    for (BB_Favorite *fav in favorites) {
-        if([fav.favoriteStop isEqual:[BB_MapState get].mapView.selectedMarker.userData]){
-            [UIView animateWithDuration:0.4 animations:^{
-                fav.favoriteBar.alpha = 0.0;
-            } completion:^(BOOL finished) {
-                [fav.favoriteBar removeFromSuperview];
-                [favorites removeObject:fav];
-                [BB_Favorite animateFavoritesAfterRemove];
-            }];
-            
-            
-        }
-    };
-    
-    [self setFavoriteButton];
+   // [self setFavoriteButton];
 
-}
+    [BB_Favorite removeFavorite];
 
-- (void)refreshFavorite{}
-
-
--(void)handleFavoriteTap:(id)sender
-{
-    UIControl *tappedRow =(UIControl *) sender;
-    
-    
-    //+[[BB_MapState get] onFavoriteTap:selectedStop];
 }
 
 - (void)addFavorite
 {
-
-
     if ([[BB_MapState get].favorites count] > 2){
         //max favorites reached
         MBProgressHUD *h = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -277,82 +217,20 @@ NSMutableArray *changedStopEstimatePairs;
         h.labelFont = [UIFont boldSystemFontOfSize:12];
 
         [h hide:YES afterDelay:1.75];
-    }
-
-    else {
+    } else {
         CGRect frame = CGRectMake(10, self.view.frame.size.height-50, self.view.frame.size.width-20, 30);
-        
-        
-        
         BB_Stop *selectedStop = [BB_MapState get].mapView.selectedMarker.userData;
-
-        
         BB_Favorite *newFavorite = [BB_Favorite initNewFavoriteWithStop:selectedStop andFrame:frame];
-        
+
         [self setFavoriteButton];
         [self.view addSubview:newFavorite.favoriteBar];
-
-        
         
         [UIView animateWithDuration:0.4 animations:^{
             newFavorite.favoriteBar.alpha = 0.75;
         }];
     }
     
-    
 }
-
-
-     /*
-    else {
-    NSLog(@"Add Favorite");
-    UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 35, self.view.frame.size.width*0.8, 25)];
-    //UIView *favoriteBar = [[UIView alloc] initWithFrame:CGRectMake(60, 60, 300, 30)];
-    UILabel *favoriteName = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 30)];
-    UIView *favoriteEta = [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 100, 30)];
-
-    favoriteName.text = ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).name;
-
-    [favoriteBar setBackgroundColor:[UIColor whiteColor]];
-    [favoriteBar setAlpha:0];
-    favoriteBar.layer.cornerRadius = 5;
-    favoriteBar.layer.masksToBounds = YES;
-    favoriteBar.layer.borderWidth = 1;
-    favoriteBar.layer.borderColor = [UIColor blackColor].CGColor;
-    favoriteBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-
-    [favoriteBar addSubview:favoriteName];
-    [favoriteBar addSubview:favoriteEta];
-
-    int x = 0;
-    for (NSNumber *eta in ((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).etaArray){
-        UILabel *etaLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 0, 30, 30)];
-        etaLabel.text = [eta stringValue];
-        x += 35;
-        [favoriteEta addSubview:etaLabel];
-    }
-
-
-    for (UIView *row in _favoriteRows){
-        [UIView animateWithDuration:0.25 animations:^{
-            row.frame = CGRectMake(0, row.frame.origin.y - favoriteBar.frame.size.height, self.view.frame.size.width*0.8, 30);
-        }];
-    }
-
-
-    [_favoriteRows addObject:favoriteBar];
-
-    [self.view addSubview:favoriteBar];
-
-
-    [UIView animateWithDuration:0.4 animations:^{
-        favoriteBar.alpha = 0.75;
-            }];
-
-    }
-     
-     */
-
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -364,14 +242,6 @@ NSMutableArray *changedStopEstimatePairs;
             [networkFailAlert show];
         }
      */
-}
-
-- (void)slideUpdateErrorView
-{
-    //Do not use this code whatsoever
-   // UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Connection could not be established" message:@"Please check your device's connection." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
-   // [networkFailAlert show];
-
 }
 
 

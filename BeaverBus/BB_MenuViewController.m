@@ -53,7 +53,7 @@
 }
 
 
--(void)showAnimate
+- (void)showAnimate
 {
     NSLog(@"Show animate : %@", NSStringFromCGRect(self.view.frame));
     self.view.alpha = 1;
@@ -71,7 +71,7 @@
     
 }
 
--(void)removeAnimate
+- (void)removeAnimate
 {
     NSLog(@"Remove animate");
     [UIView animateWithDuration:.25 animations:^{

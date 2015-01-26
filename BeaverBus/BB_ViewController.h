@@ -10,12 +10,10 @@
 #include "EasyTableView.h"
 #include "BB_StopCell.h"
 #include "BB_ShuttleUpdater.h"
-@class BB_MenuViewController;
 #include "BB_Favorite.h"
-
+@class BB_MenuViewController;
 
 @interface BB_ViewController : UIViewController <UIAlertViewDelegate> 
-
 
 @property (nonatomic, strong) UILabel *mapLabel;
 @property (nonatomic, strong) UIButton *addFavoriteButton;
@@ -23,15 +21,10 @@
 @property BOOL optionsMenuIsOpen;
 
 + (BB_ViewController *)get;
--(UIView *)getMainView;
-- (void)slideUpdateErrorView;
-- (void)showNetworkErrorAlert;
-
--(void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen;
-
+- (UIView *)getMainView;
+- (void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen;
 - (void)setFavoriteButton;
--(void)handleFavoriteTap:(id) sender;
-- (void)addFavorite;
+- (void)showNetworkErrorAlert;
 
 @end
 

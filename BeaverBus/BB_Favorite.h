@@ -18,10 +18,12 @@
 @property (strong, nonatomic) NSMutableArray *etaLabels;
 @property (nonatomic) CGRect defaultFrame;
 
-+(BB_Favorite *)initNewFavoriteWithStop:(BB_Stop*)stop andFrame:(CGRect)frame;
--(void)updateFavorite;
-+(void)animateFavoritesAfterRemove;
-+(void)handleFavoriteTap:(UITapGestureRecognizer *)sender;
-+(void)restoreFavorites;
++ (void)handleFavoriteTap:(UITapGestureRecognizer *)sender;
++ (BB_Favorite *)initNewFavoriteWithStop:(BB_Stop*)stop andFrame:(CGRect)frame;
++ (void)removeFavorite;
++ (void)saveCurrentFavorites;
++ (void)restoreFavorites;
++ (void)animateFavoritesAfterRemove;
+- (void)updateFavorite;
 
 @end
