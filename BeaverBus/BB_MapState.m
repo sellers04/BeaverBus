@@ -77,7 +77,7 @@ static BB_MapState *mapState = NULL;
         [_mainViewController setFavoriteButton];
         [_mainViewController.addFavoriteButton setHidden:NO];
 
-        [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
+        //[[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
 
 
         _mainViewController.mapLabel.text = ((BB_Stop *)marker.userData).name;
@@ -121,9 +121,9 @@ static BB_MapState *mapState = NULL;
     [_mainViewController.addFavoriteButton setHidden:YES];
     //If a marker was deselected, set route line widths to normal
     if ([_mapView selectedMarker] != nil){
-        if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
-            [[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
-        }
+        //if ([[_mapView selectedMarker].userData isKindOfClass:[BB_Stop class]]){
+            //[[_mapView selectedMarker] setIcon:[UIImage imageNamed:@"marker"]];
+        //}
         [_mapView setSelectedMarker:nil];
         [_westPolyline setStrokeWidth:3];
         [_eastPolyline setStrokeWidth:3];
@@ -260,6 +260,8 @@ static BB_MapState *mapState = NULL;
 
     if ([marker.userData isKindOfClass:[BB_Shuttle class]]){
 
+
+
         //Set the thickness of selected shuttle's associated route
 
         if ([((BB_Shuttle *)marker.userData).routeID isEqualToNumber:@9]){ //West Route
@@ -281,7 +283,7 @@ static BB_MapState *mapState = NULL;
 
     else if ([marker.userData isKindOfClass:[BB_Stop class]]){
 
-        [marker setIcon:[UIImage imageNamed:@"marker_selected"]];
+        //s[marker setIcon:[UIImage imageNamed:@"marker_selected"]];
 
 
 
