@@ -7,24 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4550460F19CC985F004EC589 /* StopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4550460E19CC985F004EC589 /* StopCell.xib */; };
-		455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 455E5F8A19CC9FAD007620AD /* BB_StopCell.m */; };
 		4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */; };
 		45A5AB7D1A643B330068728F /* BB_MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A5AB7B1A643B330068728F /* BB_MenuViewController.m */; };
 		45A5AB7E1A643B330068728F /* BB_MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */; };
-		45E1779C1A69947F004BB865 /* BB_FavoriteRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E1779B1A69947F004BB865 /* BB_FavoriteRow.m */; };
 		7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE019D337500053E3A6 /* StopETABox.xib */; };
 		7C7FDFE419D338480053E3A6 /* BB_StopETABox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */; };
 		7C92FA391A080DDD004A44B5 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C92FA381A080DDD004A44B5 /* MBProgressHUD.m */; };
 		7C92FA3C1A643CEB004A44B5 /* BB_Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C92FA3B1A643CEB004A44B5 /* BB_Favorite.m */; };
-		7C92FA4D1A7FEF8D004A44B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA4C1A7FEF8D004A44B5 /* GoogleMaps.bundle */; };
-		7C92FA4E1A7FEFC7004A44B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C92FA4A1A7FEF7B004A44B5 /* GoogleMaps.framework */; };
-		7CC348ED19E71EBD00183D25 /* PopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC348EB19E71EBD00183D25 /* PopUpViewController.m */; };
-		7CC348EE19E71EBD00183D25 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348EC19E71EBD00183D25 /* PopUpViewController.xib */; };
+		7C92FA521A7FFEFF004A44B5 /* PopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C92FA501A7FFEFF004A44B5 /* PopUpViewController.m */; };
+		7C92FA531A7FFEFF004A44B5 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA511A7FFEFF004A44B5 /* PopUpViewController.xib */; };
+		7C92FA561A7FFF17004A44B5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C92FA551A7FFF17004A44B5 /* Reachability.m */; };
+		7C92FA581A7FFF86004A44B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C92FA571A7FFF86004A44B5 /* GoogleMaps.framework */; };
+		7C92FA5A1A7FFF8F004A44B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA591A7FFF8F004A44B5 /* GoogleMaps.bundle */; };
+		7C92FA5C1A8001AB004A44B5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA5B1A8001AB004A44B5 /* Images.xcassets */; };
 		7CC348F219E7471C00183D25 /* Gudea-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348EF19E7471C00183D25 /* Gudea-Bold.otf */; };
 		7CC348F319E7471C00183D25 /* Gudea-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F019E7471C00183D25 /* Gudea-Italic.otf */; };
 		7CC348F419E7471C00183D25 /* Gudea-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F119E7471C00183D25 /* Gudea-Regular.otf */; };
-		7CC348F719F7124300183D25 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC348F619F7124300183D25 /* Reachability.m */; };
 		7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */; };
 		7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
@@ -33,7 +31,6 @@
 		7CDD0ABC19C8D85E00B7623D /* BB_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CDD0ABB19C8D85E00B7623D /* BB_AppDelegate.m */; };
 		7CDD0ABF19C8D85E00B7623D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDD0ABD19C8D85E00B7623D /* Main.storyboard */; };
 		7CDD0AC219C8D85E00B7623D /* BB_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CDD0AC119C8D85E00B7623D /* BB_ViewController.m */; };
-		7CDD0AC419C8D85E00B7623D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CDD0AC319C8D85E00B7623D /* Images.xcassets */; };
 		7CDD0ACC19C8D85E00B7623D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAB19C8D85E00B7623D /* Foundation.framework */; };
 		7CDD0ACD19C8D85E00B7623D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDD0AAF19C8D85E00B7623D /* UIKit.framework */; };
 		7CDD0AD519C8D85E00B7623D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CDD0AD319C8D85E00B7623D /* InfoPlist.strings */; };
@@ -69,16 +66,11 @@
 /* Begin PBXFileReference section */
 		4550460B19CC921B004EC589 /* EasyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTableView.h; sourceTree = "<group>"; };
 		4550460C19CC921B004EC589 /* EasyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTableView.m; sourceTree = "<group>"; };
-		4550460E19CC985F004EC589 /* StopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StopCell.xib; path = ../StopCell.xib; sourceTree = "<group>"; };
-		455E5F8919CC9FAD007620AD /* BB_StopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopCell.h; sourceTree = "<group>"; };
-		455E5F8A19CC9FAD007620AD /* BB_StopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopCell.m; sourceTree = "<group>"; };
 		4598D29A19D0D5FF00BF6339 /* BB_StopEstimatePair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopEstimatePair.h; sourceTree = "<group>"; };
 		4598D29B19D0D5FF00BF6339 /* BB_StopEstimatePair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopEstimatePair.m; sourceTree = "<group>"; };
 		45A5AB7A1A643B330068728F /* BB_MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_MenuViewController.h; sourceTree = "<group>"; };
 		45A5AB7B1A643B330068728F /* BB_MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_MenuViewController.m; sourceTree = "<group>"; };
 		45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BB_MenuViewController.xib; sourceTree = "<group>"; };
-		45E1779A1A69947F004BB865 /* BB_FavoriteRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BB_FavoriteRow.h; path = ../BB_FavoriteRow.h; sourceTree = "<group>"; };
-		45E1779B1A69947F004BB865 /* BB_FavoriteRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BB_FavoriteRow.m; path = ../BB_FavoriteRow.m; sourceTree = "<group>"; };
 		7C7FDFE019D337500053E3A6 /* StopETABox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StopETABox.xib; sourceTree = "<group>"; };
 		7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_StopETABox.h; sourceTree = "<group>"; };
 		7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_StopETABox.m; sourceTree = "<group>"; };
@@ -86,16 +78,17 @@
 		7C92FA381A080DDD004A44B5 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		7C92FA3A1A643CEB004A44B5 /* BB_Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BB_Favorite.h; sourceTree = "<group>"; };
 		7C92FA3B1A643CEB004A44B5 /* BB_Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BB_Favorite.m; sourceTree = "<group>"; };
-		7C92FA4A1A7FEF7B004A44B5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
-		7C92FA4C1A7FEF8D004A44B5 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
-		7CC348EA19E71EBD00183D25 /* PopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpViewController.h; path = ../PopUpViewController.h; sourceTree = "<group>"; };
-		7CC348EB19E71EBD00183D25 /* PopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopUpViewController.m; path = ../PopUpViewController.m; sourceTree = "<group>"; };
-		7CC348EC19E71EBD00183D25 /* PopUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopUpViewController.xib; path = ../PopUpViewController.xib; sourceTree = "<group>"; };
+		7C92FA4F1A7FFEFF004A44B5 /* PopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopUpViewController.h; sourceTree = "<group>"; };
+		7C92FA501A7FFEFF004A44B5 /* PopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopUpViewController.m; sourceTree = "<group>"; };
+		7C92FA511A7FFEFF004A44B5 /* PopUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
+		7C92FA541A7FFF17004A44B5 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		7C92FA551A7FFF17004A44B5 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		7C92FA571A7FFF86004A44B5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = BeaverBus/GoogleMaps.framework; sourceTree = "<group>"; };
+		7C92FA591A7FFF8F004A44B5 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = BeaverBus/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		7C92FA5B1A8001AB004A44B5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7CC348EF19E7471C00183D25 /* Gudea-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Bold.otf"; sourceTree = "<group>"; };
 		7CC348F019E7471C00183D25 /* Gudea-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Italic.otf"; sourceTree = "<group>"; };
 		7CC348F119E7471C00183D25 /* Gudea-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Regular.otf"; sourceTree = "<group>"; };
-		7CC348F519F7124300183D25 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../Reachability.h; sourceTree = "<group>"; };
-		7CC348F619F7124300183D25 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability.m; sourceTree = "<group>"; };
 		7CDD0AA819C8D85E00B7623D /* BeaverBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaverBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AAB19C8D85E00B7623D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CDD0AAD19C8D85E00B7623D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -109,7 +102,6 @@
 		7CDD0ABE19C8D85E00B7623D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7CDD0AC019C8D85E00B7623D /* BB_ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BB_ViewController.h; sourceTree = "<group>"; };
 		7CDD0AC119C8D85E00B7623D /* BB_ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BB_ViewController.m; sourceTree = "<group>"; };
-		7CDD0AC319C8D85E00B7623D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7CDD0AC919C8D85E00B7623D /* BeaverBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaverBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDD0AD219C8D85E00B7623D /* BeaverBusTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BeaverBusTests-Info.plist"; sourceTree = "<group>"; };
 		7CDD0AD419C8D85E00B7623D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -141,7 +133,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C92FA4E1A7FEFC7004A44B5 /* GoogleMaps.framework in Frameworks */,
 				7CDD0BAD19C8DA3F00B7623D /* SystemConfiguration.framework in Frameworks */,
 				7CDD0BAB19C8DA3A00B7623D /* QuartzCore.framework in Frameworks */,
 				7CDD0BA919C8DA3600B7623D /* OpenGLES.framework in Frameworks */,
@@ -156,6 +147,7 @@
 				7CDD0B9719C8DA0000B7623D /* AVFoundation.framework in Frameworks */,
 				7CDD0AAE19C8D85E00B7623D /* CoreGraphics.framework in Frameworks */,
 				7CDD0AB019C8D85E00B7623D /* UIKit.framework in Frameworks */,
+				7C92FA581A7FFF86004A44B5 /* GoogleMaps.framework in Frameworks */,
 				7CDD0AAC19C8D85E00B7623D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,8 +195,8 @@
 		7CDD0AAA19C8D85E00B7623D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7C92FA4C1A7FEF8D004A44B5 /* GoogleMaps.bundle */,
-				7C92FA4A1A7FEF7B004A44B5 /* GoogleMaps.framework */,
+				7C92FA591A7FFF8F004A44B5 /* GoogleMaps.bundle */,
+				7C92FA571A7FFF86004A44B5 /* GoogleMaps.framework */,
 				7CDD0BAC19C8DA3F00B7623D /* SystemConfiguration.framework */,
 				7CDD0BAA19C8DA3A00B7623D /* QuartzCore.framework */,
 				7CDD0BA819C8DA3600B7623D /* OpenGLES.framework */,
@@ -227,29 +219,17 @@
 		7CDD0AB119C8D85E00B7623D /* BeaverBus */ = {
 			isa = PBXGroup;
 			children = (
-				45E1779A1A69947F004BB865 /* BB_FavoriteRow.h */,
-				45E1779B1A69947F004BB865 /* BB_FavoriteRow.m */,
-				7C92FA3A1A643CEB004A44B5 /* BB_Favorite.h */,
-				7C92FA3B1A643CEB004A44B5 /* BB_Favorite.m */,
-				7CC348F519F7124300183D25 /* Reachability.h */,
-				7CC348F619F7124300183D25 /* Reachability.m */,
-				7C92FA371A080DDD004A44B5 /* MBProgressHUD.h */,
-				7C92FA381A080DDD004A44B5 /* MBProgressHUD.m */,
-				7CC348EA19E71EBD00183D25 /* PopUpViewController.h */,
-				7CC348EB19E71EBD00183D25 /* PopUpViewController.m */,
-				7CC348EC19E71EBD00183D25 /* PopUpViewController.xib */,
-				4550460E19CC985F004EC589 /* StopCell.xib */,
-				7C7FDFE019D337500053E3A6 /* StopETABox.xib */,
-				7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */,
-				7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */,
-				455E5F8919CC9FAD007620AD /* BB_StopCell.h */,
-				455E5F8A19CC9FAD007620AD /* BB_StopCell.m */,
-				7CDD0ABD19C8D85E00B7623D /* Main.storyboard */,
-				7CDD0BAF19C8DE6D00B7623D /* Model */,
-				7CDD0BAE19C8DE6300B7623D /* View Controller */,
 				7CDD0ABA19C8D85E00B7623D /* BB_AppDelegate.h */,
 				7CDD0ABB19C8D85E00B7623D /* BB_AppDelegate.m */,
-				7CDD0AC319C8D85E00B7623D /* Images.xcassets */,
+				7C92FA541A7FFF17004A44B5 /* Reachability.h */,
+				7C92FA551A7FFF17004A44B5 /* Reachability.m */,
+				7C92FA371A080DDD004A44B5 /* MBProgressHUD.h */,
+				7C92FA381A080DDD004A44B5 /* MBProgressHUD.m */,
+				45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */,
+				7CDD0ABD19C8D85E00B7623D /* Main.storyboard */,
+				7C92FA5B1A8001AB004A44B5 /* Images.xcassets */,
+				7CDD0BAF19C8DE6D00B7623D /* Model */,
+				7CDD0BAE19C8DE6300B7623D /* View Controller */,
 				7CDD0AB219C8D85E00B7623D /* Supporting Files */,
 			);
 			path = BeaverBus;
@@ -290,11 +270,16 @@
 		7CDD0BAE19C8DE6300B7623D /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7C92FA4F1A7FFEFF004A44B5 /* PopUpViewController.h */,
+				7C92FA501A7FFEFF004A44B5 /* PopUpViewController.m */,
+				7C92FA511A7FFEFF004A44B5 /* PopUpViewController.xib */,
 				45A5AB7A1A643B330068728F /* BB_MenuViewController.h */,
 				45A5AB7B1A643B330068728F /* BB_MenuViewController.m */,
-				45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */,
 				7CDD0AC019C8D85E00B7623D /* BB_ViewController.h */,
 				7CDD0AC119C8D85E00B7623D /* BB_ViewController.m */,
+				7C7FDFE019D337500053E3A6 /* StopETABox.xib */,
+				7C7FDFE219D338480053E3A6 /* BB_StopETABox.h */,
+				7C7FDFE319D338480053E3A6 /* BB_StopETABox.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -309,6 +294,8 @@
 				7CDD0BB419C8EB3A00B7623D /* BB_Shuttle.m */,
 				7CDD0BB619C8EB4F00B7623D /* BB_Stop.h */,
 				7CDD0BB719C8EB4F00B7623D /* BB_Stop.m */,
+				7C92FA3A1A643CEB004A44B5 /* BB_Favorite.h */,
+				7C92FA3B1A643CEB004A44B5 /* BB_Favorite.m */,
 				7CDD0BB919C8F35A00B7623D /* BB_ShuttleUpdater.h */,
 				7CDD0BBA19C8F35A00B7623D /* BB_ShuttleUpdater.m */,
 				4598D29A19D0D5FF00BF6339 /* BB_StopEstimatePair.h */,
@@ -428,16 +415,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C7FDFE119D337500053E3A6 /* StopETABox.xib in Resources */,
-				7C92FA4D1A7FEF8D004A44B5 /* GoogleMaps.bundle in Resources */,
+				7C92FA5C1A8001AB004A44B5 /* Images.xcassets in Resources */,
+				7C92FA531A7FFEFF004A44B5 /* PopUpViewController.xib in Resources */,
 				7CC348F219E7471C00183D25 /* Gudea-Bold.otf in Resources */,
-				7CDD0AC419C8D85E00B7623D /* Images.xcassets in Resources */,
 				7CDD0AB619C8D85E00B7623D /* InfoPlist.strings in Resources */,
 				7CC348F319E7471C00183D25 /* Gudea-Italic.otf in Resources */,
 				7CDD0ABF19C8D85E00B7623D /* Main.storyboard in Resources */,
-				7CC348EE19E71EBD00183D25 /* PopUpViewController.xib in Resources */,
 				45A5AB7E1A643B330068728F /* BB_MenuViewController.xib in Resources */,
-				4550460F19CC985F004EC589 /* StopCell.xib in Resources */,
 				7CC348F419E7471C00183D25 /* Gudea-Regular.otf in Resources */,
+				7C92FA5A1A7FFF8F004A44B5 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,17 +445,15 @@
 				45A5AB7D1A643B330068728F /* BB_MenuViewController.m in Sources */,
 				7CDD0ABC19C8D85E00B7623D /* BB_AppDelegate.m in Sources */,
 				7CDD0BB519C8EB3A00B7623D /* BB_Shuttle.m in Sources */,
+				7C92FA521A7FFEFF004A44B5 /* PopUpViewController.m in Sources */,
 				7CDD0AB819C8D85E00B7623D /* main.m in Sources */,
 				7CDD0BB219C8DEE600B7623D /* BB_MapState.m in Sources */,
 				7CDD0BBB19C8F35A00B7623D /* BB_ShuttleUpdater.m in Sources */,
 				7C7FDFE419D338480053E3A6 /* BB_StopETABox.m in Sources */,
 				4598D29C19D0D5FF00BF6339 /* BB_StopEstimatePair.m in Sources */,
 				7C92FA3C1A643CEB004A44B5 /* BB_Favorite.m in Sources */,
+				7C92FA561A7FFF17004A44B5 /* Reachability.m in Sources */,
 				7CDD0AC219C8D85E00B7623D /* BB_ViewController.m in Sources */,
-				45E1779C1A69947F004BB865 /* BB_FavoriteRow.m in Sources */,
-				7CC348ED19E71EBD00183D25 /* PopUpViewController.m in Sources */,
-				455E5F8B19CC9FAD007620AD /* BB_StopCell.m in Sources */,
-				7CC348F719F7124300183D25 /* Reachability.m in Sources */,
 				7CDD0BB819C8EB4F00B7623D /* BB_Stop.m in Sources */,
 				7C92FA391A080DDD004A44B5 /* MBProgressHUD.m in Sources */,
 			);
@@ -599,7 +583,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "./**";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"./**",
+					"$(PROJECT_DIR)/BeaverBus",
+				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "./**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BeaverBus/BeaverBus-Prefix.pch";
@@ -615,7 +603,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "./**";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"./**",
+					"$(PROJECT_DIR)/BeaverBus",
+				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "./**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BeaverBus/BeaverBus-Prefix.pch";

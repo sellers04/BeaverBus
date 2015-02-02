@@ -42,7 +42,9 @@ static BB_MapState *mapState = NULL;
     _mapView.myLocationEnabled = YES;
 
     _mapView.settings.compassButton = YES;
-    _mapView.settings.myLocationButton = YES;
+    //_mapView.settings.myLocationButton = YES;
+
+    //_mapView.padding = UIEdgeInsetsMake(0, 0, 430, 0);
 
     _mapView.delegate = self;
 
@@ -155,6 +157,8 @@ static BB_MapState *mapState = NULL;
         [newMarker setMap:_mapView];
         [newMarker setUserData:stop];
         [newMarker setOpacity:0.75];
+
+        [newMarker setGroundAnchor:CGPointMake(0.5, 0.5)];
 
         [stop setMarker:newMarker];
         _stopsVisible = true;

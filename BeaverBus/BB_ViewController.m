@@ -65,7 +65,7 @@ NSMutableArray *changedStopEstimatePairs;
 
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Gudea-Bold" size:22],
+      [UIFont fontWithName:@"Gudea-Bold" size:20],
        NSFontAttributeName,
       nil]];
 
@@ -76,13 +76,15 @@ NSMutableArray *changedStopEstimatePairs;
     
     self.view = [BB_MapState get].mapView;
 
-    _addFavoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _addFavoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[_addFavoriteButton setImageEdgeInsets:
+
     [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
-    
+    [_addFavoriteButton setImage:[UIImage imageNamed:@"favorite_filled"] forState:UIControlStateNormal];
     _addFavoriteButton.frame = CGRectMake(0, 0, 80, 40.0);
     _addFavoriteButton.backgroundColor = [UIColor whiteColor];
     //addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [_addFavoriteButton setHidden:YES];
+    [_addFavoriteButton setHidden:NO];
     [self.view addSubview:_addFavoriteButton];
     
     if (![BB_MapState get].didInitialRequest){
