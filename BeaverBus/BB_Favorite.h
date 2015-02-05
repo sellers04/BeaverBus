@@ -25,5 +25,6 @@
 + (void)restoreFavorites;
 + (void)animateFavoritesAfterRemove;
 - (void)updateFavorite;
+- (void)removeFavoriteFromBar:(UITapGestureRecognizer *)sender;
 
 @end

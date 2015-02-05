@@ -78,7 +78,9 @@ NSTimer *timer;
     }
 
     if (![self connected]) {
-        [[BB_ViewController get] showNetworkErrorAlert];
+        [[BB_ViewController get] showNetworkErrorAlert:YES];
+        NSLog(@"not connected");
+        //[[[BB_MapState get] mainViewController] showNetworkErrorAlert:YES];
     } else {
         //getStops >> getShuttles >> getEstimates >> startShuttleUpdater >> distributeStops
         [self getStops];
@@ -106,7 +108,12 @@ NSTimer *timer;
 
     if (![self connected]) {
         // not connected, show some error window/view
+        NSLog(@"not connected");
+        //[[BB_ViewController get] showNetworkErrorAlert:NO];
+        [[[BB_MapState get] mainViewController] showNetworkErrorAlert:NO];
+
     } else {
+        NSLog(@"connected");
         //getShuttles >> getEstimates >> distributeStops
         [self getShuttles:NO];
     }
@@ -136,7 +143,7 @@ NSTimer *timer;
             //Assume its stopped, set appropriate icon
             [shuttle.marker setIcon:[UIImage imageNamed:[NSString stringWithFormat:@"%@_stop", shuttle.imageName]]];
             [shuttle.marker setRotation:0];
-            NSLog(@"%@_stop", shuttle.imageName);
+            //NSLog(@"%@_stop", shuttle.imageName);
         }
 
         [shuttle.marker setPosition:CLLocationCoordinate2DMake(shuttle.latitude, shuttle.longitude)];

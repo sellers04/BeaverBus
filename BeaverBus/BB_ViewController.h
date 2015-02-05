@@ -13,7 +13,7 @@
 #include "BB_Favorite.h"
 @class BB_MenuViewController;
 
-@interface BB_ViewController : UIViewController <UIAlertViewDelegate> 
+@interface BB_ViewController : UIViewController <UIAlertViewDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) UILabel *mapLabel;
 @property (nonatomic, strong) UIButton *addFavoriteButton;
@@ -24,7 +24,7 @@
 - (UIView *)getMainView;
 - (void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen;
 - (void)setFavoriteButton;
-- (void)showNetworkErrorAlert;
+- (void)showNetworkErrorAlert:(BOOL)initialRequest;
 
 @end
 

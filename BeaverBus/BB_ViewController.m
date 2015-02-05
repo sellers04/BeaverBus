@@ -69,7 +69,7 @@ NSMutableArray *changedStopEstimatePairs;
        NSFontAttributeName,
       nil]];
 
-    self.navigationItem.rightBarButtonItems = @[[self optionsBar], [self favoritesButton]];
+    self.navigationItem.rightBarButtonItems = @[[self optionsBar]/*, [self favoritesButton]*/];
     self.navigationItem.title = @"Beaver Bus Tracker";
 
     changedStopEstimatePairs = [[NSMutableArray alloc] init];
@@ -81,10 +81,17 @@ NSMutableArray *changedStopEstimatePairs;
 
     [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
     [_addFavoriteButton setImage:[UIImage imageNamed:@"favorite_filled"] forState:UIControlStateNormal];
-    _addFavoriteButton.frame = CGRectMake(0, 0, 80, 40.0);
+    _addFavoriteButton.frame = CGRectMake(0, 0, 40, 40.0);
     _addFavoriteButton.backgroundColor = [UIColor whiteColor];
+
+    _addFavoriteButton.layer.cornerRadius = 5;
+    _addFavoriteButton.layer.masksToBounds = YES;
+    _addFavoriteButton.layer.borderWidth = 1;
+    _addFavoriteButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
     //addFavoriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [_addFavoriteButton setHidden:NO];
+    [_addFavoriteButton setHidden:YES];
     [self.view addSubview:_addFavoriteButton];
     
     if (![BB_MapState get].didInitialRequest){
@@ -95,7 +102,49 @@ NSMutableArray *changedStopEstimatePairs;
 
 
     //TODO: map label subview
-    //UIView *mapLabel = [[[NSBundle mainBundle] loadNibNamed:@"MapLabelView" owner:self options:nil] objectAtIndex:0];
+
+
+
+
+
+}
+
+- (void)showActionSheet
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Beaver Bus Options"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Clear Favorites"
+                                                    otherButtonTitles:@"Stops Visibility", @"Bus Information", @"Rate the App", nil];
+
+    [actionSheet showInView:self.view];
+
+}
+
+- (void) showBusInfo
+{
+
+    //NSString *busInfo = [NSString stringWithFormat:@"%@%@%@%@",@"Hours of Operation:\n",@"7AM - 7PM", "a", "b"];
+    NSString *busInfo = [NSString stringWithFormat:@"\nHours of Operation: 7AM - 7PM\n\nEstimated Loop Times: 5 - 14 Minutes"];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bus Information" message:busInfo delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"the 0");
+            break;
+        case 1:
+            NSLog(@"the 1");
+        case 2:
+            [self showBusInfo];
+        default:
+            break;
+    }
 
 }
 
@@ -123,7 +172,7 @@ NSMutableArray *changedStopEstimatePairs;
 
     return item;
 }
-
+/*
 - (UIBarButtonItem *)favoritesButton
 {
     UIImage *image = [UIImage imageNamed:@"settingsGear.png"];
@@ -136,12 +185,13 @@ NSMutableArray *changedStopEstimatePairs;
     
     return item;
 }
+ */
 
 - (void)openOptionsMenu
-{
+{/*
     if (!_optionsMenuIsOpen){
                 //_popViewController = [[PopUpViewController alloc] initWithNibName:@"PopUpViewController" bundle:nil];
-        CGRect menuFrame = CGRectMake(self.view.frame.size.width-100, 0, 100, 150);
+        CGRect menuFrame = CGRectMake(self.view.frame.size.width-130, 0, 120, 150);
 
         [_menuViewController showInView:self.view withImage:nil withMessage:@"" animated:YES withFrame:menuFrame controller:self];
         _optionsMenuIsOpen = true;
@@ -151,7 +201,9 @@ NSMutableArray *changedStopEstimatePairs;
         //[_popViewController removeAnimate];
         [_menuViewController removeAnimate];
         _optionsMenuIsOpen = false;
-    }
+    }*/
+    [self showActionSheet];
+
 }
 
 - (void)setOptionsMenuIsOpen:(BOOL)optionsMenuIsOpen
@@ -176,22 +228,29 @@ NSMutableArray *changedStopEstimatePairs;
     _mapLabel.layer.masksToBounds = YES;
     _mapLabel.layer.borderWidth = 1;
     _mapLabel.layer.borderColor = [UIColor blackColor].CGColor;
-    [_mapLabel setAlpha:0.8];
+    [_mapLabel setAlpha:0.9];
     [_mapLabel setHidden:YES];
+    [_addFavoriteButton setFrame:CGRectMake(10, 10, 35, 35)];
     [self.view addSubview:_mapLabel];
 
 }
 
 - (void)setFavoriteButton
 {
+    if ([BB_MapState get].mapView.selectedMarker == NULL){
+        return;
+    }
 
     if (((BB_Stop*)[BB_MapState get].mapView.selectedMarker.userData).isFavorite){
-        [_addFavoriteButton setTitle:@"Remove Favorite" forState:UIControlStateNormal];
+        //[_addFavoriteButton setTitle:@"Remove Favorite" forState:UIControlStateNormal];
+        //NSLog(@"is favorite, empty star");
+        [_addFavoriteButton setImage:[UIImage imageNamed:@"favorite_filled"] forState:UIControlStateNormal];
         [_addFavoriteButton removeTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
         [_addFavoriteButton addTarget:self action:@selector(removeFavorite) forControlEvents:UIControlEventTouchUpInside];
     }
     else{
-        [_addFavoriteButton setTitle:@"Add Favorite" forState:UIControlStateNormal];
+        //[_addFavoriteButton setTitle:@"Add Favorite" forState:UIControlStateNormal];
+        [_addFavoriteButton setImage:[UIImage imageNamed:@"favorite_empty"] forState:UIControlStateNormal];
         [_addFavoriteButton removeTarget:self action:@selector(removeFavorite) forControlEvents:UIControlEventTouchUpInside];
         [_addFavoriteButton addTarget:self action:@selector(addFavorite) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -213,22 +272,21 @@ NSMutableArray *changedStopEstimatePairs;
 {
     if ([[BB_MapState get].favorites count] > 2){
         //max favorites reached
-        MBProgressHUD *h = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        /*MBProgressHUD *h = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         h.mode = MBProgressHUDModeText;
         h.labelText = @"Can't add any more favorites";
         h.labelFont = [UIFont boldSystemFontOfSize:12];
-
-        [h hide:YES afterDelay:1.75];
+        [h hide:YES afterDelay:1.75];*/
+        [self showFavoritesToast];
     } else {
         CGRect frame = CGRectMake(10, self.view.frame.size.height-50, self.view.frame.size.width-20, 30);
         BB_Stop *selectedStop = [BB_MapState get].mapView.selectedMarker.userData;
         BB_Favorite *newFavorite = [BB_Favorite initNewFavoriteWithStop:selectedStop andFrame:frame];
-
         [self setFavoriteButton];
         [self.view addSubview:newFavorite.favoriteBar];
         
         [UIView animateWithDuration:0.4 animations:^{
-            newFavorite.favoriteBar.alpha = 0.75;
+            newFavorite.favoriteBar.alpha = 0.9;
         }];
     }
     
@@ -236,7 +294,7 @@ NSMutableArray *changedStopEstimatePairs;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [[BB_ShuttleUpdater get] initialNetworkRequest];
+    //[[BB_ShuttleUpdater get] initialNetworkRequest];
         //Repeat the initial network request
     /*
         if (![[BB_ShuttleUpdater get] initialNetworkRequest]) {
@@ -247,14 +305,75 @@ NSMutableArray *changedStopEstimatePairs;
 }
 
 
-- (void)showNetworkErrorAlert
+- (void)showNetworkErrorAlert:(BOOL)initialRequest
 {
+    if (initialRequest){
+        NSLog(@"show the update error alert");
+        UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Please check your device's connection." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
+        [networkFailAlert show];
+    } else {
+        NSLog(@"show the update error view");
 
-    NSLog(@"show the update error view");
-    UIAlertView *networkFailAlert =  [[UIAlertView alloc] initWithTitle:@"Unable to request data" message:@"Please check your device's connection." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Try again", nil];
-    [networkFailAlert show];
+
+
+
+    }
 
 }
+
+- (void)slideNetworkErrorView:(BOOL)add
+{
+    if (add){ //slide in
+        UIView *networkFail = [[UIView alloc] initWithFrame:CGRectMake(10, -40, self.view.frame.size.width-20, 40)];
+        //[networkFail setHidden:NO];
+        [networkFail setBackgroundColor:[UIColor redColor]];
+        [networkFail setAlpha:0.75];
+        [self.view addSubview:networkFail];
+        [UIView animateWithDuration:2.0
+                         animations:^{
+                             networkFail.frame = CGRectMake(10, 0, self.view.frame.size.width-20, 40);
+                         }];
+
+    } else {//slide out
+
+    }
+}
+
+- (void)showFavoritesToast
+{
+    UIView *favoritesToast = [[UIView alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height-140, self.view.frame.size.width-20, 40)];
+    [favoritesToast setBackgroundColor:[UIColor blackColor]];
+    favoritesToast.layer.cornerRadius = 5.0;
+    UILabel *favoritesToastLabel = [[UILabel alloc] init];
+    [favoritesToastLabel setBackgroundColor:[UIColor whiteColor]];
+    [favoritesToastLabel setText:@"Can't add any more favorites"];
+   // [favoritesToastLabel setBackgroundColor:[UIColor blackColor]];
+   // favoritesToastLabel.layer.cornerRadius = 5.0;
+    [favoritesToast addSubview:favoritesToastLabel];
+    [favoritesToast setAlpha:0.5];
+    [self.view addSubview:favoritesToast];
+
+    [UIView animateWithDuration:3.0
+                     animations:^{
+                         [favoritesToast setAlpha:0.75];
+                     }
+                     completion:^(BOOL finished){
+                         //[favoritesToast removeFromSuperview];
+                     }];
+
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         [favoritesToast setAlpha:0];
+                     }
+                     completion:^(BOOL finished){
+                         [favoritesToast removeFromSuperview];
+                     }];
+
+
+
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -12,6 +12,7 @@
 #import "BB_StopETABox.h"
 #import "BB_CustomInfoWindow.h"
 #import "BB_MapLabelView.h"
+#import "UIColor+CustomColors.h"
 
 static BB_MapState *mapState = NULL;
 
@@ -246,17 +247,20 @@ static BB_MapState *mapState = NULL;
 
     _northPolyline = [GMSPolyline polylineWithPath:northPath];
     [_northPolyline setStrokeWidth:3];
-    [_northPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]]]; //Green
+    //[_northPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]]]]; //Green
+    [_northPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor northColor]]]];
     [_northPolyline setMap:_mapView];
     
     _eastPolyline = [GMSPolyline polylineWithPath:eastPath];
     [_eastPolyline setStrokeWidth:3];
-    [_eastPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]]]; //Purple
+    //[_eastPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]]]]; //Purple
+    [_eastPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor eastColor]]]];
     [_eastPolyline setMap:_mapView];
 
     _westPolyline = [GMSPolyline polylineWithPath:westPath];
     [_westPolyline setStrokeWidth:3];
-    [_westPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]]]; //Yellow
+    //[_westPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]]]]; //Yellow
+    [_westPolyline setSpans:@[[GMSStyleSpan spanWithColor:[UIColor westColor]]]];
     [_westPolyline setMap:_mapView];
 }
 
@@ -308,22 +312,26 @@ static BB_MapState *mapState = NULL;
                 numEtaFound++;
                 BB_StopETABox *stopETABox = [[[NSBundle mainBundle] loadNibNamed:@"StopETABox" owner:self options:nil] objectAtIndex:0];
                 if ([[stop.etaArray objectAtIndex:i] integerValue] <= 1){
-                    stopETABox.ETA.text = @"~1";
+                    stopETABox.ETA.text = @"1";
                 } else {
                     stopETABox.ETA.text = [[stop.etaArray objectAtIndex:i] stringValue];
                 }
                 switch (i) {
                     case 0:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]; //Green
+                        //stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.439 green:.659 blue:0 alpha:1]; //Green
+                        stopETABox.colorBox.backgroundColor = [UIColor northColor];
                         break;
                     case 1:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
+                        //stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
+                        stopETABox.colorBox.backgroundColor = [UIColor westColor];
                         break;
                     case 2:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
+                        //stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.878 green:.667 blue:.059 alpha:1]; //Yellow
+                        stopETABox.colorBox.backgroundColor = [UIColor westColor];
                         break;
                     case 3:
-                        stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
+                        //stopETABox.colorBox.backgroundColor = [UIColor colorWithRed:.667 green:.4 blue:.804 alpha:1]; //Purple
+                        stopETABox.colorBox.backgroundColor = [UIColor eastColor];
                         break;
                     default:
                         stopETABox.colorBox.backgroundColor = [UIColor grayColor];
@@ -343,6 +351,7 @@ static BB_MapState *mapState = NULL;
         stopInfoWindow.layer.cornerRadius = 5;
         stopInfoWindow.layer.masksToBounds = YES;
         stopInfoWindow.backgroundColor = [UIColor clearColor];
+        stopInfoWindow.layer.borderWidth = 1.0;
 
         /*
         UIImageView *bottomArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infowindow_arrow"]];

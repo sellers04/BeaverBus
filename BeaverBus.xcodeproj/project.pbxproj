@@ -20,6 +20,7 @@
 		7C92FA581A7FFF86004A44B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C92FA571A7FFF86004A44B5 /* GoogleMaps.framework */; };
 		7C92FA5A1A7FFF8F004A44B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA591A7FFF8F004A44B5 /* GoogleMaps.bundle */; };
 		7C92FA5C1A8001AB004A44B5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C92FA5B1A8001AB004A44B5 /* Images.xcassets */; };
+		7C92FA621A8145E7004A44B5 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C92FA611A8145E7004A44B5 /* UIColor+CustomColors.m */; };
 		7CC348F219E7471C00183D25 /* Gudea-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348EF19E7471C00183D25 /* Gudea-Bold.otf */; };
 		7CC348F319E7471C00183D25 /* Gudea-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F019E7471C00183D25 /* Gudea-Italic.otf */; };
 		7CC348F419E7471C00183D25 /* Gudea-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7CC348F119E7471C00183D25 /* Gudea-Regular.otf */; };
@@ -86,6 +87,8 @@
 		7C92FA571A7FFF86004A44B5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = BeaverBus/GoogleMaps.framework; sourceTree = "<group>"; };
 		7C92FA591A7FFF8F004A44B5 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = BeaverBus/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		7C92FA5B1A8001AB004A44B5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7C92FA601A8145E7004A44B5 /* UIColor+CustomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CustomColors.h"; sourceTree = "<group>"; };
+		7C92FA611A8145E7004A44B5 /* UIColor+CustomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CustomColors.m"; sourceTree = "<group>"; };
 		7CC348EF19E7471C00183D25 /* Gudea-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Bold.otf"; sourceTree = "<group>"; };
 		7CC348F019E7471C00183D25 /* Gudea-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Italic.otf"; sourceTree = "<group>"; };
 		7CC348F119E7471C00183D25 /* Gudea-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gudea-Regular.otf"; sourceTree = "<group>"; };
@@ -227,6 +230,8 @@
 				7C92FA381A080DDD004A44B5 /* MBProgressHUD.m */,
 				45A5AB7C1A643B330068728F /* BB_MenuViewController.xib */,
 				7CDD0ABD19C8D85E00B7623D /* Main.storyboard */,
+				7C92FA601A8145E7004A44B5 /* UIColor+CustomColors.h */,
+				7C92FA611A8145E7004A44B5 /* UIColor+CustomColors.m */,
 				7C92FA5B1A8001AB004A44B5 /* Images.xcassets */,
 				7CDD0BAF19C8DE6D00B7623D /* Model */,
 				7CDD0BAE19C8DE6300B7623D /* View Controller */,
@@ -454,6 +459,7 @@
 				7C92FA3C1A643CEB004A44B5 /* BB_Favorite.m in Sources */,
 				7C92FA561A7FFF17004A44B5 /* Reachability.m in Sources */,
 				7CDD0AC219C8D85E00B7623D /* BB_ViewController.m in Sources */,
+				7C92FA621A8145E7004A44B5 /* UIColor+CustomColors.m in Sources */,
 				7CDD0BB819C8EB4F00B7623D /* BB_Stop.m in Sources */,
 				7C92FA391A080DDD004A44B5 /* MBProgressHUD.m in Sources */,
 			);
